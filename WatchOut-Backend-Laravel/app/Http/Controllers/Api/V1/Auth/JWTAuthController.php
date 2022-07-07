@@ -71,6 +71,25 @@ class JWTAuthController extends Controller
         ], Response::HTTP_OK);
     }
 
+    public function login(Request $request)
+    {
+        $input = $request->only('username', 'password');
+        $jwt_token = null;
+  
+        if (!$jwt_token = JWTAuth::attempt($input)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid Usernname or Password',
+            ]);
+        }
+        $user = Auth::user();
+        return response()->json([
+            'success' => true,
+            'token' => $jwt_token,
+            'is_admin' => $user->is_admin,
+        ]);
+    }
+
    
     
     public function refresh(){
