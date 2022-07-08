@@ -51,4 +51,9 @@ class UserController extends Controller
             'message' => 'Infrastructural problem reported successfuly',
         ], Response::HTTP_OK);
     }
+
+    public function get(){
+        $infrastructural_problems=InfrastructuralProblem::all();
+        return $infrastructural_problems;
+    }
 }

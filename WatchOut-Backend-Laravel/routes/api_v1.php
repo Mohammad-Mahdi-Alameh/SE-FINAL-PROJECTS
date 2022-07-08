@@ -15,9 +15,10 @@ Route::group(['prefix' => 'user'] , function(){
     
     Route::group(['middleware' => 'api'], function($router) {
 
-    Route::post('/report', [UserController::class, 'report']);
-    
-    Route::post('/logout', [JWTAuthController::class, 'logout']);
-    
+        Route::get('/get', [UserController::class, 'get']);
+        
+        Route::post('/report', [UserController::class, 'report']);
+        
+        Route::post('/logout', [JWTAuthController::class, 'logout']);
     });
 });
