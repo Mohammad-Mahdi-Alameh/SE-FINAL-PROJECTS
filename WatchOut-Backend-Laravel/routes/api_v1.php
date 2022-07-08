@@ -6,11 +6,16 @@ use App\Http\Controllers\Api\V1\Auth\JWTAuthController;
 use App\Http\Controllers\Api\V1\MyController;
 
 
-Route::group(['middleware' => 'api'], function($router) {
 
+Route::group(['prefix' => 'user'] , function(){
+    
     Route::post('/signup', [JWTAuthController::class, 'signup']);
     
     Route::post('/login', [JWTAuthController::class, 'login']);
     
+    Route::group(['middleware' => 'api'], function($router) {
+
     Route::post('/logout', [JWTAuthController::class, 'logout']);
+
+    });
 });
