@@ -11,4 +11,6 @@ Route::group(['middleware' => 'api'], function($router) {
     Route::post('/signup', [JWTAuthController::class, 'signup']);
     
     Route::post('/login', [JWTAuthController::class, 'login']);
+    
+    Route::post('/logout', [JWTAuthController::class, 'logout']);
 });

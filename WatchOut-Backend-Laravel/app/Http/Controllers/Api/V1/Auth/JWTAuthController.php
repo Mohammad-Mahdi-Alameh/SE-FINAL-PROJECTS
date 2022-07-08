@@ -90,6 +90,15 @@ class JWTAuthController extends Controller
         ]);
     }
 
+    public function logout() {
+        Auth::guard('api')->logout();
+    
+        return response()->json([
+            'status' => 'success',
+            'message' => 'logout'
+        ], 200);
+    }    
+    
    
     
     public function refresh(){
