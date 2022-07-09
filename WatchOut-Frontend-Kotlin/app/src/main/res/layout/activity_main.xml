@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     android:background="@color/grey"
     tools:context=".MainActivity">
+    <TextView
+        android:text="Watch Out !"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:layout_marginTop="45dp"
+        android:textStyle="bold|normal|italic"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 
 
