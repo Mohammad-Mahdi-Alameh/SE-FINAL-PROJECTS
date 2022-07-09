@@ -169,7 +169,8 @@
             android:gravity="center"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
             <com.google.android.material.textfield.TextInputLayout
                 android:hint="@string/first_name"
                 android:layout_marginLeft="5dp"
