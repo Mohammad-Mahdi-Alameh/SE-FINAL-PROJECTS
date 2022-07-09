@@ -102,7 +102,7 @@
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:inputType="textPersonName|textEmailAddress"
+                        android:inputType="textPersonName"
                         android:id="@+id/username"
                         android:ems="10"
                         android:textSize="13sp"
@@ -184,8 +184,32 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:inputType="textPersonName|textEmailAddress"
-                    android:id="@+id/eMails"
+                    android:inputType="textPersonName"
+                    android:id="@+id/first_name"
+                    android:ems="10"
+                    android:textSize="13sp"
+                    android:textColor="@color/black"
+                    android:textStyle="normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:hint="@string/last_name"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                app:shapeAppearanceOverlay="@style/Button_a"
+                app:hintTextColor="#4E4A4A"
+                app:boxStrokeColor="#4E4A4A"
+                app:boxStrokeWidth="1dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="textPersonName"
+                    android:id="@+id/last_name"
                     android:ems="10"
                     android:textSize="13sp"
                     android:textColor="@color/black"
