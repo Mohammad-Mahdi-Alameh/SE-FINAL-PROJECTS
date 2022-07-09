@@ -4,4 +4,6 @@
     <string name="log_in">Login</string>
     <string name="watch_out">Watch Out !</string>
     <string name="user_name">Enter your username</string>
+    <string name="password">Password</string>
+    <string name="forget_password">Forget Password ?</string>
 </resources>
