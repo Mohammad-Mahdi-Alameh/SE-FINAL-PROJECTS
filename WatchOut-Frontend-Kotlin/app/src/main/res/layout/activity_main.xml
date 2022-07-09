@@ -144,6 +144,22 @@
                     android:textStyle="normal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@+id/singIn"
+                    android:text="@string/log_in"
+                    android:textSize="20sp"
+                    android:textAllCaps="false"
+                    android:elevation="15dp"
+                    android:gravity="center"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="24dp"
+                    android:textColor="@color/textColor"
+                    android:layout_gravity="center"
+                    app:shapeAppearanceOverlay="@style/Button_b"
+                    app:backgroundTint="@color/pinkColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
