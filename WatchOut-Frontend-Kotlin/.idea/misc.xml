@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/activity_main.xml" value="0.14175724637681159" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/toggle_container.xml" value="0.1" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/toggled_button.xml" value="0.1" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/activity_main.xml" value="0.125" />
       </map>
     </option>
   </component>
