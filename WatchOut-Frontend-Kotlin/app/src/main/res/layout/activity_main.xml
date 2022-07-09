@@ -145,7 +145,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
                 <Button
-                    android:id="@+id/singIn"
+                    android:id="@+id/logIn_btn"
                     android:text="@string/log_in"
                     android:textSize="20sp"
                     android:textAllCaps="false"
@@ -161,6 +161,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
+        <LinearLayout
+            android:id="@+id/singUpLayout"
+            android:background="@color/white"
+            android:padding="25dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
