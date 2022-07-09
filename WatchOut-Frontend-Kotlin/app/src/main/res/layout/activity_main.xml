@@ -241,6 +241,31 @@
                     android:layout_height="wrap_content"
                     />
             </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:hint="@string/choose_password"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                app:shapeAppearanceOverlay="@style/Button_a"
+                app:hintTextColor="#4E4A4A"
+                app:boxStrokeColor="#4E4A4A"
+                app:boxStrokeWidth="1dp"
+                app:endIconMode="password_toggle"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="textPassword"
+                    android:id="@+id/new_password"
+                    android:ems="10"
+                    android:textSize="13sp"
+                    android:textColor="@color/black"
+                    android:textStyle="normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
