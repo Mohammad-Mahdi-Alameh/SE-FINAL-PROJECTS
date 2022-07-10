@@ -7,6 +7,10 @@ plugins {
 android {
     compileSdk 32
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId "com.example.watchout_frontend_kotlin"
         minSdk 21
