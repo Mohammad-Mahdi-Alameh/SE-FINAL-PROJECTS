@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             logIn.setTextColor(resources.getColor(R.color.pinkColor, null))
             btn.text = "Sign Up"
             btn.setOnClickListener {
-                //signUp()
+                signUp()
             }
         }
         logIn.setOnClickListener {
@@ -57,4 +57,24 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun signUp() {
+        val firstname = first_name.text.toString()
+        val lastname = last_name.text.toString()
+        val username = new_username.text.toString()
+        val password = new_password.text.toString()
+        val confirmPassword = confirm_password.text.toString()
+        if (firstname.isEmpty() || lastname.isEmpty() || username.isEmpty() || password.isEmpty() ||
+            confirmPassword.isEmpty() ) {
+            Toast.makeText(applicationContext, "Please fill the missing fields !", Toast.LENGTH_SHORT)
+                .show()
+        }
+        else{
+            if( password != confirmPassword ){
+                Toast.makeText(applicationContext, "Entered passwords don't match !", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+
+        }
+    }
 }
