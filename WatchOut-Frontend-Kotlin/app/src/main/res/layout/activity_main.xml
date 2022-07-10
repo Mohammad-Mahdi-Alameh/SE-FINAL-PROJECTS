@@ -128,7 +128,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:inputType="textPassword"
-                        android:id="@+id/passwords"
+                        android:id="@+id/password"
                         android:ems="10"
                         android:textSize="13sp"
                         android:textColor="@color/black"
@@ -268,7 +268,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:inputType="textPassword"
-                    android:id="@+id/passwords01"
+                    android:id="@+id/confirm_password"
                     android:ems="10"
                     android:textSize="13sp"
                     android:textColor="@color/black"

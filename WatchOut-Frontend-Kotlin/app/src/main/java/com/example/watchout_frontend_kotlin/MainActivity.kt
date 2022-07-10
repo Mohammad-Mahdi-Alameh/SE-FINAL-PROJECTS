@@ -1,9 +1,9 @@
 package com.example.watchout_frontend_kotlin
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -14,27 +14,47 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        btn.setOnClickListener {
+            logIn()
+        }
         signUp.setOnClickListener {
-            signUp.background = resources.getDrawable(R.drawable.toggled_button,null)
-            signUp.setTextColor(resources.getColor(R.color.textColor,null))
+            signUp.background = resources.getDrawable(R.drawable.toggled_button, null)
+            signUp.setTextColor(resources.getColor(R.color.textColor, null))
             signUpLayout.visibility = View.VISIBLE
             logIn.background = null
             logInLayout.visibility = View.GONE
-            logIn.setTextColor(resources.getColor(R.color.pinkColor,null))
+            logIn.setTextColor(resources.getColor(R.color.pinkColor, null))
             btn.text = "Sign Up"
+            btn.setOnClickListener {
+                //signUp()
+            }
         }
         logIn.setOnClickListener {
             signUp.background = null
-            signUp.setTextColor(resources.getColor(R.color.pinkColor,null))
+            signUp.setTextColor(resources.getColor(R.color.pinkColor, null))
             signUpLayout.visibility = View.GONE
-            logIn.background = resources.getDrawable(R.drawable.toggled_button,null)
+            logIn.background = resources.getDrawable(R.drawable.toggled_button, null)
             logInLayout.visibility = View.VISIBLE
-            logIn.setTextColor(resources.getColor(R.color.textColor,null))
+            logIn.setTextColor(resources.getColor(R.color.textColor, null))
             btn.text = "Log In";
+            btn.setOnClickListener {
+                logIn()
+            }
 
         }
-        btn.setOnClickListener {
-            startActivity(Intent(this@MainActivity,HomeActivity::class.java))
-        }
+
     }
+
+    private fun logIn() {
+        val username = username.text.toString()
+        val password = password.text.toString()
+        if (username.isEmpty() || password.isEmpty()) {
+            Toast.makeText(applicationContext, "Please fill the missing fields !", Toast.LENGTH_SHORT)
+                .show()
+
+        }
+
+
+    }
+
 }
