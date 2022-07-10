@@ -145,25 +145,10 @@
                     android:textStyle="normal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
-                <Button
-                    android:id="@+id/logIn_btn"
-                    android:text="@string/log_in"
-                    android:textSize="20sp"
-                    android:textAllCaps="false"
-                    android:elevation="15dp"
-                    android:gravity="center"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="24dp"
-                    android:textColor="@color/textColor"
-                    android:layout_gravity="center"
-                    app:shapeAppearanceOverlay="@style/Button_b"
-                    app:backgroundTint="@color/pinkColor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+
             </LinearLayout>
         <LinearLayout
-            android:id="@+id/singUpLayout"
+            android:id="@+id/signUpLayout"
             android:background="@color/white"
             android:padding="25dp"
             android:gravity="center"
@@ -293,6 +278,24 @@
                     />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
+            <Button
+                android:id="@+id/btn"
+                android:text="@string/log_in"
+                android:textSize="20sp"
+                android:padding="5sp"
+                android:textAllCaps="false"
+                android:elevation="15dp"
+                android:gravity="center"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:textColor="@color/textColor"
+                android:layout_gravity="center"
+                app:shapeAppearanceOverlay="@style/Button_b"
+                app:backgroundTint="@color/pinkColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
