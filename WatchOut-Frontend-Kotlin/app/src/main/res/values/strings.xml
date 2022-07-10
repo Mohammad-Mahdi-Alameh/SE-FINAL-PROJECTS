@@ -14,5 +14,6 @@
     <string name="welcome">Welcome</string>
     <string name="home_fragment">Hello from home fragment</string>
     <string name="map_fragment">Hello from map fragment</string>
+    <string name="profile_fragment">Hello from profile fragment</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
