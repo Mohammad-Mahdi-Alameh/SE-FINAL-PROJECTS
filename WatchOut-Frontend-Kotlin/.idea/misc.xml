@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_icons8_home.xml" value="0.1065" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/map_icon.xml" value="0.1065" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/profile_icon.xml" value="0.1065" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/toggle_container.xml" value="0.1" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/toggled_button.xml" value="0.1" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/activity_home.xml" value="0.14175724637681159" />
@@ -11,6 +14,7 @@
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/fragment_home.xml" value="0.14175724637681159" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/fragment_map.xml" value="0.14175724637681159" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/fragment_profile.xml" value="0.14175724637681159" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/menu/nav_menu.xml" value="0.1513157894736842" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/menu/top_navbar.xml" value="0.1513157894736842" />
       </map>
     </option>
