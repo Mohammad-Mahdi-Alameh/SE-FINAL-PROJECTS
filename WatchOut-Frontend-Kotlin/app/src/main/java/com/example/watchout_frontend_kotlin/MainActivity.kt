@@ -1,5 +1,6 @@
 package com.example.watchout_frontend_kotlin
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity() {
             logIn.background = null
             logInLayout.visibility = View.GONE
             logIn.setTextColor(resources.getColor(R.color.pinkColor,null))
-            btn.text = "Sign Up";
+            btn.text = "Sign Up"
         }
         logIn.setOnClickListener {
             signUp.background = null
@@ -31,6 +32,9 @@ class MainActivity : AppCompatActivity() {
             logIn.setTextColor(resources.getColor(R.color.textColor,null))
             btn.text = "Log In";
 
+        }
+        btn.setOnClickListener {
+            startActivity(Intent(this@MainActivity,HomeActivity::class.java))
         }
     }
 }
