@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/pinkColor"
+    android:background="@color/grey"
     tools:context=".HomeActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@id/toolbar_container"
@@ -25,13 +25,25 @@
             tools:layout_editor_absoluteY="0dp" />
 
     </com.google.android.material.appbar.AppBarLayout>
-    <FrameLayout
-        android:id="@+id/container"
+
+<!--    <FrameLayout-->
+<!--        android:id="@+id/container"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_above="@+id/bottomNav"-->
+<!--        android:layout_below="@+id/toolbar_container" >-->
+
+<!--    </FrameLayout>-->
+    <fragment
+        android:id="@+id/fragment_container_view_tag"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph"
         android:layout_above="@+id/bottomNav"
-        android:layout_below="@+id/toolbar_container"
-        />
+        android:layout_below="@+id/toolbar_container"/>
+
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -43,7 +55,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/nav_menu" />
+        app:menu="@menu/nav_menu" >
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 
 </RelativeLayout>
