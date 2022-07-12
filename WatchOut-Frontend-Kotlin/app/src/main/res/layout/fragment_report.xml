@@ -54,15 +54,15 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        android:layout_marginStart="38dp"
-        android:layout_marginEnd="38dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         app:cardUseCompatPadding="true"
-        android:layout_width="match_parent"
+        android:layout_width="500dp"
         android:layout_height="wrap_content">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="380dp"
             android:gravity="center"
             >
 
@@ -75,19 +75,23 @@
     >
     <Button
         android:id="@+id/button1"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:layout_marginRight="30dp"
         android:text="Hole"
-        app:cardCornerRadius="25dp"
-
+        android:drawableTop="@drawable/ic_hole_icon"
+        android:bottomRightRadius="30dp"
+        android:bottomLeftRadius="30dp"
+        android:topLeftRadius="30dp"
+        android:topRightRadius="30dp"
         />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:text="Sharp Turn"
+        android:drawableTop="@drawable/ic_turn_icon"
         app:cardCornerRadius="25dp"
         />
 </LinearLayout>
@@ -105,15 +109,17 @@
         android:layout_marginRight="30dp"
         android:text="Hard Bump"
         app:cardCornerRadius="25dp"
+        android:drawableTop="@drawable/bump_icon"
 
 
         />
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="Button"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:text="Blockage"
+        android:drawableTop="@drawable/ic_blockage_icon"
         app:cardCornerRadius="25dp"
 
         />
