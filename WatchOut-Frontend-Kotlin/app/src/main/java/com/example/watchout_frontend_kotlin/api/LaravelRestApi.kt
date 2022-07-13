@@ -16,6 +16,6 @@ interface LaravelRestApi {
     fun logIn(@Body loginInfo: LoginInfo): Call<LoginResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("/api/v1/user/login")
+    @POST("/api/v1/user/signup")
     fun signUp(@Body signupInfo: SignupInfo): Call<SignupResponse>
 }
