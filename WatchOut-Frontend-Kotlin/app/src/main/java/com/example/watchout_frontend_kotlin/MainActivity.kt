@@ -1,7 +1,6 @@
 package com.example.watchout_frontend_kotlin
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
@@ -12,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.watchout_frontend_kotlin.api.RestApiService
 import com.example.watchout_frontend_kotlin.model.LoginInfo
+import com.example.watchout_frontend_kotlin.model.SignupInfo
 
 class MainActivity : AppCompatActivity() {
 
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 
         }
         else{
-          startActivity(Intent(this@MainActivity,HomeActivity::class.java))
+//          startActivity(Intent(this@MainActivity,HomeActivity::class.java))
             val apiService = RestApiService()
             val loginInfo = LoginInfo(
                 username = username,
@@ -106,10 +106,32 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Entered passwords don't match !", Toast.LENGTH_SHORT)
                     .show()
             }
+            val apiService = RestApiService()
+            val signupInfo = SignupInfo(
+                firstname = firstname,
+                lastname = lastname,
+                username = username,
+                password = password,
+                c_password = confirmPassword)
+
+            apiService.signUp(signupInfo ) {
+                if (it?.message == "User successfully registered") {
+                    Log.i("message", "User added successfully")
+                } else {
+                    //Error on laravel validator because password < 6
+                    if(password.length < 6) {
+                        Log.i("Signup Error", "Password too short ! It should be minimum six characters")
+                    }
+                    //Error on laravel validator because username exists already
+                    else
+                    Log.i("Signup Error", "Username exists please choose another one !")
+                }
+            }
+        }
+
 
             }
 
 
         }
-    }
 
