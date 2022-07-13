@@ -3,10 +3,13 @@ package com.example.watchout_frontend_kotlin
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.example.watchout_frontend_kotlin.api.RestApiService
+import com.example.watchout_frontend_kotlin.model.LoginInfo
 
 class MainActivity : AppCompatActivity() {
 
@@ -62,8 +65,20 @@ class MainActivity : AppCompatActivity() {
                 .show()
 
         }
-        else {
-            startActivity(Intent(this@MainActivity, HomeActivity::class.java))
+        else{
+          startActivity(Intent(this@MainActivity,HomeActivity::class.java))
+            val apiService = RestApiService()
+            val loginInfo = LoginInfo(
+                username = username,
+                password = password)
+
+            apiService.login(loginInfo) {
+                if (it?.token != null) {
+                    Log.i("token", it.token)
+                } else {
+                    Log.i("Login Error", "Wrong username or password !")
+                }
+            }
         }
     }
 
