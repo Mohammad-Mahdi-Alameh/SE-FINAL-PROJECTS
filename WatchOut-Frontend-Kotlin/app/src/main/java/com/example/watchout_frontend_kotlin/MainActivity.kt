@@ -1,6 +1,8 @@
 package com.example.watchout_frontend_kotlin
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -75,6 +77,11 @@ class MainActivity : AppCompatActivity() {
             apiService.login(loginInfo) {
                 if (it?.token != null) {
                     Log.i("token", it.token)
+                    val sharedPreferences: SharedPreferences = this.getPreferences(Context.MODE_PRIVATE)
+                    val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                    editor.putString("token", it.token)
+                    editor.apply()
+                    editor.commit()
                 } else {
                     Log.i("Login Error", "Wrong username or password !")
                 }
