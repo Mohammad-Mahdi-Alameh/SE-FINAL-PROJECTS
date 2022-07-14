@@ -74,25 +74,20 @@
 
     >
     <Button
-        android:id="@+id/button1"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
+        android:id="@+id/hole_btn"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:layout_marginRight="30dp"
         android:text="Hole"
         android:drawableTop="@drawable/ic_hole_icon"
-        android:bottomRightRadius="30dp"
-        android:bottomLeftRadius="30dp"
-        android:topLeftRadius="30dp"
-        android:topRightRadius="30dp"
         />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
+        android:id="@+id/turn_btn"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:text="Sharp Turn"
         android:drawableTop="@drawable/ic_turn_icon"
-        app:cardCornerRadius="25dp"
         />
 </LinearLayout>
         <LinearLayout
@@ -103,24 +98,22 @@
 
             >
     <Button
-        android:id="@+id/button3"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
+        android:id="@+id/bump_btn"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:layout_marginRight="30dp"
         android:text="Hard Bump"
-        app:cardCornerRadius="25dp"
         android:drawableTop="@drawable/bump_icon"
 
 
         />
 
     <Button
-        android:id="@+id/button4"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
+        android:id="@+id/blockage_btn"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:text="Blockage"
         android:drawableTop="@drawable/ic_blockage_icon"
-        app:cardCornerRadius="25dp"
 
         />
         </LinearLayout>
