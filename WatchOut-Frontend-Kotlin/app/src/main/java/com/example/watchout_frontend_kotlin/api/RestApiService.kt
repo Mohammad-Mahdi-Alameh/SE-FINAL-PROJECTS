@@ -1,10 +1,7 @@
 package com.example.watchout_frontend_kotlin.api
 
 import android.util.Log
-import com.example.watchout_frontend_kotlin.model.LoginInfo
-import com.example.watchout_frontend_kotlin.model.LoginResponse
-import com.example.watchout_frontend_kotlin.model.SignupInfo
-import com.example.watchout_frontend_kotlin.model.SignupResponse
+import com.example.watchout_frontend_kotlin.model.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,6 +19,7 @@ class RestApiService {
                 override fun onResponse( call: Call<LoginResponse>, response: Response<LoginResponse>) {
                     val addedUser = response.body()
                     onResult(addedUser)
+                    ////
                     if (response.code() == 400) {
                         response.errorBody()?.let { Log.e("error", it.string()) }
                     }
@@ -42,6 +40,24 @@ class RestApiService {
                     val addedUser = response.body()
                     Log.d("Added User",response.body().toString())
                     onResult(addedUser)
+
+
+                }
+            }
+        )
+    }
+    fun report(reportInfo: ReportInfo, onResult: (ReportResponse?) -> Unit){
+        val retrofit = ServiceBuilder.buildService(LaravelRestApi::class.java)
+        retrofit.report(reportInfo).enqueue(
+            object : Callback<ReportResponse> {
+                override fun onFailure(call: Call<ReportResponse>, t: Throwable) {
+                    Log.i("error","error in getting response")
+                    onResult(null)
+                }
+                override fun onResponse( call: Call<ReportResponse>, response: Response<ReportResponse>) {
+                    val submittedReport = response.body()
+                    Log.d("Response",response.body().toString())
+                    onResult(submittedReport)
 
 
                 }
