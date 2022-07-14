@@ -1,33 +1,17 @@
 package com.example.watchout_frontend_kotlin
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.fragment.app.Fragment
+import com.example.watchout_frontend_kotlin.api.RestApiService
+import com.example.watchout_frontend_kotlin.model.ReportInfo
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ReportFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ReportFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+class ReportFragment : Fragment() , View.OnClickListener{
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,23 +21,54 @@ class ReportFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_report, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ReportFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ReportFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.findViewById<Button>(R.id.hole_btn).setOnClickListener (this)
+        view.findViewById<Button>(R.id.turn_btn).setOnClickListener (this)
+        view.findViewById<Button>(R.id.bump_btn).setOnClickListener (this)
+        view.findViewById<Button>(R.id.blockage_btn).setOnClickListener (this)
+    }
+
+    override fun onClick(v: View?) {
+        fun getType():String{
+            val type = ""
+            if (v != null) {
+                when (v.id) {
+                    R.id.hole_btn -> {
+                        return type.replace("", "hole")
+                    }
+                    R.id.turn_btn -> {
+                        return type.replace("", "turn")
+                    }
+                    R.id.bump_btn -> {
+                        return type.replace("", "bump")
+                    }
+                    R.id.blockage_btn -> {
+                        return type.replace("", "blockage")
+                    }
                 }
             }
+            return  type
+        }
+        val apiService = RestApiService()
+        val reportInfo = ReportInfo(
+            latitude = "live latitude",
+            longitude = "live longitude",
+            type = "live longitude",
+        )
+
+        apiService.report(reportInfo) {
+            if (it?.message == "Infrastructural problem reported successfully") {
+                Log.i("Report Succeeded", it.message)
+            } else {
+                if (it?.message == "There is no such type!") {
+                    Log.i("Report failed", it.message)
+                }
+                Log.i("Error", "Report Failed !")
+            }
+        }
     }
+
 }
+//temporary type of the problem and  longitude will be stored in db as "live longitude"
+// and latitude will be stored in db as "live latitude" because live location isn't activated yet
