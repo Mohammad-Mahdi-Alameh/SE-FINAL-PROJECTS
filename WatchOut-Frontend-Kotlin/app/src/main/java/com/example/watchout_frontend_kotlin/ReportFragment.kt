@@ -54,7 +54,7 @@ class ReportFragment : Fragment() , View.OnClickListener{
         val reportInfo = ReportInfo(
             latitude = "live latitude",
             longitude = "live longitude",
-            type = "live longitude",
+            type = getType()
         )
 
         apiService.report(reportInfo) {
@@ -62,9 +62,11 @@ class ReportFragment : Fragment() , View.OnClickListener{
                 Log.i("Report Succeeded", it.message)
             } else {
                 if (it?.message == "There is no such type!") {
-                    Log.i("Report failed", it.message)
+                    Log.i("Report failed", getType())
                 }
-                Log.i("Error", "Report Failed !")
+                else {
+                    Log.i("Error", "Report Failed !")
+                }
             }
         }
     }
