@@ -1,6 +1,7 @@
 package com.example.watchout_frontend_kotlin
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
@@ -24,8 +25,16 @@ class MainActivity : AppCompatActivity() {
         val signUp = findViewById<TextView>(R.id.signUp)
         val logInLayout = findViewById<LinearLayout>(R.id.logInLayout)
         val signUpLayout = findViewById<LinearLayout>(R.id.signUpLayout)
+//        val database = Firebase.database
+//        val myRef = database.getReference("message")
+//        myRef.setValue("Hello, World!")
+
+
+//        var i = 0
         btn.setOnClickListener {
             logIn()
+//            val myRef = database.getReference("message")
+//            myRef.setValue(i++)Sett
         }
         signUp.setOnClickListener {
             signUp.background = resources.getDrawable(R.drawable.toggled_button, null)
@@ -47,6 +56,7 @@ class MainActivity : AppCompatActivity() {
             logInLayout.visibility = View.VISIBLE
             logIn.setTextColor(resources.getColor(R.color.textColor, null))
             btn.text = "Log In"
+
             btn.setOnClickListener {
                 logIn()
             }
@@ -68,7 +78,7 @@ class MainActivity : AppCompatActivity() {
 
         }
         else{
-//          startActivity(Intent(this@MainActivity,HomeActivity::class.java))
+          startActivity(Intent(this@MainActivity,HomeActivity::class.java))
             val apiService = RestApiService()
             val loginInfo = LoginInfo(
                 username = username,
