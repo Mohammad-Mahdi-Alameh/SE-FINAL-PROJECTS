@@ -18,7 +18,6 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'latitude' => 'required|string|min:2|max:100',
             'longitude' => 'required|string|min:2|max:100',
-            // 'risk_level' => 'required',
             'type' => 'required|string',
         ]);
 
@@ -42,7 +41,6 @@ class UserController extends Controller
         $infrastructural_problem->latitude = $request->latitude;
         $infrastructural_problem->longitude = $request->longitude;
         $infrastructural_problem->is_fixed = 0;
-        $infrastructural_problem->risk_level = 0;
         $infrastructural_problem->type_id = $type_id;
 
         $infrastructural_problem->save();

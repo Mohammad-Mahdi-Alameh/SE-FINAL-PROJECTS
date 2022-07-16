@@ -18,7 +18,6 @@ class CreateInfrastructuralProblemsTable extends Migration
             $table->string('latitude');
             $table->string('longitude');
             $table->integer('is_fixed');
-            $table->integer('risk_level');
             $table->unsignedBigInteger('type_id');
             $table->foreign('type_id')->references('id')->on('types');
             $table->timestamps();
