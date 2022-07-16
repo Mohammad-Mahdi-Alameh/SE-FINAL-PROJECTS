@@ -20,6 +20,12 @@ interface LaravelRestApi {
     @POST("/api/v1/user/report")
     fun report(@Body reportInfo: ReportInfo): Call<ReportResponse>
 
+    //infras : infrastructural problems
+    @Headers("Content-Type: application/json")
+    @POST("/api/v1/user/getNearInfras")
+    fun getNearInfras(@Body getNearInfrasInfo: GetNearInfrasInfo): Call<List<GetNearInfrasResponse>>
+
+
 
 
 }
