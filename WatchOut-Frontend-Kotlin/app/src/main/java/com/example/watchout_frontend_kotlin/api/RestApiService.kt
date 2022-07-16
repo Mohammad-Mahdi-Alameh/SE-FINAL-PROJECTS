@@ -64,4 +64,23 @@ class RestApiService {
             }
         )
     }
+    //infras:Infrastructural problems
+    fun getNearInfras(getNearInfrasInfo: GetNearInfrasInfo, onResult: (List<GetNearInfrasResponse>?) -> Unit){
+        val retrofit = ServiceBuilder.buildService(LaravelRestApi::class.java)
+        retrofit.getNearInfras(getNearInfrasInfo).enqueue(
+            object : Callback<List<GetNearInfrasResponse>> {
+                override fun onFailure(call: Call<List<GetNearInfrasResponse>>, t: Throwable) {
+                    Log.d("error","error in getting response")
+                    onResult(null)
+                }
+                override fun onResponse( call: Call<List<GetNearInfrasResponse>>, response: Response<List<GetNearInfrasResponse>>) {
+                    val nearInfras = response.body()
+                    Log.d("Near Infras",response.toString())
+                    onResult(nearInfras)
+
+
+                }
+            }
+        )
+    }
 }
