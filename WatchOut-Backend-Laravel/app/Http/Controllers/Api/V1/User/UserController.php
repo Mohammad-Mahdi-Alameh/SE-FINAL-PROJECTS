@@ -14,27 +14,27 @@ class UserController extends Controller
     public function report(Request $request)
     {
 
-        
+
         $validator = Validator::make($request->all(), [
             'latitude' => 'required|string|min:2|max:100',
             'longitude' => 'required|string|min:2|max:100',
             // 'risk_level' => 'required',
-            'type' => 'required|string', 
+            'type' => 'required|string',
         ]);
 
         if($validator->fails()) {
             return response()->json(["message" => "Validator Failed ! Check your submiited values again!"]);
         }
 
-     
+
         $infrastructural_problem = new InfrastructuralProblem;
 
         $record = Type::where("name","=",$request->type)->get();
-        
+
         if(count($record) == 0){
             return response()->json([
                 'message' => 'There is no such type!',
-                
+
             ]);
         }
         $type_id = json_decode($record,true)[0]["id"];
@@ -51,8 +51,8 @@ class UserController extends Controller
             'message' => 'Infrastructural problem reported successfully',
         ], Response::HTTP_OK);
     }
-
-    public function get(Request $request){
+//infras :infrastructural problems
+    public function getNearInfras(Request $request){
         function getDistance($lat1, $lon1, $lat2, $lon2) {
             if (($lat1 == $lat2) && ($lon1 == $lon2)) {
               return 0;
@@ -63,18 +63,39 @@ class UserController extends Controller
               $dist = acos($dist);
               $dist = rad2deg($dist);
               $miles = $dist * 60 * 1.1515;
-              $unit = strtoupper($unit);
-          
+
+
               return $miles * 1.609344;
-             
-            }
+
           }
+        }
+
+          $validator = Validator::make($request->all(), [
+            'base_latitude' => 'required|string|min:2|max:100',
+            'base_longitude' => 'required|string|min:2|max:100',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json(["message" => "Validator Failed ! Check your submiited values again!"]);
+        }
 
         $infrastructural_problems=InfrastructuralProblem::all();
-        return $infrastructural_problems;
-    }
-   
+        $decoded = json_decode($infrastructural_problems, false);
+        $near_infra_problems = [];
+        $i = 0;
+        foreach($decoded as $d) {
 
-      
-      
+          $i++;
+          $distance = getDistance(floatval($request->base_latitude),floatval($request->base_longitude),floatval($d->latitude),floatval($d->longitude),"K");
+          if($distance < 7){
+                  array_push($near_infra_problems,$d);
+
+                }
+
+        }
+        return $near_infra_problems;
+    }
+
+
+
 }

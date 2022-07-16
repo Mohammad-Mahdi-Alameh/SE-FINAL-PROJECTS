@@ -15,7 +15,7 @@ Route::group(['prefix' => 'user'] , function(){
     
     Route::group(['middleware' => 'api'], function($router) {
 
-        Route::get('/get', [UserController::class, 'get']);
+        Route::get('/getNearInfras', [UserController::class, 'getNearInfras']);   //infras :infrastructural problems
         
         Route::post('/report', [UserController::class, 'report']);
         
