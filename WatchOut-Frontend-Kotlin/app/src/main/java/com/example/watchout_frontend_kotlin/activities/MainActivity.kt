@@ -1,4 +1,4 @@
-package com.example.watchout_frontend_kotlin
+package com.example.watchout_frontend_kotlin.activities
 
 import android.content.Context
 import android.content.Intent
@@ -10,9 +10,10 @@ import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.example.watchout_frontend_kotlin.R
 import com.example.watchout_frontend_kotlin.api.RestApiService
-import com.example.watchout_frontend_kotlin.model.LoginInfo
-import com.example.watchout_frontend_kotlin.model.SignupInfo
+import com.example.watchout_frontend_kotlin.models.LoginInfo
+import com.example.watchout_frontend_kotlin.models.SignupInfo
 
 class MainActivity : AppCompatActivity() {
 
@@ -78,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
         }
         else{
-          startActivity(Intent(this@MainActivity,HomeActivity::class.java))
+          startActivity(Intent(this@MainActivity, HomeActivity::class.java))
             val apiService = RestApiService()
             val loginInfo = LoginInfo(
                 username = username,

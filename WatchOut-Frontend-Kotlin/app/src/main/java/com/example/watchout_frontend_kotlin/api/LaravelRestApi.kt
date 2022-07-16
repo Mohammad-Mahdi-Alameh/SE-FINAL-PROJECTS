@@ -1,6 +1,6 @@
 package com.example.watchout_frontend_kotlin.api
 
-import com.example.watchout_frontend_kotlin.model.*
+import com.example.watchout_frontend_kotlin.models.*
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Headers
@@ -19,4 +19,7 @@ interface LaravelRestApi {
     @Headers("Content-Type: application/json")
     @POST("/api/v1/user/report")
     fun report(@Body reportInfo: ReportInfo): Call<ReportResponse>
+
+
+
 }

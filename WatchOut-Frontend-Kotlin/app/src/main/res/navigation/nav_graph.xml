@@ -6,20 +6,20 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.example.watchout_frontend_kotlin.MapFragment"
+        android:name="com.example.watchout_frontend_kotlin.fragments.MapFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.watchout_frontend_kotlin.ProfileFragment"
+        android:name="com.example.watchout_frontend_kotlin.fragments.ProfileFragment"
         android:label="ProfileFragment" />
     <fragment
         android:id="@+id/reportFragment"
-        android:name="com.example.watchout_frontend_kotlin.ReportFragment"
+        android:name="com.example.watchout_frontend_kotlin.fragments.ReportFragment"
         android:label="ReportFragment" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.watchout_frontend_kotlin.HomeFragment"
+        android:name="com.example.watchout_frontend_kotlin.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action

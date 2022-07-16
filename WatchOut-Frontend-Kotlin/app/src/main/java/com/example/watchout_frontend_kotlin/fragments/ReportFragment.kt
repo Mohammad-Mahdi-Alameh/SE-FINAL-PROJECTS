@@ -1,4 +1,4 @@
-package com.example.watchout_frontend_kotlin
+package com.example.watchout_frontend_kotlin.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -7,8 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.example.watchout_frontend_kotlin.R
 import com.example.watchout_frontend_kotlin.api.RestApiService
-import com.example.watchout_frontend_kotlin.model.ReportInfo
+import com.example.watchout_frontend_kotlin.models.ReportInfo
 
 
 class ReportFragment : Fragment() , View.OnClickListener{

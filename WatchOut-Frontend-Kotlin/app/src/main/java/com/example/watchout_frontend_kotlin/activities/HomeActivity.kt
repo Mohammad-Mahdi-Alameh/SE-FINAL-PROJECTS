@@ -1,9 +1,10 @@
-package com.example.watchout_frontend_kotlin
+package com.example.watchout_frontend_kotlin.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.watchout_frontend_kotlin.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 //import kotlinx.android.synthetic.main.activity_home.*

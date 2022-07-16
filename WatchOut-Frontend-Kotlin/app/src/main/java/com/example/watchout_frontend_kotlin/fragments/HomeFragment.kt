@@ -1,4 +1,4 @@
-package com.example.watchout_frontend_kotlin
+package com.example.watchout_frontend_kotlin.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.example.watchout_frontend_kotlin.R
 
 
 class HomeFragment : Fragment() ,View.OnClickListener {

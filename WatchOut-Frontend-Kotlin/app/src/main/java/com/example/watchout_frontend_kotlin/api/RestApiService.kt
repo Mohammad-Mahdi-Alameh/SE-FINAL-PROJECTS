@@ -1,7 +1,7 @@
 package com.example.watchout_frontend_kotlin.api
 
 import android.util.Log
-import com.example.watchout_frontend_kotlin.model.*
+import com.example.watchout_frontend_kotlin.models.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
