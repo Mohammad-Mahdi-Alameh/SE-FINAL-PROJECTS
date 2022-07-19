@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.navigation.findNavController
@@ -106,6 +107,25 @@ class HomeActivity : AppCompatActivity() {
 
 
 
+            }
+        }
+    }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        //check if the request code matches the REQUEST_LOCATION
+        if (requestCode == HomeActivity.REQUEST_LOCATION)
+        {
+            //check if grantResults contains PERMISSION_GRANTED.If it does, call getCurrentLocation()
+            if (grantResults.size == 1 && grantResults[0] ==
+                PackageManager.PERMISSION_GRANTED) {
+                trackCurrentLocation()
+            } else {
+                Toast.makeText(applicationContext, "Location permission was denied", Toast.LENGTH_LONG).show()
             }
         }
     }
