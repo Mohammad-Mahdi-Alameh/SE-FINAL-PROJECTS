@@ -1,8 +1,10 @@
 package com.example.watchout_frontend_kotlin.activities
 
+import android.Manifest
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.watchout_frontend_kotlin.R
@@ -12,6 +14,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 
 class HomeActivity : AppCompatActivity() {
+    companion object {
+        private const val REQUEST_LOCATION = 1 //request code to identify specific permission request
+        private const val TAG = "HomeActivity" // for debugging
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -20,11 +27,11 @@ class HomeActivity : AppCompatActivity() {
         val navController = findNavController(R.id.fragment_container_view_tag)
         bottomNav.setupWithNavController(navController)
         //infras:Infrastructural problems
-        getNearInfras("29.46786", "-98.56586")
-    }
+        getNearInfras("29.46786","-98.56586")
+        }
 
 
-    private fun getNearInfras(latitude: String, longitude: String) {
+    private fun getNearInfras(latitude : String , longitude : String) {
         val apiService = RestApiService()
         val getNearInfrasInfo = GetNearInfrasInfo(
             base_latitude = latitude,
@@ -38,12 +45,18 @@ class HomeActivity : AppCompatActivity() {
                 Log.i("Error", "Error")
 
             }
-        }
-
     }
 
-    private fun showResult(data: String) {
-        Log.i("result", data)
+}
+    private fun showResult(data:String) {
+        Log.i("result",data)
+    }
+
+    private fun requestLocPermissions() {
+        ActivityCompat.requestPermissions(this,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), //permission in the manifest
+            REQUEST_LOCATION
+        )
     }
 
 }
