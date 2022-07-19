@@ -12,16 +12,19 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.watchout_frontend_kotlin.R
 import com.example.watchout_frontend_kotlin.api.RestApiService
 import com.example.watchout_frontend_kotlin.models.GetNearInfrasInfo
+import com.example.watchout_frontend_kotlin.models.LocationInfo
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var fusedLocClient: FusedLocationProviderClient
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private var dbReference: DatabaseReference = database.getReference("test")
     companion object {
         private const val REQUEST_LOCATION = 1 //request code to identify specific permission request
         private const val TAG = "HomeActivity" // for debugging
@@ -40,6 +43,8 @@ class HomeActivity : AppCompatActivity() {
 
         setupLocClient()
         trackCurrentLocation()
+        dbReference = Firebase.database.reference
+        dbReference.addValueEventListener(locListener)
         getNearInfras("29.46786","-98.56586")
 
         }
@@ -130,6 +135,34 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    private val locListener = object : ValueEventListener {
+        //     @SuppressLint("LongLogTag")
+        override fun onDataChange(snapshot: DataSnapshot) {
+            if(snapshot.exists()){
+                //get the exact longitude and latitude and speed from the database "test"
+                val location = snapshot.child("test").getValue(LocationInfo::class.java)
+                val locationLat = location?.latitude
+                val locationLong = location?.longitude
+                val speed = location?.speed
+                //trigger reading of location from database using the button
+                Log.i("lat", locationLat.toString())
+                Log.i("long", locationLong.toString())
+                Log.i("speed", speed.toString())
+//                getCurrentLocation()
+                    }
+                    else {
+                        // if location is null , log an error message
+                        Log.e(TAG, "user location cannot be found")
+                    }
+                }
 
+
+
+        // show this toast if there is an error while reading from the database
+        override fun onCancelled(error: DatabaseError) {
+            Toast.makeText(applicationContext, "Could not read from database", Toast.LENGTH_LONG).show()
+        }
+
+    }
 
 }
