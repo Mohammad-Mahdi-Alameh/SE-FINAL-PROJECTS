@@ -15,23 +15,12 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.watchout_frontend_kotlin.R
 import com.example.watchout_frontend_kotlin.api.RestApiService
 import com.example.watchout_frontend_kotlin.models.GetNearInfrasInfo
+import com.example.watchout_frontend_kotlin.others.Constants.REQUEST_LOCATION
 import com.example.watchout_frontend_kotlin.services.TrackingService
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 
 class HomeActivity : AppCompatActivity() {
-    private lateinit var fusedLocClient: FusedLocationProviderClient
-    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
-    private var dbReference: DatabaseReference = database.getReference("test")
-
-    companion object {
-        private const val REQUEST_LOCATION =
-            1 //request code to identify specific permission request
-        private const val TAG = "HomeActivity" // for debugging
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,7 +90,7 @@ class HomeActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         //check if the request code matches the REQUEST_LOCATION
-        if (requestCode == HomeActivity.REQUEST_LOCATION) {
+        if (requestCode == REQUEST_LOCATION) {
             //check if grantResults contains PERMISSION_GRANTED.If it does, call getCurrentLocation()
             if (grantResults.size == 1 && grantResults[0] ==
                 PackageManager.PERMISSION_GRANTED
