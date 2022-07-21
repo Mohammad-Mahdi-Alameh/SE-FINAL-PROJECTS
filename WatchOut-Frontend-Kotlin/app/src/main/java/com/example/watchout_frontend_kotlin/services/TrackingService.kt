@@ -1,6 +1,9 @@
 package com.example.watchout_frontend_kotlin.services
 
 import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -9,12 +12,16 @@ import android.location.Criteria
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import com.example.watchout_frontend_kotlin.activities.HomeActivity
 import com.example.watchout_frontend_kotlin.models.LocationInfo
+import com.example.watchout_frontend_kotlin.others.Constants.CHANNEL_ID
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -35,6 +42,7 @@ class TrackingService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        createNotificationChannel()
     }
 
 
@@ -120,6 +128,7 @@ class TrackingService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        showNotification()
 //        setupLocClient()
         trackCurrentLocation(this)
         dbReference = Firebase.database.reference
@@ -127,4 +136,41 @@ class TrackingService : Service() {
         return START_STICKY
     }
 
+
+    private fun showNotification() {
+
+        //It requires to create notification channel when android version is more than or equal to oreo
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel()
+        }
+
+        val notificationIntent = Intent(this, HomeActivity::class.java)
+
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            0, notificationIntent, PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle("Location Service")
+            .setContentText("WatchOut! is running")
+            .setContentIntent(pendingIntent)
+            .setOngoing(true)
+            .build()
+        startForeground(1, notification)
+    }
+
+    private fun createNotificationChannel() {
+        val serviceChannel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel(
+                CHANNEL_ID, "Location Service Channel",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+        } else {
+            TODO("VERSION.SDK_INT < O")
+        }
+        val manager = getSystemService(NotificationManager::class.java)
+        manager!!.createNotificationChannel(serviceChannel)
+
+    }
 }
