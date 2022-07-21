@@ -11,4 +11,7 @@
     <color name="textColor">#ECE5EC</color>
     <color name="pinkColor">#FF003B</color>
     <color name="transparentColor">#00FFFFFF</color>
+    <color name="purple">#792DC4</color>
+    <color name="cyan">#52DDB3</color>
+
 </resources>
