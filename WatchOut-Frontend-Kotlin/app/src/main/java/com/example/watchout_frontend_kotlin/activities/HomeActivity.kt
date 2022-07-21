@@ -2,11 +2,9 @@ package com.example.watchout_frontend_kotlin.activities
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Criteria
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -17,13 +15,11 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.watchout_frontend_kotlin.R
 import com.example.watchout_frontend_kotlin.api.RestApiService
 import com.example.watchout_frontend_kotlin.models.GetNearInfrasInfo
-import com.example.watchout_frontend_kotlin.models.LocationInfo
+import com.example.watchout_frontend_kotlin.services.TrackingService
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 
 class HomeActivity : AppCompatActivity() {
@@ -45,10 +41,7 @@ class HomeActivity : AppCompatActivity() {
         val navController = findNavController(R.id.fragment_container_view_tag)
         bottomNav.setupWithNavController(navController)
         //infras:Infrastructural problems
-        setupLocClient()
         trackCurrentLocation(this)
-        dbReference = Firebase.database.reference
-        dbReference.addValueEventListener(locListener)
         getNearInfras("29.46786", "-98.56586")
     }
 
@@ -65,49 +58,9 @@ class HomeActivity : AppCompatActivity() {
         ) {
             requestLocPermissions()
         } else {
-
+            startTrackingService(this)
             //Criteria class indicating the application criteria for selecting a location provider
-            val criteria = Criteria()
-            criteria.accuracy = Criteria.ACCURACY_FINE
-            criteria.isSpeedRequired = true
-            criteria.speedAccuracy = Criteria.ACCURACY_HIGH
 
-            val locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
-            val provider = locationManager.getBestProvider(criteria, true)
-
-            if (provider != null) {
-                locationManager.requestLocationUpdates(
-                    provider, 1, 0.1f, object : LocationListener {
-                        override fun onLocationChanged(location: Location) {
-                            val ref: DatabaseReference = database.getReference("test")
-                            if (location != null) {
-                                ref.setValue(location)
-                            } else {
-                                // if location is null , log an error message
-                                Log.e("error", "No location found")
-                            }
-
-
-                        }
-
-                        override fun onProviderDisabled(provider: String) {
-                            //Provider disabled
-                        }
-
-                        override fun onProviderEnabled(provider: String) {
-                            //Provider enabled
-                        }
-
-                        override fun onStatusChanged(
-                            provider: String?,
-                            status: Int,
-                            extras: Bundle?
-                        ) {
-
-                        }
-
-                    })
-            }
         }
     }
 
@@ -131,12 +84,6 @@ class HomeActivity : AppCompatActivity() {
 
     private fun showResult(data: String) {
         Log.i("result", data)
-    }
-
-
-    private fun setupLocClient() {
-        fusedLocClient =
-            LocationServices.getFusedLocationProviderClient(this)
     }
 
     private fun requestLocPermissions() {
@@ -170,35 +117,6 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private val locListener = object : ValueEventListener {
-        //     @SuppressLint("LongLogTag")
-        override fun onDataChange(snapshot: DataSnapshot) {
-            if (snapshot.exists()) {
-                //get the exact longitude and latitude and speed from the database "test"
-                val location = snapshot.child("test").getValue(LocationInfo::class.java)
-                val locationLat = location?.latitude
-                val locationLong = location?.longitude
-                val speed = location?.speed
-
-                //trigger reading of location from database using the button
-                Log.i("lat", locationLat.toString())
-                Log.i("long", locationLong.toString())
-                Log.i("speed", speed.toString())
-            } else {
-                // if location is null , log an error message
-                Log.e(TAG, "user location cannot be found")
-            }
-        }
-
-
-        // show this toast if there is an error while reading from the database
-        override fun onCancelled(error: DatabaseError) {
-            Toast.makeText(applicationContext, "Could not read from database", Toast.LENGTH_LONG)
-                .show()
-        }
-
-    }
-
     private fun getDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
         val theta = lon1 - lon2
         var dist = (Math.sin(deg2rad(lat1))
@@ -219,6 +137,17 @@ class HomeActivity : AppCompatActivity() {
 
     private fun rad2deg(rad: Double): Double {
         return rad * 180.0 / Math.PI
+    }
+    private fun startTrackingService(context: Context) {
+        val startServiceIntent = Intent(context, TrackingService::class.java)
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+            context.startForegroundService(startServiceIntent)
+        } else {
+            // Pre-O behavior.
+            context.startService(startServiceIntent)
+        }
+
     }
 
 }
