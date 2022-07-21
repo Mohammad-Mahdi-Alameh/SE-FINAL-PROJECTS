@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/purple"
-    tools:context=".activities.LoginActivity">
+    tools:context=".activities.MainActivity">
 
     <ImageView
         android:layout_marginTop="124dp"
@@ -15,5 +15,112 @@
         android:layout_gravity="center"
         android:src="@drawable/ic_pikaboo"
         />
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="25dp"
+        app:cardElevation="10dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="70dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        app:cardUseCompatPadding="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_purple"
+            >
 
+            <LinearLayout
+                android:id="@+id/logInLayout"
+                android:padding="20dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="9dp"
+                    android:src="@drawable/ic_signin"
+                    />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:hint="@string/user_name"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="9dp"
+                    app:hintTextColor="#4E4A4A"
+                    app:boxStrokeColor="@color/transparentColor"
+                    app:boxStrokeWidth="0dp"
+                    android:background="@drawable/rounded_corner_input"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:inputType="textPersonName"
+                        android:id="@+id/username"
+                        android:ems="10"
+                        android:textSize="13sp"
+                        android:textColor="@color/black"
+                        android:textStyle="normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:hint="@string/password"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    app:hintTextColor="#4E4A4A"
+                    app:boxStrokeColor="@color/transparentColor"
+                    app:boxStrokeWidth="0dp"
+                    android:background="@drawable/rounded_corner_input"
+                    app:endIconMode="password_toggle"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                  >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:inputType="textPassword"
+                        android:id="@+id/password"
+                        android:ems="10"
+                        android:textSize="13sp"
+                        android:textColor="@color/black"
+                        android:textStyle="normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn"
+                android:text="SIGN IN"
+                android:textSize="20sp"
+                android:fontFamily="@font/inter_extrabold"
+                android:padding="5sp"
+                android:textAllCaps="false"
+                android:elevation="15dp"
+                android:gravity="center"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"
+                android:textColor="@color/textColor"
+                android:layout_gravity="center"
+                app:shapeAppearanceOverlay="@style/Button_b"
+                app:backgroundTint="@color/cyan"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </LinearLayout>
