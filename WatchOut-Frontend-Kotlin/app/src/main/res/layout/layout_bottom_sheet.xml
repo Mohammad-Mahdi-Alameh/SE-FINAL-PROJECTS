@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bottom_sheet_background"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/peekaboo"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Report A Problem"
+        android:textColor="@color/black"
+        android:textFontWeight="900"
+        android:textSize="18sp" />
+
+
+
+</LinearLayout>
