@@ -42,7 +42,26 @@
                 android:textFontWeight="900"
                 android:textSize="17dp" />
 
-
+            <Button
+                android:id="@+id/okay_btn"
+                android:layout_width="127dp"
+                android:layout_height="57dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="25dp"
+                android:elevation="15dp"
+                android:fontFamily="@font/inter_extrabold"
+                android:textFontWeight="900"
+                android:gravity="center"
+                android:padding="7sp"
+                android:text="OKAY"
+                android:textAllCaps="false"
+                android:textColor="@color/textColor"
+                android:textSize="20sp"
+                app:backgroundTint="@color/cyan"
+                app:shapeAppearanceOverlay="@style/Button_b" />
 
         </RelativeLayout>
 
