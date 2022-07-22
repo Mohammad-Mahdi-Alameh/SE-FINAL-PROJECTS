@@ -1,9 +1,18 @@
 package com.example.watchout_frontend_kotlin.activities
 
+import android.Manifest
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.example.watchout_frontend_kotlin.R
 import com.example.watchout_frontend_kotlin.databinding.ActivityMapsBinding
+import com.example.watchout_frontend_kotlin.others.Constants
+import com.example.watchout_frontend_kotlin.services.TrackingService
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -26,6 +35,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        trackCurrentLocation(this)
+
     }
 
     /**
@@ -45,4 +56,64 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
+    private fun startTrackingService(context: Context) {
+        val startServiceIntent = Intent(context, TrackingService::class.java)
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+            context.startForegroundService(startServiceIntent)
+        } else {
+            // Pre-O behavior.
+            context.startService(startServiceIntent)
+        }
+
+    }
+    private fun trackCurrentLocation(context: Context?) {
+
+        //Check all location permission granted or not
+        if (ActivityCompat.checkSelfPermission(
+                context!!,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestLocPermissions()
+        } else {
+            startTrackingService(this)
+            //Criteria class indicating the application criteria for selecting a location provider
+
+        }
+    }
+    private fun requestLocPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), //permission in the manifest
+            Constants.REQUEST_LOCATION
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        //check if the request code matches the REQUEST_LOCATION
+        if (requestCode == Constants.REQUEST_LOCATION) {
+            //check if grantResults contains PERMISSION_GRANTED.If it does, call getCurrentLocation()
+            if (grantResults.size == 1 && grantResults[0] ==
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                trackCurrentLocation(this)
+            } else {
+                Toast.makeText(
+                    applicationContext,
+                    "Location permission was denied",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
+
 }

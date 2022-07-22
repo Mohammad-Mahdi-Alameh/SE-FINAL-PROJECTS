@@ -1,6 +1,7 @@
 package com.example.watchout_frontend_kotlin.services
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -46,6 +47,12 @@ class TrackingService : Service() {
     }
 
 
+    @SuppressLint("MissingPermission")
+    //although permission is given and everything is perfect and its working fine
+    // (compiling, running, building, and tracking)
+    // but there is a chunk in the following function staying red
+    // which bothers me I alot so added this supressLint
+    // to just remove the red color and we can remove it and everything will stay perfect
     private fun trackCurrentLocation(context: Context?) {
 
         if (ActivityCompat.checkSelfPermission(
