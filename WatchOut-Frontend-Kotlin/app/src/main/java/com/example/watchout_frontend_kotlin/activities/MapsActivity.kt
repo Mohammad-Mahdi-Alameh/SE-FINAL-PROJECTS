@@ -18,11 +18,14 @@ import com.example.watchout_frontend_kotlin.databinding.ActivityMapsBinding
 import com.example.watchout_frontend_kotlin.models.LocationInfo
 import com.example.watchout_frontend_kotlin.others.Constants
 import com.example.watchout_frontend_kotlin.services.TrackingService
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -138,6 +141,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
 
+                if (locationLat != null && locationLong!= null) {
+                    // create a LatLng object from location
+                    val latLng = LatLng(locationLat, locationLong)
+                    //create a marker at the read location and display it on the map
+                   mMap.addMarker(MarkerOptions().position(latLng)
+                       .icon(bitmapFromVector(applicationContext, R.drawable.ic_tracker)))
+                    //specify how the map camera is updated
+                    val update = CameraUpdateFactory.newLatLngZoom(latLng, 16.0f)
+                    //update the camera with the CameraUpdate object
+                    mMap.moveCamera(update)
+                }
+                else {
+                    // if location is null , log an error message
+                    Log.e("Error", "user location cannot be found")
+                }
             } else {
                 // if location is null , log an error message
                 Log.e("Error", "user location cannot be found")
