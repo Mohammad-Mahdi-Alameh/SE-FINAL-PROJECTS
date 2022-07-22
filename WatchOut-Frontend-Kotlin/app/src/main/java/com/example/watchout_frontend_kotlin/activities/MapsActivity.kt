@@ -9,11 +9,14 @@ import android.graphics.Canvas
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -49,8 +52,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         trackCurrentLocation(this)
         val report = findViewById<Button>(R.id.report_btn)
@@ -69,6 +71,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             bottomSheetDialog.show()
         }
 
+
+
+    }
+    private fun popupAlertDialog(){
+        val view = View.inflate(this,R.layout.alert_dialog,null)
+        val builder = AlertDialog.Builder(this)
+        builder.setView(view)
+
+        val popupDialog = builder.create()
+        popupDialog.show()
+        popupDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        popupDialog.window?.setGravity(Gravity.CENTER)
+        popupDialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+        popupDialog.window?.setLayout(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT)
+        popupDialog.setCancelable(false)
+        view.findViewById<View>(R.id.okay_btn).setOnClickListener{
+            popupDialog.dismiss()
+        }
+        popupDialog.show()
     }
 
     /**
