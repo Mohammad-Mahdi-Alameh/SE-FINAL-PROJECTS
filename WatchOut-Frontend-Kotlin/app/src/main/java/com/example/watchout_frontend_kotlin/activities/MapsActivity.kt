@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -61,6 +62,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 R.layout.layout_bottom_sheet,
                 findViewById<LinearLayout>(R.id.bottomSheet)
             )
+            bottomSheetView.findViewById<View>(R.id.cancel_btn).setOnClickListener {
+                bottomSheetDialog.dismiss()
+            }
             bottomSheetDialog.setContentView(bottomSheetView)
             bottomSheetDialog.show()
         }
