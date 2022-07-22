@@ -30,7 +30,7 @@
             android:text="Register"
             android:textColor="@color/white"
             android:textFontWeight="900"
-            android:textSize="30dp" />
+            android:textSize="30sp" />
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="5dp"
         app:cardCornerRadius="25dp"
         app:cardElevation="10dp"
@@ -208,6 +208,35 @@
                 app:shapeAppearanceOverlay="@style/Button_b" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginBottom="2dp"
+
+        android:layout_marginTop="170dp">
+
+        <TextView
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:fontFamily="@font/peekaboo"
+            android:text="Already have an account ?"
+            android:textColor="@color/white">
+        </TextView>
+        <TextView
+            android:id="@+id/navigateToLogin"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textFontWeight="900"
+            android:fontFamily="@font/peekaboo"
+            android:text="Login"
+            android:textColor="@color/cyan">
+        </TextView>
+
+    </LinearLayout>
 
 
 </LinearLayout>
