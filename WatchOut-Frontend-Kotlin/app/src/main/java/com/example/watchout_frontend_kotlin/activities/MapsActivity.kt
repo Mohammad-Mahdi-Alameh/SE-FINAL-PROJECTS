@@ -6,11 +6,13 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.watchout_frontend_kotlin.R
 import com.example.watchout_frontend_kotlin.databinding.ActivityMapsBinding
+import com.example.watchout_frontend_kotlin.models.LocationInfo
 import com.example.watchout_frontend_kotlin.others.Constants
 import com.example.watchout_frontend_kotlin.services.TrackingService
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -19,11 +21,16 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
+    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private var dbReference: DatabaseReference = database.getReference("Live-Tracking")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +62,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val sydney = LatLng(-34.0, 151.0)
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        dbReference = Firebase.database.reference
+        dbReference.addValueEventListener(locListener)
+
     }
     private fun startTrackingService(context: Context) {
         val startServiceIntent = Intent(context, TrackingService::class.java)
@@ -115,5 +125,37 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
+
+    private val locListener = object : ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            if (snapshot.exists()) {
+                //get the exact longitude and latitude and speed from the database "Live Tracking"
+                val location = snapshot.child("Live-Tracking").getValue(LocationInfo::class.java)
+                val locationLat = location?.latitude
+                val locationLong = location?.longitude
+                val speed = location?.speed
+
+                Log.i("lat", locationLat.toString())
+                Log.i("long", locationLong.toString())
+                Log.i("speed", speed.toString())
+
+
+
+
+            } else {
+                // if location is null , log an error message
+                Log.e("Error", "user location cannot be found")
+            }
+        }
+
+
+        // show this toast if there is an error while reading from the database
+        override fun onCancelled(error: DatabaseError) {
+            Toast.makeText(applicationContext, "Could not read from database", Toast.LENGTH_LONG)
+                .show()
+        }
+
+    }
+
 
 }
