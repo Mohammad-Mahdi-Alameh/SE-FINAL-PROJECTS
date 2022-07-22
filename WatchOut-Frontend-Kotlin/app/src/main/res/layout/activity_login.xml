@@ -137,6 +137,7 @@
             android:textColor="@color/white">
         </TextView>
         <TextView
+            android:id="@+id/navigateToRegister"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:textSize="15dp"
