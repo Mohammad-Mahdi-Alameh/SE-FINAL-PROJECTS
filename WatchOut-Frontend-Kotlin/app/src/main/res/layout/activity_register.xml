@@ -123,7 +123,7 @@
                     app:hintTextColor="#4E4A4A">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/username"
+                        android:id="@+id/new_username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
@@ -188,7 +188,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btn"
+                android:id="@+id/register_btn"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
