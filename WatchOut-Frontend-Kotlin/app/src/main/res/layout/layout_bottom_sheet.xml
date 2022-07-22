@@ -106,6 +106,25 @@
         android:layout_marginTop="10dp"
         android:background="@color/colorDividerView" />
 
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="15dp"
+        android:elevation="15dp"
+        android:fontFamily="@font/inter_extrabold"
+        android:gravity="center"
+        android:padding="5sp"
+        android:text="CANCEL"
+        android:textAllCaps="false"
+        android:textColor="@color/textColor"
+        android:textSize="20sp"
+        app:backgroundTint="@color/cyan"
+        app:shapeAppearanceOverlay="@style/Button_b" />
 
 
 </LinearLayout>
