@@ -9,6 +9,9 @@ import android.graphics.Canvas
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -26,6 +29,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -48,6 +52,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         trackCurrentLocation(this)
+        val report = findViewById<Button>(R.id.report_btn)
+        report.setOnClickListener {
+            val bottomSheetDialog = BottomSheetDialog(
+                this, R.style.BottomSheetDialogTheme
+            )
+            val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
+                R.layout.layout_bottom_sheet,
+                findViewById<LinearLayout>(R.id.bottomSheet)
+            )
+            bottomSheetDialog.setContentView(bottomSheetView)
+            bottomSheetDialog.show()
+        }
 
     }
 
@@ -66,6 +82,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         dbReference.addValueEventListener(locListener)
 
     }
+
     private fun startTrackingService(context: Context) {
         val startServiceIntent = Intent(context, TrackingService::class.java)
 
@@ -77,6 +94,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
     }
+
     private fun trackCurrentLocation(context: Context?) {
 
         //Check all location permission granted or not
@@ -95,6 +113,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         }
     }
+
     private fun requestLocPermissions() {
         ActivityCompat.requestPermissions(
             this,
@@ -141,18 +160,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
 
-                if (locationLat != null && locationLong!= null) {
+                if (locationLat != null && locationLong != null) {
                     // create a LatLng object from location
                     val latLng = LatLng(locationLat, locationLong)
                     //create a marker at the read location and display it on the map
-                   mMap.addMarker(MarkerOptions().position(latLng)
-                       .icon(bitmapFromVector(applicationContext, R.drawable.ic_tracker)))
+                    mMap.addMarker(
+                        MarkerOptions().position(latLng)
+                            .icon(bitmapFromVector(applicationContext, R.drawable.ic_tracker))
+                    )
                     //specify how the map camera is updated
                     val update = CameraUpdateFactory.newLatLngZoom(latLng, 16.0f)
                     //update the camera with the CameraUpdate object
                     mMap.moveCamera(update)
-                }
-                else {
+                } else {
                     // if location is null , log an error message
                     Log.e("Error", "user location cannot be found")
                 }
@@ -170,6 +190,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
     }
+
     private fun bitmapFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
         // below line is use to generate a drawable.
         val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)

@@ -14,5 +14,6 @@
     <color name="purple">#792DC4</color>
     <color name="cyan">#52DDB3</color>
     <color name="light_purple">#CC792DC4</color>
+    <color name="colorDividerView">#ECECEC</color>
 
 </resources>
