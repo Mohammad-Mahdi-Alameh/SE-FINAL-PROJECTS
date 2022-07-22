@@ -56,6 +56,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
     implementation 'androidx.work:work-runtime-ktx:2.7.0'
+    implementation 'com.github.Shashank02051997:FancyGifDialog-Android:1.4'
     //Retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
