@@ -16,6 +16,33 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/background_dialog">
 
+            <TextView
+                android:id="@+id/text_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="140dp"
+                android:fontFamily="@font/peekaboo"
+                android:text="Congratulations !"
+                android:textColor="@color/cyan"
+                android:textFontWeight="900"
+                android:textSize="17dp" />
+
+            <TextView
+                android:id="@+id/text_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="40dp"
+                android:fontFamily="@font/peekaboo"
+                android:text="Five coins were added to your account !"
+                android:textColor="@color/white"
+                android:textFontWeight="900"
+                android:textSize="17dp" />
+
+
 
         </RelativeLayout>
 
