@@ -18,14 +18,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WatchOutFrontendKotlin"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".activities.ProfileActivity"
-            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
 
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.MapsActivity"
             android:exported="false"
