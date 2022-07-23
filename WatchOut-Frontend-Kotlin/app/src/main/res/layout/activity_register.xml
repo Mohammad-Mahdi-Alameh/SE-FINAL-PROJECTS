@@ -27,7 +27,7 @@
             android:layout_marginRight="97dp"
             android:fontFamily="@font/peekaboo"
             android:gravity="center"
-            android:text="Register"
+            android:text="REGISTER"
             android:textColor="@color/white"
             android:textFontWeight="900"
             android:textSize="30sp" />
