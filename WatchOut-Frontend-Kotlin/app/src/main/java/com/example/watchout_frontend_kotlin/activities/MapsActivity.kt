@@ -12,11 +12,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.example.watchout_frontend_kotlin.R
 import com.example.watchout_frontend_kotlin.databinding.ActivityMapsBinding
 import com.example.watchout_frontend_kotlin.models.LocationInfo
@@ -40,14 +43,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
+    private  lateinit var drawerLayout: DrawerLayout
+    private  lateinit var hamburger: ImageView
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var dbReference: DatabaseReference = database.getReference("Live-Tracking")
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        hamburger=findViewById(R.id.hamburger_btn)
+        drawerLayout=findViewById(R.id.drawer_layout)
+        hamburger.setOnClickListener{
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -86,10 +94,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             bottomSheetDialog.show()
         }
 
-
-
     }
-
 
     /**
      * Manipulates the map once available.
