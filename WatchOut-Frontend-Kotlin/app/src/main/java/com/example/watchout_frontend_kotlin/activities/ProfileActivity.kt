@@ -21,7 +21,20 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
+    private fun pickImageGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        if (ActivityCompat.checkSelfPermission(
+                this!!,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestStoragePermissions()
+        } else {
+        startActivityForResult(intent, IMAGE_REQUEST_CODE)
 
+        }
+    }
     private fun requestStoragePermissions() {
         ActivityCompat.requestPermissions(
             this,
@@ -41,6 +54,7 @@ class ProfileActivity : AppCompatActivity() {
             if (grantResults.size == 1 && grantResults[0] ==
                 PackageManager.PERMISSION_GRANTED
             ) {
+                pickImageGallery()
             } else {
                 Toast.makeText(
                     applicationContext,
