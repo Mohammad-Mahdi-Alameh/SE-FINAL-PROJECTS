@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="60dp"
+        android:layout_marginBottom="30dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -39,4 +40,31 @@
             android:layout_gravity="center"
             android:src="@drawable/ic_baseline_menu_24"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/profile_photo"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/ic_profile"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="10dp"
+            app:civ_shadow="true"
+            android:layout_marginLeft="40dp"
+            app:civ_shadow_radius="10dp"
+            app:civ_shadow_color="@color/black"/>
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="70dp"
+            android:layout_gravity="bottom"
+            android:src="@drawable/ic_edit"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+
+</LinearLayout>
 </LinearLayout>

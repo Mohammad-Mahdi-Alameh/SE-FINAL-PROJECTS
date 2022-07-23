@@ -71,4 +71,8 @@ dependencies {
     //GoogleMaps
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
 
+    //ImageCircularView
+    implementation 'com.mikhaellopez:circularimageview:4.3.0'
+
+
 }
