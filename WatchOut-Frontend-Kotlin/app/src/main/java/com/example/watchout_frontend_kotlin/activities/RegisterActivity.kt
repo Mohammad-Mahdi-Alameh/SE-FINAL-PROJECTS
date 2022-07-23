@@ -37,11 +37,12 @@ class RegisterActivity : AppCompatActivity() {
     private fun register() {
         val firstname = findViewById<EditText>(R.id.first_name).text.toString()
         val lastname = findViewById<EditText>(R.id.last_name).text.toString()
+        val phonenumber = findViewById<EditText>(R.id.phone_number).text.toString()
         val username = findViewById<EditText>(R.id.new_username).text.toString()
         val password = findViewById<EditText>(R.id.new_password).text.toString()
         val confirmPassword = findViewById<EditText>(R.id.confirm_password).text.toString()
-        if (firstname.isEmpty() || lastname.isEmpty() || username.isEmpty() || password.isEmpty() ||
-            confirmPassword.isEmpty()
+        if (firstname.isEmpty() || lastname.isEmpty() || phonenumber.isEmpty() ||
+            username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()
         ) {
             Toast.makeText(
                 applicationContext,
@@ -50,6 +51,15 @@ class RegisterActivity : AppCompatActivity() {
             )
                 .show()
         } else {
+            if (!phonenumber.all { char -> char.isDigit() }) {
+                Toast.makeText(
+                    applicationContext,
+                    "Phone number can contain only numbers !",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                return
+            }
             if (password != confirmPassword) {
                 Toast.makeText(
                     applicationContext,
@@ -57,11 +67,13 @@ class RegisterActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 )
                     .show()
+                return
             }
             val apiService = RestApiService()
             val signupInfo = SignupInfo(
                 firstname = firstname,
                 lastname = lastname,
+                phonenumber = phonenumber.toInt(),
                 username = username,
                 password = password,
                 c_password = confirmPassword
