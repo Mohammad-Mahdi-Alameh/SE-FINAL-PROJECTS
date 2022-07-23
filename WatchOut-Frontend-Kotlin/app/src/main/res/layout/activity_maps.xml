@@ -21,37 +21,51 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             android:background="@color/purple"
-            android:paddingTop="20dp"
             android:gravity="center"
             android:orientation="horizontal">
-            <Button
+
+            <ImageView
                 android:id="@+id/hamburger_btn"
-                android:layout_width="50dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="60dp"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="80dp"
                 android:background="@drawable/ic_baseline_menu_24" />
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="180dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="30dp"
                 android:gravity="center"
                 android:src="@drawable/ic_peekaboo" />
+
             <LinearLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:layout_marginRight="70dp"
                 android:orientation="horizontal">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="7dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_coin" />
+
+                <TextView
+                    android:id="@+id/coins"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/peekaboo"
+                    android:textFontWeight="900"
+                    android:textSize="25sp"
+                    android:text="0" />
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_coin" />
+
             </LinearLayout>
-
-
 
 
         </LinearLayout>
