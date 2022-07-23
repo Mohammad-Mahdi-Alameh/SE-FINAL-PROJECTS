@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="17dp"
         android:layout_marginEnd="5dp"
         app:cardCornerRadius="25dp"
         app:cardElevation="10dp"
@@ -76,7 +76,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/light_purple"
             android:orientation="vertical">
 
@@ -170,7 +170,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginBottom="9dp"
+                    android:layout_marginBottom="0dp"
                     android:background="@drawable/rounded_corner_input"
                     android:hint="Edit your username"
                     app:boxStrokeColor="@color/transparentColor"
@@ -193,7 +193,45 @@
 
             </LinearLayout>
 
-
+            <Button
+                android:id="@+id/register_btn"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="10dp"
+                android:elevation="15dp"
+                android:fontFamily="@font/inter_extrabold"
+                android:gravity="center"
+                android:padding="5sp"
+                android:text="EDIT PASSWORD"
+                android:textAllCaps="false"
+                android:textColor="@color/textColor"
+                android:textSize="15sp"
+                app:backgroundTint="@color/cyan"
+                app:shapeAppearanceOverlay="@style/Button_b" />
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
+    <Button
+        android:id="@+id/update"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="15dp"
+        android:elevation="15dp"
+        android:fontFamily="@font/inter_extrabold"
+        android:gravity="center"
+        android:padding="5sp"
+        android:text="SAVE"
+        android:textAllCaps="false"
+        android:textColor="@color/textColor"
+        android:textSize="20sp"
+        app:backgroundTint="@color/cyan"
+        app:shapeAppearanceOverlay="@style/Button_b" />
 </LinearLayout>
