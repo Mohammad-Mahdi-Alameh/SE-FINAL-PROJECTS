@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottomSheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bottom_sheet_background"
     android:orientation="vertical">
 
@@ -12,54 +12,45 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/peekaboo"
         android:gravity="center"
-        android:padding="10dp"
+        android:padding="15dp"
         android:text="Report A Problem"
         android:textColor="@color/black"
         android:textFontWeight="900"
-        android:textSize="18sp" />
+        android:textSize="25sp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/colorDividerView" />
 
-    <LinearLayout
-        android:id="@+id/hole"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/purple"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal"
-        android:padding="5dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/peekaboo"
-            android:text="HOLE"
-            android:textColor="@color/white"
-            android:textFontWeight="900" />
-
-
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/bump"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/purple"
-        android:layout_marginBottom="20dp"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="17dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_bump_icon"></ImageView>
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:fontFamily="@font/peekaboo"
             android:text="HARD BUMP"
             android:textColor="@color/white"
-            android:textFontWeight="900" />
+            android:textFontWeight="900"
+            android:textSize="23sp" />
 
 
     </LinearLayout>
@@ -67,19 +58,61 @@
     <LinearLayout
         android:id="@+id/turn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/purple"
-        android:layout_marginBottom="20dp"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="17dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_turn_icon">
+
+        </ImageView>
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:fontFamily="@font/peekaboo"
             android:text="SHARP TURN"
             android:textColor="@color/white"
-            android:textFontWeight="900" />
+            android:textFontWeight="900"
+            android:textSize="23sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/hole"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/purple"
+        android:orientation="horizontal"
+        android:padding="17dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_hole_icon"></ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/peekaboo"
+            android:text="HOLE"
+            android:textColor="@color/white"
+            android:textFontWeight="900"
+            android:textSize="23sp" />
 
 
     </LinearLayout>
@@ -87,48 +120,55 @@
     <LinearLayout
         android:id="@+id/blockage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/purple"
-        android:layout_marginBottom="20dp"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="17dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_blockage_icon"></ImageView>
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:fontFamily="@font/peekaboo"
             android:text="BLOCKAGE"
             android:textColor="@color/white"
-            android:textFontWeight="900" />
+            android:textFontWeight="900"
+            android:textSize="23sp" />
 
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
         android:background="@color/colorDividerView" />
 
     <Button
         android:id="@+id/cancel_btn"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="15dp"
-        android:elevation="15dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/transparentColor"
         android:fontFamily="@font/inter_extrabold"
         android:gravity="center"
         android:padding="5sp"
         android:text="CANCEL"
-        android:textAllCaps="false"
-        android:textColor="@color/textColor"
-        android:textSize="20sp"
-        app:backgroundTint="@color/cyan"
-        app:shapeAppearanceOverlay="@style/Button_b" />
+        android:textColor="@color/black"
+        android:textFontWeight="900"
+        android:textSize="20sp" />
 
 
 </LinearLayout>
