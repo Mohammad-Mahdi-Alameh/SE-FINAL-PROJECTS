@@ -25,6 +25,7 @@
         android:background="@color/colorDividerView" />
 
     <LinearLayout
+        android:id="@+id/hole"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/purple"
@@ -44,6 +45,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/bump"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/purple"
@@ -63,6 +65,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/turn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/purple"
@@ -82,6 +85,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/blockage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/purple"
@@ -107,7 +111,7 @@
         android:background="@color/colorDividerView" />
 
     <Button
-        android:id="@+id/btn"
+        android:id="@+id/cancel_btn"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="center"

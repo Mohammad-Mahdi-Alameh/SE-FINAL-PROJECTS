@@ -67,6 +67,23 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             bottomSheetView.findViewById<View>(R.id.cancel_btn).setOnClickListener {
                 bottomSheetDialog.dismiss()
             }
+             bottomSheetView.findViewById<View>(R.id.bump).setOnClickListener {
+                bottomSheetDialog.dismiss()
+                 popupAlertDialog()
+            }
+             bottomSheetView.findViewById<View>(R.id.turn).setOnClickListener {
+                bottomSheetDialog.dismiss()
+                 popupAlertDialog()
+            }
+             bottomSheetView.findViewById<View>(R.id.hole).setOnClickListener {
+                bottomSheetDialog.dismiss()
+                 popupAlertDialog()
+             }
+             bottomSheetView.findViewById<View>(R.id.blockage).setOnClickListener {
+                bottomSheetDialog.dismiss()
+                 popupAlertDialog()
+            }
+
             bottomSheetDialog.setContentView(bottomSheetView)
             bottomSheetDialog.show()
         }
