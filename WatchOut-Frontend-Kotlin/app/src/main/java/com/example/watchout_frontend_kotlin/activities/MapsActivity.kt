@@ -9,14 +9,11 @@ import android.graphics.Canvas
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -24,6 +21,7 @@ import com.example.watchout_frontend_kotlin.R
 import com.example.watchout_frontend_kotlin.databinding.ActivityMapsBinding
 import com.example.watchout_frontend_kotlin.models.LocationInfo
 import com.example.watchout_frontend_kotlin.others.Constants
+import com.example.watchout_frontend_kotlin.others.popupAlertDialog
 import com.example.watchout_frontend_kotlin.services.TrackingService
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -69,19 +67,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
              bottomSheetView.findViewById<View>(R.id.bump).setOnClickListener {
                 bottomSheetDialog.dismiss()
-                 popupAlertDialog()
+                 popupAlertDialog(this,R.layout.alert_dialog)
             }
              bottomSheetView.findViewById<View>(R.id.turn).setOnClickListener {
                 bottomSheetDialog.dismiss()
-                 popupAlertDialog()
-            }
+                 popupAlertDialog(this,R.layout.alert_dialog)
+             }
              bottomSheetView.findViewById<View>(R.id.hole).setOnClickListener {
                 bottomSheetDialog.dismiss()
-                 popupAlertDialog()
+                 popupAlertDialog(this,R.layout.alert_dialog)
              }
              bottomSheetView.findViewById<View>(R.id.blockage).setOnClickListener {
                 bottomSheetDialog.dismiss()
-                 popupAlertDialog()
+                 popupAlertDialog(this,R.layout.alert_dialog)
             }
 
             bottomSheetDialog.setContentView(bottomSheetView)
@@ -91,23 +89,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
     }
-    private fun popupAlertDialog(){
-        val view = View.inflate(this,R.layout.alert_dialog,null)
-        val builder = AlertDialog.Builder(this)
-        builder.setView(view)
 
-        val popupDialog = builder.create()
-        popupDialog.show()
-        popupDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        popupDialog.window?.setGravity(Gravity.CENTER)
-        popupDialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
-        popupDialog.window?.setLayout(ActionBar.LayoutParams.WRAP_CONTENT,ActionBar.LayoutParams.WRAP_CONTENT)
-        popupDialog.setCancelable(false)
-        view.findViewById<View>(R.id.okay_btn).setOnClickListener{
-            popupDialog.dismiss()
-        }
-        popupDialog.show()
-    }
 
     /**
      * Manipulates the map once available.
