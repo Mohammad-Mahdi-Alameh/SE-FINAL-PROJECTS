@@ -120,4 +120,14 @@ class UserController extends Controller
         ], Response::HTTP_OK);
 
 }
+
+    public function falseAlarm($infra_id){
+        $infra = InfrastructuralProblem::findOrFail($infra_id);
+        $infra->false_alarms +=1;
+        $infra->save();
+        return response()->json([
+            'message' => 'added successfully',
+        ], Response::HTTP_OK);
+
+}
 }
