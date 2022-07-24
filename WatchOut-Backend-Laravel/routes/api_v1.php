@@ -19,6 +19,8 @@ Route::group(['prefix' => 'user'] , function(){
 
         Route::get('/getAllInfras/{user_id?}', [UserController::class, 'getAllInfras']);
 
+        Route::get('/addCoins/{user_id?}', [UserController::class, 'addCoins']);
+
         Route::post('/report', [UserController::class, 'report']);
 
         Route::post('/logout', [JWTAuthController::class, 'logout']);

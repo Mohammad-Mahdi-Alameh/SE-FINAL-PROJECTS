@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\User;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\InfrastructuralProblem;
 use App\Models\Type;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
@@ -11,7 +12,12 @@ use Validator;
 
 class UserController extends Controller
 {
-     public function report(Request $request)
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => []]);
+    }
+
+    public function report(Request $request)
     {
 
 
@@ -105,5 +111,13 @@ class UserController extends Controller
 
     }
 
+    public function addCoins($user_id){
+        $user = User::findOrFail($user_id);
+        $user->balance +=5;
+        $user->save();
+        return response()->json([
+            'message' => 'added successfully',
+        ], Response::HTTP_OK);
 
+}
 }
