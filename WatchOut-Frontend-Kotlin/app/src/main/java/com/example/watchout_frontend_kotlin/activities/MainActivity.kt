@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.watchout_frontend_kotlin.R
+import com.example.watchout_frontend_kotlin.others.logIn
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,12 +29,11 @@ class MainActivity : AppCompatActivity() {
         signin_btn.setOnClickListener {
             val username = findViewById<EditText>(R.id.username).text.toString()
             val password = findViewById<EditText>(R.id.password).text.toString()
-            //login function isn't called for testing reasons only
-            // logIn(username,password,this)
+            logIn(username, password, this)
         }
     }
 
-    private fun checkToken(){
+    private fun checkToken() {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         val token = sharedPref.getString("token", "")
         if (token?.isEmpty() == false) {
