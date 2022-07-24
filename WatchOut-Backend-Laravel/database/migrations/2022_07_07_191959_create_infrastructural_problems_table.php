@@ -15,11 +15,14 @@ class CreateInfrastructuralProblemsTable extends Migration
     {
         Schema::create('infrastructural_problems', function (Blueprint $table) {
             $table->id();
-            $table->string('latitude');
-            $table->string('longitude');
+            $table->double('latitude');
+            $table->double('longitude');
             $table->integer('is_fixed');
+            $table->integer('false_alarms');
             $table->unsignedBigInteger('type_id');
             $table->foreign('type_id')->references('id')->on('types');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
