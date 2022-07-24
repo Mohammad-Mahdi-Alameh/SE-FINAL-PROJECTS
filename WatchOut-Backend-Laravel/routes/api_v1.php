@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Auth\JWTAuthController;
 use App\Http\Controllers\Api\V1\User\UserController;
+use App\Http\Controllers\Api\V1\Common\CommonController;
 use App\Http\Controllers\Api\V1\Admin\AdminController;
 
 
@@ -15,11 +16,11 @@ Route::post('/login', [JWTAuthController::class, 'login']);
 
 Route::group(['middleware' => 'api'], function($router) {
 
+    Route::get('/get_all_infras/{user_id?}', [CommonController::class, 'getAllInfras']);
+
     Route::group(['prefix' => 'user'] , function(){
 
         Route::post('/get_near_infras', [UserController::class, 'getNearInfras']);   //infras :infrastructural problems
-
-        Route::get('/get_all_infras/{user_id?}', [UserController::class, 'getAllInfras']);
 
         Route::put('/add_coins/{user_id}', [UserController::class, 'addCoins']);
 
