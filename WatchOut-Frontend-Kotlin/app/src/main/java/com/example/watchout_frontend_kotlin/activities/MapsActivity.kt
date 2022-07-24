@@ -132,6 +132,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val editor: SharedPreferences.Editor = sharedPref.edit()
         editor.clear()
         editor.commit()
+        stopTrackingService(this)
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
@@ -172,6 +173,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             context.startService(startServiceIntent)
         }
 
+    }
+
+    private fun stopTrackingService(context: Context) {
+        val stopServiceIntent = Intent(context, TrackingService::class.java)
+        context.stopService(stopServiceIntent)
     }
 
     private fun trackCurrentLocation(context: Context?) {
