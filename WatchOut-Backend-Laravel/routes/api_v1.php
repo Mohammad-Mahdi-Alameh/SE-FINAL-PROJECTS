@@ -35,6 +35,8 @@ Route::group(['middleware' => 'api'], function($router) {
     Route::group(['prefix' => 'admin'] , function(){
        
         Route::put('/fix_infra/{infra_id}', [AdminController::class, 'fixInfra']);
+        
+        Route::put('/delete_user/{user_id}', [AdminController::class, 'deleteInfra']);
 
     });
 

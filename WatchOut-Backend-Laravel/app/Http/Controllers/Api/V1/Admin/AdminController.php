@@ -16,4 +16,12 @@ class AdminController extends Controller
             'message' => 'Deleted successfully ',
         ], Response::HTTP_OK);
     }
+    public function deleteUser($user_id){
+        $user = User::findOrFail($user_id);
+        $user->delete();
+        
+        return response()->json([
+            'message' => 'Deleted successfully ',
+        ], Response::HTTP_OK);
+    }
 }
