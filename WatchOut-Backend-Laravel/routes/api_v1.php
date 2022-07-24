@@ -4,16 +4,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Auth\JWTAuthController;
 use App\Http\Controllers\Api\V1\User\UserController;
+use App\Http\Controllers\Api\V1\Admin\AdminController;
 
 
 
-Route::group(['prefix' => 'user'] , function(){
+Route::post('/signup', [JWTAuthController::class, 'signup']);
 
-    Route::post('/signup', [JWTAuthController::class, 'signup']);
+Route::post('/login', [JWTAuthController::class, 'login']);
 
-    Route::post('/login', [JWTAuthController::class, 'login']);
 
-    Route::group(['middleware' => 'api'], function($router) {
+Route::group(['middleware' => 'api'], function($router) {
+
+    Route::group(['prefix' => 'user'] , function(){
 
         Route::post('/get_near_infras', [UserController::class, 'getNearInfras']);   //infras :infrastructural problems
 
@@ -29,4 +31,12 @@ Route::group(['prefix' => 'user'] , function(){
 
         Route::post('/logout', [JWTAuthController::class, 'logout']);
     });
+
+    Route::group(['prefix' => 'admin'] , function(){
+       
+        Route::put('/fix_infra/{infra_id}', [AdminController::class, 'fixInfra']);
+
+    });
+
 });
+

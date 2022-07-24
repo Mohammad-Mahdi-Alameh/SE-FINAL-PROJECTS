@@ -8,5 +8,12 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-  
+    public function fixInfra($infra_id){
+        $infra = InfrastructuralProblem::findOrFail($infra_id);
+        $infra->delete();
+        
+        return response()->json([
+            'message' => 'Deleted successfully ',
+        ], Response::HTTP_OK);
+    }
 }
