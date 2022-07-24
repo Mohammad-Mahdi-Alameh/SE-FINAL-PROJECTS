@@ -16,15 +16,21 @@ import com.mikhaellopez.circularimageview.CircularImageView
 class ProfileActivity : AppCompatActivity() {
     private lateinit var profilePhoto: CircularImageView
     private lateinit var setPhoto: ImageView
+    private lateinit var backArrow: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         profilePhoto = findViewById(R.id.profile_photo)
+        backArrow = findViewById(R.id.back_arrow)
         profilePhoto.setOnClickListener {
             pickImageGallery()
         }
         setPhoto.setOnClickListener {
             pickImageGallery()
+        }
+        backArrow.setOnClickListener {
+            startActivity(Intent(this,MapsActivity::class.java))
+            finish()
         }
 
     }
