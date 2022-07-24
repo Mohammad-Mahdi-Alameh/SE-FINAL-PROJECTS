@@ -36,7 +36,7 @@ class JWTAuthController extends Controller
         $validator = Validator::make($request->all(), [
             'firstname' => 'required|string|min:2|max:100',
             'lastname' => 'required|string|min:2|max:100',
-            'phonenumber' => 'required|number',
+            'phonenumber' => 'required|integer',
             'username' => 'required|string|max:100|unique:users',
             'password' => 'required|string|min:6',
             'c_password' => 'required|same:password',
@@ -51,6 +51,8 @@ class JWTAuthController extends Controller
 
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
+        $user->phonenumber = $request->phonenumber;
+        $user->picture = "";
         $user->username = $request->username;
         $user->password = bcrypt( $request->password);
         $user->balance = 0;
@@ -65,6 +67,7 @@ class JWTAuthController extends Controller
         return response()->json([
             'message' => 'User successfully registered',
             'token' => $jwt_token,
+            'user_id' => $user->id
         ], Response::HTTP_OK);
     }
 
