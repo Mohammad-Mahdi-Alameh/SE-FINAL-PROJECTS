@@ -11,10 +11,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -43,17 +40,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
-    private  lateinit var drawerLayout: DrawerLayout
-    private  lateinit var hamburger: ImageView
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var hamburger: ImageView
+    private lateinit var coins: TextView
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var dbReference: DatabaseReference = database.getReference("Live-Tracking")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        hamburger=findViewById(R.id.hamburger_btn)
-        drawerLayout=findViewById(R.id.drawer_layout)
-        hamburger.setOnClickListener{
+        hamburger = findViewById(R.id.hamburger_btn)
+        coins = findViewById(R.id.coins)
+        drawerLayout = findViewById(R.id.drawer_layout)
+        hamburger.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
@@ -73,27 +72,41 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             bottomSheetView.findViewById<View>(R.id.cancel_btn).setOnClickListener {
                 bottomSheetDialog.dismiss()
             }
-             bottomSheetView.findViewById<View>(R.id.bump).setOnClickListener {
+            bottomSheetView.findViewById<View>(R.id.bump).setOnClickListener {
                 bottomSheetDialog.dismiss()
-                 popupAlertDialog(this,R.layout.alert_dialog)
+                popupAlertDialog(this, R.layout.alert_dialog)
+                addCoins()
             }
-             bottomSheetView.findViewById<View>(R.id.turn).setOnClickListener {
+            bottomSheetView.findViewById<View>(R.id.turn).setOnClickListener {
                 bottomSheetDialog.dismiss()
-                 popupAlertDialog(this,R.layout.alert_dialog)
-             }
-             bottomSheetView.findViewById<View>(R.id.hole).setOnClickListener {
+                popupAlertDialog(this, R.layout.alert_dialog)
+                addCoins()
+            }
+            bottomSheetView.findViewById<View>(R.id.hole).setOnClickListener {
                 bottomSheetDialog.dismiss()
-                 popupAlertDialog(this,R.layout.alert_dialog)
-             }
-             bottomSheetView.findViewById<View>(R.id.blockage).setOnClickListener {
+                popupAlertDialog(this, R.layout.alert_dialog)
+                addCoins()
+            }
+            bottomSheetView.findViewById<View>(R.id.blockage).setOnClickListener {
                 bottomSheetDialog.dismiss()
-                 popupAlertDialog(this,R.layout.alert_dialog)
+                popupAlertDialog(this, R.layout.alert_dialog)
+                addCoins()
             }
 
             bottomSheetDialog.setContentView(bottomSheetView)
             bottomSheetDialog.show()
         }
 
+    }
+
+    private fun addCoins() {
+        //to implement later :
+        // 1)store new value in shared preferences
+        // 2)call api to add it to database
+        // 3)pass userId as a parameter
+        var balance = coins.text.toString().toInt()
+        balance += 5
+        coins.text = balance.toString()
     }
 
     /**
