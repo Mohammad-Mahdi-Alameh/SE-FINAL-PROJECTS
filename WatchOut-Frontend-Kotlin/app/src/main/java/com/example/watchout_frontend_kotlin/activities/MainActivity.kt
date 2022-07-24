@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.watchout_frontend_kotlin.R
 import com.example.watchout_frontend_kotlin.api.RestApiService
 import com.example.watchout_frontend_kotlin.models.LoginInfo
+import com.example.watchout_frontend_kotlin.others.encryptAndSavePassword
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,7 +32,9 @@ class MainActivity : AppCompatActivity() {
 
         }
         signin_btn.setOnClickListener {
-            logIn()
+            val intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
@@ -60,6 +63,15 @@ class MainActivity : AppCompatActivity() {
                         this.getPreferences(Context.MODE_PRIVATE)
                     val editor: SharedPreferences.Editor = sharedPreferences.edit()
                     editor.putString("token", it.token)
+                    editor.putString("user_id", it.id.toString())
+                    editor.putString("firstname", it.firstname)
+                    editor.putString("lastname", it.lastname)
+                    editor.putString("phonenumber", it.phonenumber.toString())
+                    editor.putString("balance", it.balance.toString())
+                    editor.putString("picture", it.picture)
+                    editor.putString("username", username)
+                    encryptAndSavePassword(this,password) // password will be encrypted and saved in shared preferences
+                    editor.putString("token", it.token)
                     editor.apply()
                     editor.commit()
                 } else {
@@ -68,7 +80,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 
 }
 
