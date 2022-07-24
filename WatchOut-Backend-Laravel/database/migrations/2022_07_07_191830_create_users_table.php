@@ -17,10 +17,11 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('firstname');
             $table->string('lastname');
+            $table->integer('phonenumber');
+            $table->integer('balance');
             $table->string('username');
             $table->string('password');
-            $table->string('score');
-            $table->string('level');
+            $table->string('picture');
             $table->string('is_admin');
             $table->timestamps();
         });
