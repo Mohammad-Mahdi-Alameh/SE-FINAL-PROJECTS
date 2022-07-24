@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -41,6 +42,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
     private lateinit var hamburger: ImageView
     private lateinit var coins: TextView
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -55,6 +57,32 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         hamburger.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
+        navigationView = findViewById(R.id.nav_view)
+        navigationView.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
+            val id = item.itemId
+            drawerLayout.closeDrawer(GravityCompat.START)
+            when (id) {
+                R.id.edit_profile -> Toast.makeText(
+                    this,
+                    "Edit Profile is Clicked",
+                    Toast.LENGTH_SHORT
+                ).show()
+                R.id.history -> Toast.makeText(
+                    this,
+                    "Your Report History is Clicked",
+                    Toast.LENGTH_SHORT
+                ).show()
+                R.id.logout -> Toast.makeText(
+                    this,
+                    "Logout is Clicked",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                else -> return@OnNavigationItemSelectedListener true
+            }
+            true
+        })
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
