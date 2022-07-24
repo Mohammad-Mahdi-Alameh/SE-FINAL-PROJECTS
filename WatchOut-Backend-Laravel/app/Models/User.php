@@ -61,4 +61,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+    public function infrastructalProblems()
+    {
+        return $this->hasMany(Infrastructal_Problem::class);
+    }
 }
