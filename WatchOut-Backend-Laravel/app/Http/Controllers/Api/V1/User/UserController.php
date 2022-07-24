@@ -8,14 +8,8 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
-
-
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => []]);
-    }
 
     public function report(Request $request)
     {
@@ -130,4 +124,20 @@ class UserController extends Controller
         ], Response::HTTP_OK);
 
 }
+    public function editProfile(Request $request){
+
+        $user = User::findOrFail($request->user_id);
+        $user->firstname = $request ->firstname;
+        $user->lastname = $request ->lastname;
+        $user->phonenumber = $request ->phonenumber;
+        $user->picture = $request ->picture;
+        $user->username = $request ->username;
+        $user->password = bcrypt( $request->password);
+
+        $user->save();
+        return response()->json([
+            'message' => 'updated successfully',
+        ], Response::HTTP_OK);
+
+    }
 }

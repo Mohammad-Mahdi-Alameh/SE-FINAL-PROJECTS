@@ -22,6 +22,8 @@ Route::group(['prefix' => 'user'] , function(){
         Route::get('/addCoins/{user_id}', [UserController::class, 'addCoins']);
 
         Route::get('/falseAlarm/{infra_id}', [UserController::class, 'falseAlarm']);
+        
+        Route::put('/edit_profile', [UserController::class, 'editProfile']);
 
         Route::post('/report', [UserController::class, 'report']);
 
