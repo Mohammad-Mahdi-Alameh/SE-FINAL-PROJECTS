@@ -15,13 +15,13 @@ Route::group(['prefix' => 'user'] , function(){
 
     Route::group(['middleware' => 'api'], function($router) {
 
-        Route::post('/getNearInfras', [UserController::class, 'getNearInfras']);   //infras :infrastructural problems
+        Route::post('/get_near_infras', [UserController::class, 'getNearInfras']);   //infras :infrastructural problems
 
-        Route::get('/getAllInfras/{user_id?}', [UserController::class, 'getAllInfras']);
+        Route::get('/get_all_infras/{user_id?}', [UserController::class, 'getAllInfras']);
 
-        Route::get('/addCoins/{user_id}', [UserController::class, 'addCoins']);
+        Route::put('/add_coins/{user_id}', [UserController::class, 'addCoins']);
 
-        Route::get('/falseAlarm/{infra_id}', [UserController::class, 'falseAlarm']);
+        Route::put('/false_alarm/{infra_id}', [UserController::class, 'falseAlarm']);
         
         Route::put('/edit_profile', [UserController::class, 'editProfile']);
 
