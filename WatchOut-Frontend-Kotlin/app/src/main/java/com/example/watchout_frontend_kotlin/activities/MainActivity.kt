@@ -19,8 +19,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val register = findViewById<TextView>(R.id.navigateToRegister)
         val signin_btn = findViewById<Button>(R.id.signin_btn)
-        val username = findViewById<EditText>(R.id.username).text.toString()
-        val password = findViewById<EditText>(R.id.password).text.toString()
         register.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
@@ -28,6 +26,8 @@ class MainActivity : AppCompatActivity() {
 
         }
         signin_btn.setOnClickListener {
+            val username = findViewById<EditText>(R.id.username).text.toString()
+            val password = findViewById<EditText>(R.id.password).text.toString()
             //login function isn't called for testing reasons only
             // logIn(username,password,this)
         }
