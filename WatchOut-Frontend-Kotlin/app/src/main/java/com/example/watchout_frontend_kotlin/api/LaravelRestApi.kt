@@ -4,18 +4,15 @@ import com.example.watchout_frontend_kotlin.models.*
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.HeaderMap
-import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface LaravelRestApi {
 
-    @Headers("Content-Type: application/json")
     @POST("/api/v1/user/login")
-    fun logIn(@Body loginInfo: LoginInfo): Call<LoginResponse>
+    fun logIn(@HeaderMap authedHeaders: PublicHeaders,@Body loginInfo: LoginInfo): Call<LoginResponse>
 
-    @Headers("Content-Type: application/json")
     @POST("/api/v1/user/signup")
-    fun signUp(@Body signupInfo: SignupInfo): Call<SignupResponse>
+    fun signUp(@HeaderMap authedHeaders: PublicHeaders,@Body signupInfo: SignupInfo): Call<SignupResponse>
 
     @POST("/api/v1/user/report")
     fun report(@HeaderMap authedHeaders: AuthenticatedHeaders,@Body reportInfo: ReportInfo): Call<ReportResponse>

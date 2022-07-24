@@ -8,37 +8,54 @@ import retrofit2.Response
 
 class RestApiService {
 
-    fun login(loginInfo: LoginInfo, onResult: (LoginResponse?) -> Unit){
+    fun login(
+        authedHeaders: PublicHeaders,
+        loginInfo: LoginInfo,
+        onResult: (LoginResponse?) -> Unit
+    ) {
         val retrofit = ServiceBuilder.buildService(LaravelRestApi::class.java)
-        retrofit.logIn(loginInfo).enqueue(
+        retrofit.logIn(authedHeaders, loginInfo).enqueue(
             object : Callback<LoginResponse> {
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                    Log.i("error","error in getting response")
+                    Log.i("error", "error in getting response")
                     onResult(null)
                 }
-                override fun onResponse( call: Call<LoginResponse>, response: Response<LoginResponse>) {
+
+                override fun onResponse(
+                    call: Call<LoginResponse>,
+                    response: Response<LoginResponse>
+                ) {
                     val addedUser = response.body()
                     onResult(addedUser)
                     ////
                     if (response.code() == 400) {
                         response.errorBody()?.let { Log.e("error", it.string()) }
                     }
-                    Log.d("User",response.toString())
+                    Log.d("User", response.toString())
                 }
             }
         )
     }
-    fun signUp(signupInfo: SignupInfo, onResult: (SignupResponse?) -> Unit){
+
+    fun signUp(
+        authedHeaders: PublicHeaders,
+        signupInfo: SignupInfo,
+        onResult: (SignupResponse?) -> Unit
+    ) {
         val retrofit = ServiceBuilder.buildService(LaravelRestApi::class.java)
-        retrofit.signUp(signupInfo).enqueue(
+        retrofit.signUp(authedHeaders, signupInfo).enqueue(
             object : Callback<SignupResponse> {
                 override fun onFailure(call: Call<SignupResponse>, t: Throwable) {
-                    Log.i("error","error in getting response")
+                    Log.i("error", "error in getting response")
                     onResult(null)
                 }
-                override fun onResponse( call: Call<SignupResponse>, response: Response<SignupResponse>) {
+
+                override fun onResponse(
+                    call: Call<SignupResponse>,
+                    response: Response<SignupResponse>
+                ) {
                     val addedUser = response.body()
-                    Log.d("Added User",response.body().toString())
+                    Log.d("Added User", response.body().toString())
                     onResult(addedUser)
 
 
@@ -46,17 +63,26 @@ class RestApiService {
             }
         )
     }
-    fun report(authedHeaders: AuthenticatedHeaders,reportInfo: ReportInfo, onResult: (ReportResponse?) -> Unit){
+
+    fun report(
+        authedHeaders: AuthenticatedHeaders,
+        reportInfo: ReportInfo,
+        onResult: (ReportResponse?) -> Unit
+    ) {
         val retrofit = ServiceBuilder.buildService(LaravelRestApi::class.java)
-        retrofit.report(authedHeaders,reportInfo).enqueue(
+        retrofit.report(authedHeaders, reportInfo).enqueue(
             object : Callback<ReportResponse> {
                 override fun onFailure(call: Call<ReportResponse>, t: Throwable) {
-                    Log.i("error","error in getting response")
+                    Log.i("error", "error in getting response")
                     onResult(null)
                 }
-                override fun onResponse( call: Call<ReportResponse>, response: Response<ReportResponse>) {
+
+                override fun onResponse(
+                    call: Call<ReportResponse>,
+                    response: Response<ReportResponse>
+                ) {
                     val submittedReport = response.body()
-                    Log.d("Response",response.body().toString())
+                    Log.d("Response", response.body().toString())
                     onResult(submittedReport)
 
 
@@ -64,18 +90,27 @@ class RestApiService {
             }
         )
     }
+
     //infras:Infrastructural problems
-    fun getNearInfras(authedHeaders: AuthenticatedHeaders,getNearInfrasInfo: GetNearInfrasInfo, onResult: (List<GetInfrasResponse>?) -> Unit){
+    fun getNearInfras(
+        authedHeaders: AuthenticatedHeaders,
+        getNearInfrasInfo: GetNearInfrasInfo,
+        onResult: (List<GetInfrasResponse>?) -> Unit
+    ) {
         val retrofit = ServiceBuilder.buildService(LaravelRestApi::class.java)
-        retrofit.getNearInfras(authedHeaders,getNearInfrasInfo).enqueue(
+        retrofit.getNearInfras(authedHeaders, getNearInfrasInfo).enqueue(
             object : Callback<List<GetInfrasResponse>> {
                 override fun onFailure(call: Call<List<GetInfrasResponse>>, t: Throwable) {
-                    Log.d("error","error in getting response")
+                    Log.d("error", "error in getting response")
                     onResult(null)
                 }
-                override fun onResponse( call: Call<List<GetInfrasResponse>>, response: Response<List<GetInfrasResponse>>) {
+
+                override fun onResponse(
+                    call: Call<List<GetInfrasResponse>>,
+                    response: Response<List<GetInfrasResponse>>
+                ) {
                     val nearInfras = response.body()
-                    Log.d("Near Infras",response.toString())
+                    Log.d("Near Infras", response.toString())
                     onResult(nearInfras)
 
 
@@ -83,5 +118,4 @@ class RestApiService {
             }
         )
     }
-
 }
