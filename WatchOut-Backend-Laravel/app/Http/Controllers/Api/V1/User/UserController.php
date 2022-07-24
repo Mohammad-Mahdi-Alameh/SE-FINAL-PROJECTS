@@ -98,17 +98,6 @@ class UserController extends Controller
         return $near_infra_problems;
     }
 
-    public function getAllInfras($user_id = null){
-        if($user_id){
-            $infras = InfrastructuralProblem :: where("user_id","=",$user_id) ->get();
-            return $infras;
-        }
-
-        $infrastructural_problems=InfrastructuralProblem::all();
-        return $infrastructural_problems;
-
-    }
-
     public function addCoins($user_id){
         $user = User::findOrFail($user_id);
         $user->balance +=5;
