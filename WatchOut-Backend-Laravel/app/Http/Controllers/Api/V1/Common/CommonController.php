@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 use Validator;
 class CommonController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => []]);
+    }
+    
     public function getAllInfras($user_id = null){
         if($user_id){
             $infras = InfrastructuralProblem :: where("user_id","=",$user_id) ->get();
