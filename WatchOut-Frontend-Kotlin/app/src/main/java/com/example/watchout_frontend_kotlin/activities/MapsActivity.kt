@@ -64,11 +64,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             val id = item.itemId
             drawerLayout.closeDrawer(GravityCompat.START)
             when (id) {
-                R.id.edit_profile -> Toast.makeText(
-                    this,
-                    "Edit Profile is Clicked",
-                    Toast.LENGTH_SHORT
-                ).show()
+                R.id.edit_profile -> {
+                    startActivity(Intent(this, ProfileActivity::class.java))
+                    finish()
+                }
                 R.id.history -> Toast.makeText(
                     this,
                     "Your Report History is Clicked",
