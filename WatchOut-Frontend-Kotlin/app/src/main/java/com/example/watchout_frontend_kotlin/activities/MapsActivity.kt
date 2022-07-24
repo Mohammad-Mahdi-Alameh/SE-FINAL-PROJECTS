@@ -3,11 +3,13 @@ package com.example.watchout_frontend_kotlin.activities
 import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Build
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -72,11 +74,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     "Your Report History is Clicked",
                     Toast.LENGTH_SHORT
                 ).show()
-                R.id.logout -> Toast.makeText(
-                    this,
-                    "Logout is Clicked",
-                    Toast.LENGTH_SHORT
-                ).show()
+                R.id.logout -> {
+                    //linking to the logout api will be done later
+                    logout()
+                }
 
                 else -> return@OnNavigationItemSelectedListener true
             }
@@ -125,6 +126,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             bottomSheetDialog.show()
         }
 
+    }
+
+    private fun logout() {
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        val editor: SharedPreferences.Editor = sharedPref.edit()
+        editor.clear()
+        editor.commit()
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 
     private fun addCoins() {
