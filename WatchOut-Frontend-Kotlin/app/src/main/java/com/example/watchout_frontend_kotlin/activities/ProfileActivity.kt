@@ -21,6 +21,7 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         profilePhoto = findViewById(R.id.profile_photo)
+        setPhoto = findViewById(R.id.set_photo)
         backArrow = findViewById(R.id.back_arrow)
         profilePhoto.setOnClickListener {
             pickImageGallery()
@@ -33,6 +34,12 @@ class ProfileActivity : AppCompatActivity() {
             finish()
         }
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this,MapsActivity::class.java))
+        finish()
     }
 
     private fun pickImageGallery() {
