@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        checkToken()
         setContentView(R.layout.activity_main)
         val register = findViewById<TextView>(R.id.navigateToRegister)
         val signin_btn = findViewById<Button>(R.id.signin_btn)
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
             val username = findViewById<EditText>(R.id.username).text.toString()
             val password = findViewById<EditText>(R.id.password).text.toString()
             logIn(username, password, this)
+            checkToken()
         }
     }
 
