@@ -11,7 +11,7 @@ use Validator;
 
 class UserController extends Controller
 {
-    public function report(Request $request)
+     public function report(Request $request)
     {
 
 
@@ -94,6 +94,16 @@ class UserController extends Controller
         return $near_infra_problems;
     }
 
+    public function getAllInfras($user_id = null){
+        if($user_id){
+            $infras = InfrastructuralProblem :: where("user_id","=",$user_id) ->get();
+            return $infras;
+        }
+
+        $infrastructural_problems=InfrastructuralProblem::all();
+        return $infrastructural_problems;
+
+    }
 
 
 }
