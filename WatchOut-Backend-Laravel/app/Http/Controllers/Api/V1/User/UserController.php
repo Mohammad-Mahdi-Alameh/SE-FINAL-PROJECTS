@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 use Validator;
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => []]);
+    }
 
     public function report(Request $request)
     {
