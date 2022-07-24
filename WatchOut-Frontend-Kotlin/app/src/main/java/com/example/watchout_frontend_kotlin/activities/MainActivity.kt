@@ -3,6 +3,7 @@ package com.example.watchout_frontend_kotlin.activities
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -29,12 +30,18 @@ class MainActivity : AppCompatActivity() {
         signin_btn.setOnClickListener {
             //login function isn't called for testing reasons only
             // logIn(username,password,this)
+        }
+    }
+
+    private fun checkToken(){
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        val token = sharedPref.getString("token", "")
+        if (token?.isEmpty() == false) {
             val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
             finish()
         }
     }
-
 
 
 }
