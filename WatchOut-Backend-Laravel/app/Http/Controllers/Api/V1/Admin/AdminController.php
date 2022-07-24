@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Admin;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\Controller;
 use App\Models\InfrastructuralProblem;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -12,7 +13,7 @@ class AdminController extends Controller
     {
         $this->middleware('auth:api', ['except' => []]);
     }
-    
+
     public function fixInfra($infra_id){
         $infra = InfrastructuralProblem::findOrFail($infra_id);
         $infra->delete();
@@ -28,5 +29,14 @@ class AdminController extends Controller
         return response()->json([
             'message' => 'Deleted successfully ',
         ], Response::HTTP_OK);
+    }
+
+    public function getAllUsers($user_id = null){
+        if($user_id){
+            $user = User::findOrFail($user_id);
+            return $user;
+        }
+        $users=User::all();
+        return $users;
     }
 }

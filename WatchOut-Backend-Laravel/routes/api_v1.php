@@ -38,6 +38,8 @@ Route::group(['middleware' => 'api'], function($router) {
         Route::put('/fix_infra/{infra_id}', [AdminController::class, 'fixInfra']);
         
         Route::put('/delete_user/{user_id}', [AdminController::class, 'deleteInfra']);
+      
+        Route::get('/users/{user_id?}', [AdminController::class, 'getAllUsers']);
 
     });
 
