@@ -2,6 +2,7 @@ package com.example.watchout_frontend_kotlin.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -83,7 +84,8 @@ class RegisterActivity : AppCompatActivity() {
             apiService.signUp(signupInfo) {
                 if (it?.message == "User successfully registered") {
                     Log.i("message", "User added successfully")
-                    logIn(username,password,this)
+                    logIn(username, password, this)
+                    checkToken()
                 } else {
                     //Error on laravel validator because password < 6
                     if (password.length < 6) {
@@ -100,5 +102,13 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-
+    private fun checkToken() {
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        val token = sharedPref.getString("token", "")
+        if (token?.isEmpty() == false) {
+            val intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
 }
