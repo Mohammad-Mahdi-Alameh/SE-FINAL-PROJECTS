@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.watchout_frontend_kotlin.R
 import com.example.watchout_frontend_kotlin.api.RestApiService
 import com.example.watchout_frontend_kotlin.models.SignupInfo
+import com.example.watchout_frontend_kotlin.others.logIn
 
 class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,6 +83,7 @@ class RegisterActivity : AppCompatActivity() {
             apiService.signUp(signupInfo) {
                 if (it?.message == "User successfully registered") {
                     Log.i("message", "User added successfully")
+                    logIn(username,password,this)
                 } else {
                     //Error on laravel validator because password < 6
                     if (password.length < 6) {
