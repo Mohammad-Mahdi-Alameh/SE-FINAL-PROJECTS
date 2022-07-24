@@ -86,6 +86,12 @@ class JWTAuthController extends Controller
         return response()->json([
             'success' => true,
             'token' => $jwt_token,
+            'user_id' => $user->id,
+            'firstname' => $user->firstname,
+            'lastname' => $user->lastname,
+            'phonenumber' => $user->phonenumber,
+            'picture' => $user->picture,
+            'balance' => $user->balance,
             'is_admin' => $user->is_admin,
         ]);
     }
