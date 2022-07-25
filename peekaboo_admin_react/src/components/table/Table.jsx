@@ -1,5 +1,7 @@
 import "./table.scss";
 import { useState, useEffect } from "react";
+import { DataGrid } from "@mui/x-data-grid";
+
 
 const Table = () => {
   const [users, setUsers] = useState([]);
@@ -20,9 +22,8 @@ const Table = () => {
   }, []);
   return (
     <div className="table">
-  
-      Users
-    </div>
+    Users
+  </div>
   );
 };
 
