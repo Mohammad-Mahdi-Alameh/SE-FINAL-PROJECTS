@@ -45,6 +45,12 @@ const Table = () => {
   }, []);
   return (
     <div className="table">
+    <div className="tableTitle">
+      Add New User
+      <Link to="/users/add" className="link">
+        Add New
+      </Link>
+    </div>
     <DataGrid
       className="datagrid"
       rows={users}
