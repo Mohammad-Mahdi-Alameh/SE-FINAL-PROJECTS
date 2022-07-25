@@ -1,16 +1,21 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./App.css";
+import "./App.scss";
 import Home from "./pages/home/Home";
 import Map from "./pages/map/Map";
 import Login from "./pages/login/Login";
 import View from "./pages/view/View";
 import Add from "./pages/add/Add";
 import List from "./pages/list/List";
+import Navbar from "./components/navbar/Navbar";
+import Sidebar from "./components/sidebar/Sidebar";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
+        <Sidebar />
+        <div className="container">
+          <Navbar />
           <Routes>
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
@@ -25,6 +30,7 @@ function App() {
             </Route>
           </Routes>
         </div>
+      </div>
     </BrowserRouter>
   );
 }
