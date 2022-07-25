@@ -1,4 +1,5 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
 import Home from "./pages/home/Home";
 import Map from "./pages/map/Map";
 import Login from "./pages/login/Login";
@@ -8,20 +9,23 @@ import List from "./pages/list/List";
 
 function App() {
   return (
-    <div className="App">
-     <BrowserRouter>
-     <Routes>
-      <Route index element={<Home/>}/>
-      <Route path="login" element={<Login/>}/>
-      <Route path="map" element={<Map/>}/>
-      <Route path="users" >
-          <Route path="list" element={<List/>}/>
-          <Route path="view" element={<View/>}/>
-          <Route path="add" element={<Add/>}/>
-      </Route>
-     </Routes>
-     </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="map" element={<Map />} />
+            <Route path="users">
+              <Route index element={<List />} />
+              <Route path=":userId" element={<View />} />
+              <Route
+                path="new"
+                element={<Add />}
+              />
+            </Route>
+          </Routes>
+        </div>
+    </BrowserRouter>
   );
 }
 
