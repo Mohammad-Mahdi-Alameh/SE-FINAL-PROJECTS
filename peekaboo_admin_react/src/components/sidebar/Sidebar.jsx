@@ -2,26 +2,26 @@ import "./sidebar.scss";
 const Sidebar = () => {
     return (
         <div className="sidebar">
-            <div >
-                <span >PEEKABOO</span>
+            <div className="top">
+                <span className="logo">PEEKABOO</span>
             </div>
             <hr />
             <div className="center">
                 <ul>
-                    <p>MAIN</p>
-                    <p>LISTS</p>
+
+                    <p className="title">MANAGE</p>
                     <li>
                         <span>Users</span>
                     </li>
 
-                    <p>MAP</p>
                     <li>
-                        <span>Map</span>
+                        <span>MAP</span>
                     </li>
-
-
-                    <p>USER</p>
-
+                    
+                    <p className="title">USER</p>
+                    <li>
+                        <span>Profile</span>
+                    </li>
                     <li>
                         <span>Logout</span>
                     </li>
