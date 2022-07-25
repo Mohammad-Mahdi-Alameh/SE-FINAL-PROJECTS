@@ -9,6 +9,25 @@ const Table = () => {
   const [users, setUsers] = useState([]);
   const base_url = "http://192.168.0.100:8000/api/v1/admin";
 
+  const actionColumn = [
+    {
+      field: "action",
+      headerName: "Action",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <div className="cellAction">
+              <div className="viewButton">View</div>
+            <div
+              className="deleteButton"
+            >
+              Delete
+            </div>
+          </div>
+        );
+      },
+    },
+  ];
  
 
   const getUsers = async () => {
@@ -29,7 +48,7 @@ const Table = () => {
     <DataGrid
       className="datagrid"
       rows={users}
-      columns={userColumns}
+      columns={userColumns.concat(actionColumn)}
       pageSize={9}
       rowsPerPageOptions={[9]}
       checkboxSelection
