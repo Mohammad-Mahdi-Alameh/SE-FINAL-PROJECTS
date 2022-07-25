@@ -21,9 +21,12 @@ export const userColumns = [
   },
 
   {
-    field: "phonenumber",
-    headerName: "Phone",
+    field: "total_reports",
+    headerName: "Total Reports",
     width: 230,
   },
 ];
 
+
+
+export const base_url = "http://192.168.0.100:8000/api/v1/admin";

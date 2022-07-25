@@ -2,13 +2,12 @@ import "./table.scss";
 import { useState, useEffect } from "react";
 import { useNavigate , Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns } from "../../datatablesource";
+import { base_url , userColumns } from "../../Constants";
 
 
 const Table = () => {
   let navigate=useNavigate();
   const [users, setUsers] = useState([]);
-  const base_url = "http://192.168.0.100:8000/api/v1/admin";
 
 
 
