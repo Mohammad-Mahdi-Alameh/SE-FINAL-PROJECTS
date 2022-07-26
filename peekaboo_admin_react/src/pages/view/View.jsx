@@ -1,8 +1,8 @@
 import "./view.scss"
 import { useState, useEffect } from "react";
+import { base_url } from "../../Constants";
 
 const View = () => {
-    const base_url = "http://192.168.0.100:8000/api/v1/admin";
     let [info, setInfo] = useState([]);
     let urlString = window.location.href;
     let paramString = urlString.split('?')[1];
@@ -49,6 +49,10 @@ const View = () => {
                 <span className="itemKey">Phone :</span>
                 <span className="itemValue">{" "+info.phonenumber}</span>
               </div>
+              {/* <div className="detailItem">
+                <span className="itemKey">Toral Reports :</span>
+                <span className="itemValue">{" "+info.total_reports}</span>
+              </div> */}
               <div className="detailItem">
                 <span className="itemKey">Balance : </span>
                 <span className="itemValue">
