@@ -27,10 +27,17 @@ const options ={
 const Map = () => {
     const [markers , setMarkers]=useState([])
     const [selected , setSelected]=useState(null)
+
     const mapRef = React.useRef();
     const onMapLoad = React.useCallback((map)=>{
         mapRef.current = map ;
-    })
+    });
+
+    const panTo = React.useCallback(({lat , lng}) =>{
+        mapRef.current.panTo({lat , lng});
+        mapRef.current.setZoom(14);
+        console.log(lat,lng);
+    },[]);
 
     const onMapClick = React.useCallback((event)=>
     setMarkers((current) => [
@@ -40,7 +47,7 @@ const Map = () => {
             lng : event.latLng.lng(),
             time : new Date()
         }
-    ]))
+    ]));
 
     const {isLoaded,loadError } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -50,8 +57,10 @@ const Map = () => {
     if(loadError) return "Error loading maps";
     if(!isLoaded) return "Loading maps";
 
-    function Search(){
-        const {ready, value , suggestions : {status , data},setValue,clearSuggestion} = usePlacesAutocomplete({
+    
+
+    function Search({panTo}){
+        const {ready, value , suggestions : {status , data},setValue,clearSuggestions} = usePlacesAutocomplete({
             requestOptions:{
                 location:{
                     lat : ()=> 43.653225,
@@ -65,8 +74,8 @@ const Map = () => {
         onSelect={async (address) =>{
             try{
                 const results = await getGeocode({address});
-                const {lat ,lng} = await getLatLng(results[0]);
-                console.log(lat,lng)
+                const {lat ,lng} = getLatLng(results[0]);
+                panTo({lat,lng});
             }catch(error){
                 console.log("error")
             }
@@ -121,7 +130,7 @@ const Map = () => {
             
             
             </GoogleMap>
-        <Search/>
+            <Search panTo={panTo}/>
             </div>)
 
 
