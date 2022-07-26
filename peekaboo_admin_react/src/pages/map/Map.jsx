@@ -89,7 +89,9 @@ const Map = () => {
             placeholder="Enter an address"
             />
             <ComboboxPopover>
+                <ComboboxList>
                 {status === "OK" && data.map(( {id , description})=>(<ComboboxOption key={id} value={description}/>))}
+                </ComboboxList>
             </ComboboxPopover>
 
         </Combobox>
