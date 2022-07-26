@@ -24,7 +24,7 @@ function App() {
               <Route index element={<List />} />
               <Route path=":userId" element={<View />} />
               <Route
-                path="new"
+                path="add"
                 element={<Add />}
               />
             </Route>
