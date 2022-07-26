@@ -19,7 +19,9 @@ const center ={
     lng:-79.383186,
 }
 const options ={
-    styles : mapStyles
+    styles : mapStyles,
+    disableDefaultUI: true,
+    zoomControl :true,
 }
 
 const Map = () => {
