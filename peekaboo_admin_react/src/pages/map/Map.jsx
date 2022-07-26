@@ -5,7 +5,8 @@ import Navbar from "../../components/navbar/Navbar";
 import React ,{ useState , useCallback ,useRef } from "react"
 import {formatRelative} from "date-fns";
 import usePlacesAutocomplete ,{getGeocode,getLatLang} from "use-places-autocomplete";
-import { Combobox,ComboboxInput,ComboboxPopover,ComboboxList,ComboboxOptions } from "@reach/combobox";
+import { Combobox,ComboboxInput,ComboboxPopover,ComboboxList,ComboboxOption } from "@reach/combobox";
+import "@reach/combobox/styles.css";
 import { Search } from "@mui/icons-material";
 const libraries = ["places"]
 const mapContainerStyle = {
@@ -56,10 +57,24 @@ const Map = () => {
                 radius:200*1000,
             }
         })
+        return( 
+        <div className="search"><Combobox >
+            <ComboboxInput value={value} onChange={(e) =>{
+                setValue(e.target.value);
+            }}
+            disable={!ready}
+            placeholder="Enter an address"
+            />
+            <ComboboxPopover>
+                {status === "OK" && data.map(( {id , description})=>(<ComboboxOption key={id} value={description}/>))}
+            </ComboboxPopover>
+
+        </Combobox>
+        <SearchOutlinedIcon />
+        </div>)
     }
 
     return (<div className="map">
-        <Search/>
         <GoogleMap 
         mapContainerStyle={mapContainerStyle}
         zoom={8}
@@ -92,7 +107,9 @@ const Map = () => {
             
             
             
-            </GoogleMap></div>)
+            </GoogleMap>
+        <Search/>
+            </div>)
 
 
 }
