@@ -1,7 +1,8 @@
-import { GoogleMap,Marker,MarkerClusterer,useLoadScript } from "@react-google-maps/api"
+import { GoogleMap,InfoWindow,Marker,MarkerClusterer,useLoadScript } from "@react-google-maps/api"
 import "./map.scss"
 import mapStyles from "../../mapStyles"
 import React ,{ useState , useCallback ,useRef } from "react"
+import {formatRelative} from "date-fns";
 const libraries = ["places"]
 const mapContainerStyle = {
     width : "80vw",
@@ -17,6 +18,7 @@ const options ={
 
 const Map = () => {
     const [markers , setMarkers]=useState([])
+    const [selected , setSelected]=useState(null)
     const mapRef = React.useRef();
     const onMapLoad = React.useCallback((map)=>{
         mapRef.current = map ;
@@ -53,9 +55,27 @@ const Map = () => {
             {markers.map((marker) => (
                 <Marker
                 key={marker.time.toISOString()}
-                position={{lat :marker.lat, lng :marker.lng}}/>
+                position={{lat :marker.lat, lng :marker.lng}}
+                onClick={() =>{
+                    setSelected(marker);
+                }}/>
 
-            ))}</GoogleMap></div>)
+            ))}
+            {
+                selected ? (<InfoWindow position={{lat :selected.lat, lng :selected.lng}} onCloseClick={()=>{setSelected(null)}}>
+                    <div>
+                    <p>Created at {formatRelative(selected.time , new Date())}</p>
+                    </div>
+
+                </InfoWindow>
+                
+                ) : null }
+            
+            
+            
+            
+            
+            </GoogleMap></div>)
 
 
 }
