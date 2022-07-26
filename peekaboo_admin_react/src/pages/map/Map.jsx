@@ -1,5 +1,6 @@
 import { GoogleMap,InfoWindow,Marker,MarkerClusterer,useLoadScript } from "@react-google-maps/api"
 import "./map.scss"
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import mapStyles from "../../mapStyles"
 import Navbar from "../../components/navbar/Navbar";
 import React ,{ useState , useCallback ,useRef } from "react"
@@ -57,7 +58,7 @@ const Map = () => {
                 radius:200*1000,
             }
         })
-        return( 
+        return( <div className="wrapper">
         <div className="search"><Combobox >
             <ComboboxInput value={value} onChange={(e) =>{
                 setValue(e.target.value);
@@ -71,6 +72,7 @@ const Map = () => {
 
         </Combobox>
         <SearchOutlinedIcon />
+        </div>
         </div>)
     }
 
