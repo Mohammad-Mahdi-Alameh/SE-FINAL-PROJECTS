@@ -1,6 +1,7 @@
-import { GoogleMap,useLoadScript } from "@react-google-maps/api"
+import { GoogleMap,Marker,MarkerClusterer,useLoadScript } from "@react-google-maps/api"
 import "./map.scss"
 import mapStyles from "../../mapStyles"
+import { useState  } from "react"
 const libraries = ["places"]
 const mapContainerStyle = {
     width : "80vw",
@@ -14,6 +15,8 @@ const options ={
     styles : mapStyles
 }
 const Map = () => {
+    const [markers , setMarkers]=useState([])
+   
 
     const {isLoaded,loadError } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -30,7 +33,22 @@ const Map = () => {
         zoom={8}
         center={center}
         options={options}
-        ></GoogleMap></div>)
+        onClick={(event)=>
+            setMarkers((current) => [
+                ...current,
+                {
+                    lat : event.latLng.lat(),
+                    lng : event.latLng.lng(),
+                    time : new Date()
+                }
+            ])}
+        >
+            {markers.map((marker) => (
+                <Marker
+                key={marker.time.toISOString()}
+                position={{lat :marker.lat, lng :marker.lng}}/>
+
+            ))}</GoogleMap></div>)
 
 
 }
