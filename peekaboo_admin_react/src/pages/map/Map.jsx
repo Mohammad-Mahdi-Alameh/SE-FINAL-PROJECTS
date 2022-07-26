@@ -43,8 +43,17 @@ const Map = () => {
             return data;
           };
         
-        
-        
+function getLiveLocation(){
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            panTo({
+                lat : position.coords.latitude,
+                lng : position.coords.longitude
+            });
+        },
+        () => null
+    );
+}        
         
           useEffect(() => {
             const getData = async () => {
@@ -52,6 +61,7 @@ const Map = () => {
               setInfras(infrasFromServer);
             };
             getData();
+
           }, []);
 
     const panTo = React.useCallback(({ lat, lng }) => {
@@ -80,15 +90,7 @@ const Map = () => {
 
     function Locate({ panTo }) {
         return (<button className="locate" onClick={() => {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    panTo({
-                        lat : position.coords.latitude,
-                        lng : position.coords.longitude
-                    });
-                },
-                () => null
-            );
+            getLiveLocation();
         }}
         >
             <img src={compass} alt="" /></button>
