@@ -1,8 +1,12 @@
 import { GoogleMap,InfoWindow,Marker,MarkerClusterer,useLoadScript } from "@react-google-maps/api"
 import "./map.scss"
 import mapStyles from "../../mapStyles"
+import Navbar from "../../components/navbar/Navbar";
 import React ,{ useState , useCallback ,useRef } from "react"
 import {formatRelative} from "date-fns";
+import usePlacesAutocomplete ,{getGeocode,getLatLang} from "use-places-autocomplete";
+import { Combobox,ComboboxInput,ComboboxPopover,ComboboxList,ComboboxOptions } from "@reach/combobox";
+import { Search } from "@mui/icons-material";
 const libraries = ["places"]
 const mapContainerStyle = {
     width : "80vw",
@@ -42,8 +46,20 @@ const Map = () => {
     if(loadError) return "Error loading maps";
     if(!isLoaded) return "Loading maps";
 
+    function Search(){
+        const {ready, value , suggestions : {status , data},setValue,clearSuggestion} = usePlacesAutocomplete({
+            requestOptions:{
+                location:{
+                    lat : ()=> 43.653225,
+                    lng : ()=>-79.383186,
+                },
+                radius:200*1000,
+            }
+        })
+    }
 
     return (<div className="map">
+        <Search/>
         <GoogleMap 
         mapContainerStyle={mapContainerStyle}
         zoom={8}
@@ -52,6 +68,7 @@ const Map = () => {
         onClick={onMapClick}
         onLoad={onMapLoad}
         >
+
             {markers.map((marker) => (
                 <Marker
                 key={marker.time.toISOString()}
