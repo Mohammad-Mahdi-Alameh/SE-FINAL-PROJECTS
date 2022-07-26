@@ -72,6 +72,8 @@ const Map = () => {
         return( <div className="wrapper">
         <div className="search"><Combobox
         onSelect={async (address) =>{
+            setValue(address,false);
+            clearSuggestions();
             try{
                 const results = await getGeocode({address});
                 const {lat ,lng} = getLatLng(results[0]);
