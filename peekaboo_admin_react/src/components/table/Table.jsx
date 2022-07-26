@@ -61,8 +61,8 @@ const Table = () => {
     };
     getData();
   }, []);
-  return (
-    <div className="table">
+  return (<>
+    {users.length>0 && <div className="table">
       <div className="tableTitle">
         Add New User
         <Link to="/users/add" className="link">
@@ -77,7 +77,8 @@ const Table = () => {
         rowsPerPageOptions={[5]}
         checkboxSelection
       />
-    </div>
+    </div>}
+    </>
   );
 };
 
