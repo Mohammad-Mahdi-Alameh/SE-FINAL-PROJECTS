@@ -16,10 +16,6 @@ const mapContainerStyle = {
     width: "100%",
     height: "100vh"
 }
-const center = {
-    lat: 43.653225,
-    lng: -79.383186,
-}
 const options = {
     styles: mapStyles,
     disableDefaultUI: true,
@@ -34,6 +30,7 @@ const Map = () => {
     const mapRef = React.useRef();
     const onMapLoad = React.useCallback((map) => {
         mapRef.current = map;
+        getLiveLocation();
     });
 
         //Infras : Infrastructural problems
@@ -61,7 +58,6 @@ function getLiveLocation(){
               setInfras(infrasFromServer);
             };
             getData();
-
           }, []);
 
     const panTo = React.useCallback(({ lat, lng }) => {
@@ -145,7 +141,6 @@ function getLiveLocation(){
         <GoogleMap
             mapContainerStyle={mapContainerStyle}
             zoom={8}
-            center={center}
             options={options}
             onClick={onMapClick}
             onLoad={onMapLoad}
