@@ -4,8 +4,9 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import compass from "../../compass.svg"
 import mapStyles from "../../mapStyles"
 import Navbar from "../../components/navbar/Navbar";
-import React, { useState, useCallback, useRef } from "react"
+import React, { useState, useCallback, useRef ,useEffect} from "react"
 import { formatRelative } from "date-fns";
+import { base_url } from "../../Constants";
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from "@reach/combobox";
 import "@reach/combobox/styles.css";
@@ -27,12 +28,31 @@ const options = {
 
 const Map = () => {
     const [markers, setMarkers] = useState([])
+    const [infras, setInfras] = useState([])
     const [selected, setSelected] = useState(null)
 
     const mapRef = React.useRef();
     const onMapLoad = React.useCallback((map) => {
         mapRef.current = map;
     });
+
+        //Infras : Infrastructural problems
+        const getAllInfras = async () => {
+            const res = await fetch(base_url + "/get_all_infras");
+            const data = await res.json();
+            return data;
+          };
+        
+        
+        
+        
+          useEffect(() => {
+            const getData = async () => {
+              const infrasFromServer = await getAllInfras();
+              setInfras(infrasFromServer);
+            };
+            getData();
+          }, []);
 
     const panTo = React.useCallback(({ lat, lng }) => {
         mapRef.current.panTo({ lat, lng });
@@ -117,6 +137,8 @@ const Map = () => {
         </div>)
     }
 
+
+
     return (<div className="map">
         <GoogleMap
             mapContainerStyle={mapContainerStyle}
@@ -158,4 +180,4 @@ const Map = () => {
 
 }
 
-export default Map
+export default Map;
