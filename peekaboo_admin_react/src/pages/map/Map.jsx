@@ -5,14 +5,14 @@ import mapStyles from "../../mapStyles"
 import Navbar from "../../components/navbar/Navbar";
 import React ,{ useState , useCallback ,useRef } from "react"
 import {formatRelative} from "date-fns";
-import usePlacesAutocomplete ,{getGeocode,getLatLang} from "use-places-autocomplete";
+import usePlacesAutocomplete ,{getGeocode,getLatLng} from "use-places-autocomplete";
 import { Combobox,ComboboxInput,ComboboxPopover,ComboboxList,ComboboxOption } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import { Search } from "@mui/icons-material";
 const libraries = ["places"]
 const mapContainerStyle = {
-    width : "80vw",
-    height : "80vh"
+    width : "100%",
+    height : "100vh"
 }
 const center ={
     lat:43.653225,
@@ -61,7 +61,16 @@ const Map = () => {
             }
         })
         return( <div className="wrapper">
-        <div className="search"><Combobox >
+        <div className="search"><Combobox
+        onSelect={async (address) =>{
+            try{
+                const results = await getGeocode({address});
+                const {lat ,lng} = await getLatLng(results[0]);
+                console.log(lat,lng)
+            }catch(error){
+                console.log("error")
+            }
+        }} >
             <ComboboxInput value={value} onChange={(e) =>{
                 setValue(e.target.value);
             }}
