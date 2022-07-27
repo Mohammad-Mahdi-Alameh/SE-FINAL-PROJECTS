@@ -113,21 +113,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
             bottomSheetView.findViewById<View>(R.id.bump).setOnClickListener {
                 bottomSheetDialog.dismiss()
+                reportFunctionCaller(it)
                 public.popupAlertDialog(this, R.layout.alert_dialog)
                 addCoins()
             }
             bottomSheetView.findViewById<View>(R.id.turn).setOnClickListener {
                 bottomSheetDialog.dismiss()
+                reportFunctionCaller(it)
                 public.popupAlertDialog(this, R.layout.alert_dialog)
                 addCoins()
             }
             bottomSheetView.findViewById<View>(R.id.hole).setOnClickListener {
                 bottomSheetDialog.dismiss()
+                reportFunctionCaller(it)
                 public.popupAlertDialog(this, R.layout.alert_dialog)
                 addCoins()
             }
             bottomSheetView.findViewById<View>(R.id.blockage).setOnClickListener {
                 bottomSheetDialog.dismiss()
+                reportFunctionCaller(it)
                 public.popupAlertDialog(this, R.layout.alert_dialog)
                 addCoins()
             }
@@ -393,5 +397,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             LocationServices.getFusedLocationProviderClient(this)
     }
 
+    private fun reportFunctionCaller(v :View) {
+            fusedLocClient.lastLocation.addOnCompleteListener {
+                // lastLocation is a task running in the background
+                val location = it.result //obtain location
+                //reference to the database
+                if (location != null) {
+                    val type = getInfraType(v)
+                    report(type,location.latitude,location.longitude)
+                } else {
+                    // if location is null , log an error message
+                    Log.e("error", "No location found")
+                }
 
+
+
+            }
+        }
     }
