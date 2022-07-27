@@ -5,8 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.provider.MediaStore
+import android.util.Base64
 import android.view.Gravity
 import android.view.View
 import android.widget.EditText
@@ -22,6 +25,8 @@ import com.example.watchout_frontend_kotlin.others.Constants
 import com.example.watchout_frontend_kotlin.others.Constants.IMAGE_REQUEST_CODE
 import com.example.watchout_frontend_kotlin.others.getDecryptedPassword
 import com.mikhaellopez.circularimageview.CircularImageView
+import java.io.ByteArrayOutputStream
+import java.io.IOException
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var profilePhoto: CircularImageView
@@ -46,11 +51,10 @@ class ProfileActivity : AppCompatActivity() {
         lastName = findViewById(R.id.last_name)
         phoneNumber = findViewById(R.id.phone_number)
         username = findViewById(R.id.username)
-
-        firstName.setText(sharedPref.getString("firstname",""))
-        lastName.setText(sharedPref.getString("lastname",""))
-        phoneNumber.setText(sharedPref.getString("phonenumber",""))
-        username.setText(sharedPref.getString("username",""))
+        firstName.setText(sharedPref.getString("firstname", ""))
+        lastName.setText(sharedPref.getString("lastname", ""))
+        phoneNumber.setText(sharedPref.getString("phonenumber", ""))
+        username.setText(sharedPref.getString("username", ""))
         profilePhoto.setOnClickListener {
             pickImageGallery()
         }
@@ -58,7 +62,7 @@ class ProfileActivity : AppCompatActivity() {
             pickImageGallery()
         }
         backArrow.setOnClickListener {
-            startActivity(Intent(this,MapsActivity::class.java))
+            startActivity(Intent(this, MapsActivity::class.java))
             finish()
         }
         editPassword.setOnClickListener {
@@ -85,7 +89,7 @@ class ProfileActivity : AppCompatActivity() {
         popupDialog.setCancelable(false)
         password = view.findViewById(R.id.password)
         confirmPassword = view.findViewById(R.id.c_password)
-        password.setText(getDecryptedPassword( this))
+        password.setText(getDecryptedPassword(this))
         confirmPassword.setText(getDecryptedPassword(this))
         view.findViewById<View>(R.id.done_btn).setOnClickListener {
             if (password.text.toString() != confirmPassword.text.toString()) {
@@ -103,7 +107,7 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        startActivity(Intent(this,MapsActivity::class.java))
+        startActivity(Intent(this, MapsActivity::class.java))
         finish()
     }
 
@@ -117,7 +121,7 @@ class ProfileActivity : AppCompatActivity() {
         ) {
             requestStoragePermissions()
         } else {
-        startActivityForResult(intent, IMAGE_REQUEST_CODE)
+            startActivityForResult(intent, IMAGE_REQUEST_CODE)
 
         }
     }
@@ -153,8 +157,34 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        val sharedPref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val editor: SharedPreferences.Editor = sharedPref.edit()
         if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
             profilePhoto.setImageURI(data?.data)
+//            encodePicTo64(data?.data)
+            val uri: Intent? = data
+            try {
+                if (uri != null) {
+                    val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri.data)
+                    // initialize byte stream
+                    val stream = ByteArrayOutputStream()
+                    // compress Bitmap
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+                    // Initialize byte array
+                    val bytes = stream.toByteArray()
+                    // get base64 encoded string
+                    val imageString = Base64.encodeToString(bytes, Base64.DEFAULT)
+                    // set encoded text on textview
+                    editor.putString("picture", imageString)
+                    editor.apply()
+                    editor.commit()
+
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
         }
+
     }
+
 }
