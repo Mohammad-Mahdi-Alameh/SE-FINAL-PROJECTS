@@ -118,4 +118,31 @@ class RestApiService {
             }
         )
     }
+
+    fun getAllInfras(
+        authedHeaders: AuthenticatedHeaders,
+        user_id: String,
+        onResult: (List<GetInfrasResponse>?) -> Unit
+    ) {
+        val retrofit = ServiceBuilder.buildService(LaravelRestApi::class.java)
+        retrofit.getAllInfras(authedHeaders, user_id).enqueue(
+            object : Callback<List<GetInfrasResponse>> {
+                override fun onFailure(call: Call<List<GetInfrasResponse>>, t: Throwable) {
+                    Log.d("error", "error in getting response")
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<List<GetInfrasResponse>>,
+                    response: Response<List<GetInfrasResponse>>
+                ) {
+                    val nearInfras = response.body()
+                    Log.d("All Infras", response.toString())
+                    onResult(nearInfras)
+
+
+                }
+            }
+        )
+    }
 }
