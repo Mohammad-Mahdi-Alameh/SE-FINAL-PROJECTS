@@ -28,6 +28,8 @@ import com.example.watchout_frontend_kotlin.models.ReportInfo
 import com.example.watchout_frontend_kotlin.others.Constants
 import com.example.watchout_frontend_kotlin.others.PublicFunctions
 import com.example.watchout_frontend_kotlin.services.TrackingService
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -51,14 +53,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var navigationView: NavigationView
     private lateinit var hamburger: ImageView
     private lateinit var coins: TextView
+    private lateinit var report: Button
+    private lateinit var fusedLocClient: FusedLocationProviderClient
     private var public = PublicFunctions()
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var dbReference: DatabaseReference = database.getReference("Live-Tracking")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getAllInfras()
+        setupLocClient()
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        report = findViewById(R.id.report_btn)
         hamburger = findViewById(R.id.hamburger_btn)
         coins = findViewById(R.id.coins)
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -94,7 +100,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         trackCurrentLocation(this)
-        val report = findViewById<Button>(R.id.report_btn)
         report.setOnClickListener {
             val bottomSheetDialog = BottomSheetDialog(
                 this, R.style.BottomSheetDialogTheme
@@ -236,7 +241,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private val locListener = object : ValueEventListener {
+    var locListener = object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
             if (snapshot.exists()) {
                 //get the exact longitude and latitude and speed from the database "Live Tracking"
@@ -341,16 +346,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val type = ""
         if (v != null) {
             when (v.id) {
-                R.id.hole_btn -> {
+                R.id.hole -> {
                     return type.replace("", "hole")
                 }
-                R.id.turn_btn -> {
+                R.id.turn -> {
                     return type.replace("", "turn")
                 }
-                R.id.bump_btn -> {
+                R.id.bump -> {
                     return type.replace("", "bump")
                 }
-                R.id.blockage_btn -> {
+                R.id.blockage -> {
                     return type.replace("", "blockage")
                 }
             }
@@ -383,4 +388,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
-}
+    private fun setupLocClient() {
+        fusedLocClient =
+            LocationServices.getFusedLocationProviderClient(this)
+    }
+
+
+    }
