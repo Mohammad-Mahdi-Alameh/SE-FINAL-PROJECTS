@@ -20,6 +20,7 @@ import androidx.core.app.ActivityCompat
 import com.example.watchout_frontend_kotlin.R
 import com.example.watchout_frontend_kotlin.others.Constants
 import com.example.watchout_frontend_kotlin.others.Constants.IMAGE_REQUEST_CODE
+import com.example.watchout_frontend_kotlin.others.getDecryptedPassword
 import com.mikhaellopez.circularimageview.CircularImageView
 
 class ProfileActivity : AppCompatActivity() {
@@ -82,9 +83,11 @@ class ProfileActivity : AppCompatActivity() {
             ActionBar.LayoutParams.WRAP_CONTENT
         )
         popupDialog.setCancelable(false)
+        password = view.findViewById(R.id.password)
+        confirmPassword = view.findViewById(R.id.c_password)
+        password.setText(getDecryptedPassword( this))
+        confirmPassword.setText(getDecryptedPassword(this))
         view.findViewById<View>(R.id.done_btn).setOnClickListener {
-            password = view.findViewById(R.id.password)
-            confirmPassword = view.findViewById(R.id.c_password)
             if (password.text.toString() != confirmPassword.text.toString()) {
                 Toast.makeText(
                     this,
