@@ -6,7 +6,7 @@ import retrofit2.http.*
 
 interface LaravelRestApi {
 
-    @POST("/api/v1/user/login")
+    @POST("/api/v1/login")
     fun logIn(
         @HeaderMap authedHeaders: PublicHeaders,
         @Body loginInfo: LoginInfo
@@ -34,9 +34,14 @@ interface LaravelRestApi {
     @GET("/api/v1/user/getAllInfras/")
     fun getAllInfras(
         @HeaderMap authedHeaders: AuthenticatedHeaders,
-        @Query("user_id") user_id : String?,
+        @Query("user_id") user_id: String?,
     ): Call<List<GetInfrasResponse>>
 
+    @PUT("/api/v1/user/editProfile")
+    fun editProfile(
+        @HeaderMap authedHeaders: AuthenticatedHeaders,
+        @Body editProfileInfo: EditProfileInfo
+    ): Call<EditProfileResponse>
 
 
 }
