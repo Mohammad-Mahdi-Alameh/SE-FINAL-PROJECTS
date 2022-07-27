@@ -24,6 +24,7 @@ import com.example.watchout_frontend_kotlin.api.ApiMainHeadersProvider
 import com.example.watchout_frontend_kotlin.api.RestApiService
 import com.example.watchout_frontend_kotlin.databinding.ActivityMapsBinding
 import com.example.watchout_frontend_kotlin.models.LocationInfo
+import com.example.watchout_frontend_kotlin.models.ReportInfo
 import com.example.watchout_frontend_kotlin.others.Constants
 import com.example.watchout_frontend_kotlin.others.PublicFunctions
 import com.example.watchout_frontend_kotlin.services.TrackingService
@@ -357,4 +358,29 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         return type
     }
 
+    private fun report(type: String, latitude: Double, longitude: Double) {
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        val jwtToken = sharedPref.getString("token", "")
+        val apiService = RestApiService()
+        val authenticatedHeaders =
+            jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
+        if (authenticatedHeaders != null) {
+            val reportInfo = ReportInfo(
+                latitude = latitude,
+                longitude = longitude,
+                type = type,
+                id = sharedPref.getString("user_id", "")?.toInt()
+            )
+            val authenticatedHeaders =
+                ApiMainHeadersProvider.getAuthenticatedHeaders("")
+            apiService.report( authenticatedHeaders,reportInfo) {
+                if (it?.message == "Infrastructural problem reported successfully") {
+                    Log.i("Report Succeeded", it.message)
+                } else {
+
+                    Log.i("Error", "Report Failed !")
+                }
+            }
+        }
+    }
 }
