@@ -12,10 +12,7 @@ import android.provider.MediaStore
 import android.util.Base64
 import android.view.Gravity
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -33,29 +30,40 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var setPhoto: ImageView
     private lateinit var backArrow: ImageView
     private lateinit var editPassword: TextView
-    private lateinit var firstName: EditText
-    private lateinit var lastName: EditText
-    private lateinit var phoneNumber: EditText
-    private lateinit var username: EditText
+    private lateinit var firstnameEdit: EditText
+    private lateinit var lastnameEdit: EditText
+    private lateinit var phonenumberEdit: EditText
+    private lateinit var usernameEdit: EditText
     private lateinit var password: EditText
     private lateinit var confirmPassword: EditText
+    private lateinit var firstName: String
+    private lateinit var lastName: String
+    private lateinit var phoneNumber: String
+    private lateinit var userName: String
+    private lateinit var register: Button
     private lateinit var  public : PublicFunctions
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sharedPref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val editor: SharedPreferences.Editor = sharedPref.edit()
         setContentView(R.layout.activity_profile)
         profilePhoto = findViewById(R.id.profile_photo)
         setPhoto = findViewById(R.id.set_photo)
         backArrow = findViewById(R.id.back_arrow)
         editPassword = findViewById(R.id.edit_password)
-        firstName = findViewById(R.id.first_name)
-        lastName = findViewById(R.id.last_name)
-        phoneNumber = findViewById(R.id.phone_number)
-        username = findViewById(R.id.username)
-        firstName.setText(sharedPref.getString("firstname", ""))
-        lastName.setText(sharedPref.getString("lastname", ""))
-        phoneNumber.setText(sharedPref.getString("phonenumber", ""))
-        username.setText(sharedPref.getString("username", ""))
+        firstnameEdit = findViewById(R.id.first_name)
+        lastnameEdit = findViewById(R.id.last_name)
+        phonenumberEdit = findViewById(R.id.phone_number)
+        usernameEdit = findViewById(R.id.username)
+        register = findViewById(R.id.register_btn)
+        firstName=firstnameEdit.text.toString()
+        lastName=lastnameEdit.text.toString()
+        phoneNumber=phonenumberEdit.text.toString()
+        userName=usernameEdit.text.toString()
+        firstnameEdit.setText(sharedPref.getString("firstname", ""))
+        lastnameEdit.setText(sharedPref.getString("lastname", ""))
+        phonenumberEdit.setText(sharedPref.getString("phonenumber", ""))
+        usernameEdit.setText(sharedPref.getString("username", ""))
         profilePhoto.setOnClickListener {
             pickImageGallery()
         }
@@ -68,6 +76,12 @@ class ProfileActivity : AppCompatActivity() {
         }
         editPassword.setOnClickListener {
             popupPasswordDialog(this, R.layout.password_dialog)
+        }
+        register.setOnClickListener {
+            editor.putString("firstname", firstName)
+            editor.putString("lastname", lastName)
+            editor.putString("phonenumber", phoneNumber)
+            editor.putString("username", userName)
         }
 
 
