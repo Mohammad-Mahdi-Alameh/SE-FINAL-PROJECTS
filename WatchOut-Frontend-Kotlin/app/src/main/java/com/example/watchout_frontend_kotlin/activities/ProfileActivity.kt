@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.provider.MediaStore
 import android.util.Base64
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.*
@@ -18,6 +19,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.watchout_frontend_kotlin.R
+import com.example.watchout_frontend_kotlin.api.ApiMainHeadersProvider
+import com.example.watchout_frontend_kotlin.api.RestApiService
+import com.example.watchout_frontend_kotlin.models.EditProfileInfo
 import com.example.watchout_frontend_kotlin.others.Constants
 import com.example.watchout_frontend_kotlin.others.Constants.IMAGE_REQUEST_CODE
 import com.example.watchout_frontend_kotlin.others.PublicFunctions
@@ -40,8 +44,8 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var lastName: String
     private lateinit var phoneNumber: String
     private lateinit var userName: String
-    private lateinit var register: Button
-    private lateinit var public: PublicFunctions
+    private lateinit var update: Button
+    private var public = PublicFunctions()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sharedPref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -55,11 +59,7 @@ class ProfileActivity : AppCompatActivity() {
         lastnameEdit = findViewById(R.id.last_name)
         phonenumberEdit = findViewById(R.id.phone_number)
         usernameEdit = findViewById(R.id.username)
-        register = findViewById(R.id.register_btn)
-        firstName = firstnameEdit.text.toString()
-        lastName = lastnameEdit.text.toString()
-        phoneNumber = phonenumberEdit.text.toString()
-        userName = usernameEdit.text.toString()
+        update = findViewById(R.id.update)
         firstnameEdit.setText(sharedPref.getString("firstname", ""))
         lastnameEdit.setText(sharedPref.getString("lastname", ""))
         phonenumberEdit.setText(sharedPref.getString("phonenumber", ""))
@@ -77,7 +77,11 @@ class ProfileActivity : AppCompatActivity() {
         editPassword.setOnClickListener {
             popupPasswordDialog(this, R.layout.password_dialog)
         }
-        register.setOnClickListener {
+        update.setOnClickListener {
+            firstName = firstnameEdit.text.toString()
+            lastName = lastnameEdit.text.toString()
+            phoneNumber = phonenumberEdit.text.toString()
+            userName = usernameEdit.text.toString()
             if (firstName.isEmpty() || lastName.isEmpty() || phoneNumber.isEmpty() ||
                 userName.isEmpty()
             ) {
@@ -89,14 +93,48 @@ class ProfileActivity : AppCompatActivity() {
                 )
                     .show()
             } else {
-                editor.putString("firstname", firstName)
-                editor.putString("lastname", lastName)
-                editor.putString("phonenumber", phoneNumber)
-                editor.putString("username", userName)
+                if (!phoneNumber.all { char -> char.isDigit() }) {
+                    Toast.makeText(
+                        applicationContext,
+                        "Phone number can contain only numbers !",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                } else {
+                    editor.putString("firstname", firstName)
+                    editor.putString("lastname", lastName)
+                    editor.putString("phonenumber", phoneNumber)
+                    editor.putString("username", userName)
+                    editor.apply()
+                    editor.commit()
+                    val jwtToken = sharedPref.getString("token", "")
+                    val apiService = RestApiService()
+                    val editProfileInfo = EditProfileInfo(
+                        user_id = sharedPref.getString("user_id", "")?.toInt(),
+                        firstname = sharedPref.getString("firstname", ""),
+                        lastname = sharedPref.getString("lastname", ""),
+                        phonenumber = sharedPref.getString("phonenumber", "")?.toInt(),
+                        picture = sharedPref.getString("picture", ""),
+                        username = sharedPref.getString("firstname", ""),
+                        password = public.getDecryptedPassword(this),
+                        c_password = public.getDecryptedPassword(this)
+                    )
+                    val authenticatedHeaders =
+                        jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
+                    if (authenticatedHeaders != null) {
+                        apiService.editProfile(authenticatedHeaders, editProfileInfo) {
+                            if (it?.message == "updated successfully") {
+
+                                Log.i("message", "User edited successfully")
+                                startActivity(Intent(this, MainActivity::class.java))
+                                finish()
+                            }
+                        }
+                    }
+                }
+
             }
         }
-
-
     }
 
     private fun popupPasswordDialog(context: Context, id: Int) {
@@ -130,29 +168,22 @@ class ProfileActivity : AppCompatActivity() {
             } else { //all these validator functions should be public function in
                 // PublicFunctions class cause they are written here and in register activity so to avoid
                 // redundancy and I will fix later
-                if (!phoneNumber.all { char -> char.isDigit() }) {
-                    Toast.makeText(
-                        applicationContext,
-                        "Phone number can contain only numbers !",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                } else {
-                    if (password.length < 6) {
-                        Toast.makeText(
-                            this,
-                            "Password too short ! It should be minimum six characters",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        public.encryptAndSavePassword(this, password)
-                        popupDialog.dismiss()
-                    }
-                }
-            }//all these validator functions should be public function in
-            // PublicFunctions class cause they are written here and in register activity so to avoid
-            // redundancy and I will fix later
-        }
+
+//                if (password.length < 6) {
+//                    Toast.makeText(
+//                        this,
+//                        "Password too short ! It should be minimum six characters",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
+            public.encryptAndSavePassword(this, password)
+            popupDialog.dismiss()
+            }
+
+        }//all these validator functions should be public function in
+        // PublicFunctions class cause they are written here and in register activity so to avoid
+        // redundancy and I will fix later
+
         popupDialog.show()
     }
 
