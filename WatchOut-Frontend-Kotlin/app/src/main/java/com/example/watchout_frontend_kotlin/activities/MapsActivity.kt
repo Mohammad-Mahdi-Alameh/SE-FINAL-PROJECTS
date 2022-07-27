@@ -50,7 +50,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var navigationView: NavigationView
     private lateinit var hamburger: ImageView
     private lateinit var coins: TextView
-    private lateinit var public: PublicFunctions
+    private var public = PublicFunctions()
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var dbReference: DatabaseReference = database.getReference("Live-Tracking")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -314,12 +314,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun getAllInfras() {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-        val jwtToken = sharedPref.getString("token","")
+        val jwtToken = sharedPref.getString("token", "")
         val apiService = RestApiService()
         val authenticatedHeaders =
             jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
         if (authenticatedHeaders != null) {
-            apiService.getAllInfras(authenticatedHeaders,"") {
+            apiService.getAllInfras(authenticatedHeaders, "") {
                 if (it?.size != null) {
                     Log.i("All Infras", Gson().toJson(it))
                     showResult(Gson().toJson(it))
@@ -335,4 +335,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun showResult(data: String) {
         Log.i("All Infras", data)
     }
+
+    private fun getInfraType(v: View): String {
+        val type = ""
+        if (v != null) {
+            when (v.id) {
+                R.id.hole_btn -> {
+                    return type.replace("", "hole")
+                }
+                R.id.turn_btn -> {
+                    return type.replace("", "turn")
+                }
+                R.id.bump_btn -> {
+                    return type.replace("", "bump")
+                }
+                R.id.blockage_btn -> {
+                    return type.replace("", "blockage")
+                }
+            }
+        }
+        return type
+    }
+
 }
