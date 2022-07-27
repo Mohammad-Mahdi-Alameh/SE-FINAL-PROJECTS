@@ -1,17 +1,12 @@
 package com.example.watchout_frontend_kotlin.others
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.Gravity
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import com.example.watchout_frontend_kotlin.R
-import com.example.watchout_frontend_kotlin.api.RestApiService
-import com.example.watchout_frontend_kotlin.models.LoginInfo
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.ObjectInputStream
@@ -35,12 +30,29 @@ fun popupAlertDialog(context: Context, id: Int) {
         ActionBar.LayoutParams.WRAP_CONTENT,
         ActionBar.LayoutParams.WRAP_CONTENT
     )
-    popupDialog.setCancelable(false)
+    popupDialog.setCancelable(true)
     view.findViewById<View>(R.id.okay_btn).setOnClickListener {
         popupDialog.dismiss()
     }
     popupDialog.show()
 }
+// fun buildDialog(context: Context, id: Int) : AlertDialog{
+//    val view = View.inflate(context, id, null)
+//    val builder = AlertDialog.Builder(context)
+//    builder.setView(view)
+//
+//    val popupDialog = builder.create()
+//    popupDialog.show()
+//    popupDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+//    popupDialog.window?.setGravity(Gravity.CENTER)
+//    popupDialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+//    popupDialog.window?.setLayout(
+//        ActionBar.LayoutParams.WRAP_CONTENT,
+//        ActionBar.LayoutParams.WRAP_CONTENT
+//    )
+//
+//    return popupDialog
+//}
 
 fun encryptAndSavePassword(context: Context, strToEncrypt: String): ByteArray {
     val plainText = strToEncrypt.toByteArray(Charsets.UTF_8)
@@ -132,47 +144,47 @@ fun getSavedInitializationVector(context: Context): ByteArray {
     return initializationVector
 }
 
-fun logIn(username: String, password: String, context: Context) {
-    if (username.isEmpty() || password.isEmpty()) {
-        Toast.makeText(
-            context,
-            "Please fill the missing fields !",
-            Toast.LENGTH_SHORT
-        )
-            .show()
-
-    } else {
-        val apiService = RestApiService()
-        val loginInfo = LoginInfo(
-            username = username,
-            password = password
-        )
-
-        apiService.login(loginInfo) {
-            if (it != null) {
-                if (it.token != null) {
-                    Log.i("token", it.token)
-                    val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-                    val editor: SharedPreferences.Editor = sharedPref.edit()
-                    editor.putString("token", it.token)
-                    editor.putString("user_id", it.id.toString())
-                    editor.putString("firstname", it.firstname)
-                    editor.putString("lastname", it.lastname)
-                    editor.putString("phonenumber", it.phonenumber.toString())
-                    editor.putString("balance", it.balance.toString())
-                    editor.putString("picture", it?.picture)//because user may not have a picture
-                    editor.putString("username", username)
-                    encryptAndSavePassword(
-                        context,
-                        password
-                    ) // password will be encrypted and saved in shared preferences
-                    editor.putString("token", it.token)
-                    editor.apply()
-                    editor.commit()
-                } else {
-                    Log.i("Login Error", "Wrong username or password !")
-                }
-            }
-        }
-    }
-}
+//fun logIn(username: String, password: String, context: Context) {
+//    if (username.isEmpty() || password.isEmpty()) {
+//        Toast.makeText(
+//            context,
+//            "Please fill the missing fields !",
+//            Toast.LENGTH_SHORT
+//        )
+//            .show()
+//
+//    } else {
+//        val apiService = RestApiService()
+//        val loginInfo = LoginInfo(
+//            username = username,
+//            password = password
+//        )
+//
+//        apiService.login(loginInfo) {
+//            if (it != null) {
+//                if (it.token != null) {
+//                    Log.i("token", it.token)
+//                    val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+//                    val editor: SharedPreferences.Editor = sharedPref.edit()
+//                    editor.putString("token", it.token)
+//                    editor.putString("user_id", it.id.toString())
+//                    editor.putString("firstname", it.firstname)
+//                    editor.putString("lastname", it.lastname)
+//                    editor.putString("phonenumber", it.phonenumber.toString())
+//                    editor.putString("balance", it.balance.toString())
+//                    editor.putString("picture", it?.picture)//because user may not have a picture
+//                    editor.putString("username", username)
+//                    encryptAndSavePassword(
+//                        context,
+//                        password
+//                    ) // password will be encrypted and saved in shared preferences
+//                    editor.putString("token", it.token)
+//                    editor.apply()
+//                    editor.commit()
+//                } else {
+//                    Log.i("Login Error", "Wrong username or password !")
+//                }
+//            }
+//        }
+//    }
+//}
