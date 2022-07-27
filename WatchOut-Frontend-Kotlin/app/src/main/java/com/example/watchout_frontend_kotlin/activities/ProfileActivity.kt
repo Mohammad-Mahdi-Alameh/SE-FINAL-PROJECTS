@@ -100,6 +100,7 @@ class ProfileActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
+                public.encryptAndSavePassword(this,password.text.toString())
                 popupDialog.dismiss()
             }
         }
