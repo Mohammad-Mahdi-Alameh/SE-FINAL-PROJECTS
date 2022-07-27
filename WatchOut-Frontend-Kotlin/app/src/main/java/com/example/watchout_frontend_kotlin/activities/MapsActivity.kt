@@ -20,6 +20,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.watchout_frontend_kotlin.R
+import com.example.watchout_frontend_kotlin.api.ApiMainHeadersProvider
+import com.example.watchout_frontend_kotlin.api.RestApiService
 import com.example.watchout_frontend_kotlin.databinding.ActivityMapsBinding
 import com.example.watchout_frontend_kotlin.models.LocationInfo
 import com.example.watchout_frontend_kotlin.others.Constants
@@ -38,6 +40,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -51,6 +54,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var dbReference: DatabaseReference = database.getReference("Live-Tracking")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        getAllInfras()
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         hamburger = findViewById(R.id.hamburger_btn)
@@ -307,5 +311,27 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 
+    private fun getAllInfras() {
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        val jwtToken = sharedPref.getString("token","")
+        val apiService = RestApiService()
+        val authenticatedHeaders =
+            jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
+        if (authenticatedHeaders != null) {
+            apiService.getAllInfras(authenticatedHeaders,"") {
+                if (it?.size != null) {
+                    Log.i("All Infras", Gson().toJson(it))
+                    showResult(Gson().toJson(it))
+                } else {
+                    Log.i("Error", "Error")
 
+                }
+            }
+        }
+
+    }
+
+    private fun showResult(data: String) {
+        Log.i("All Infras", data)
+    }
 }
