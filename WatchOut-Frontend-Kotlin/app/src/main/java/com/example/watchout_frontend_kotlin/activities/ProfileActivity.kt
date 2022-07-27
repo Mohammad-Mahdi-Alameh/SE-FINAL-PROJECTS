@@ -4,7 +4,9 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -17,12 +19,24 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var profilePhoto: CircularImageView
     private lateinit var setPhoto: ImageView
     private lateinit var backArrow: ImageView
+    private lateinit var editPassword: TextView
+    private lateinit var firstName: EditText
+    private lateinit var lastName: EditText
+    private lateinit var phoneNumber: EditText
+    private lateinit var username: EditText
+    private lateinit var password: EditText
+    private lateinit var confirmPassword: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         profilePhoto = findViewById(R.id.profile_photo)
         setPhoto = findViewById(R.id.set_photo)
         backArrow = findViewById(R.id.back_arrow)
+        editPassword = findViewById(R.id.edit_password)
+        firstName = findViewById(R.id.first_name)
+        lastName = findViewById(R.id.last_name)
+        phoneNumber = findViewById(R.id.phone_number)
+        username = findViewById(R.id.username)
         profilePhoto.setOnClickListener {
             pickImageGallery()
         }
