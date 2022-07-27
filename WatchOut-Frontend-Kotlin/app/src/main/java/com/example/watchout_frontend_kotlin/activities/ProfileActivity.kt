@@ -3,8 +3,10 @@ package com.example.watchout_frontend_kotlin.activities
 import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.Gravity
 import android.view.View
 import android.widget.EditText
@@ -33,6 +35,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var confirmPassword: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val sharedPref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         setContentView(R.layout.activity_profile)
         profilePhoto = findViewById(R.id.profile_photo)
         setPhoto = findViewById(R.id.set_photo)
@@ -42,6 +45,11 @@ class ProfileActivity : AppCompatActivity() {
         lastName = findViewById(R.id.last_name)
         phoneNumber = findViewById(R.id.phone_number)
         username = findViewById(R.id.username)
+
+        firstName.setText(sharedPref.getString("firstname",""))
+        lastName.setText(sharedPref.getString("lastname",""))
+        phoneNumber.setText(sharedPref.getString("phonenumber",""))
+        username.setText(sharedPref.getString("username",""))
         profilePhoto.setOnClickListener {
             pickImageGallery()
         }
@@ -75,7 +83,17 @@ class ProfileActivity : AppCompatActivity() {
         )
         popupDialog.setCancelable(false)
         view.findViewById<View>(R.id.done_btn).setOnClickListener {
+            password = view.findViewById(R.id.password)
+            confirmPassword = view.findViewById(R.id.c_password)
+            if (password.text.toString() != confirmPassword.text.toString()) {
+                Toast.makeText(
+                    this,
+                    "Passwords don't match !",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
                 popupDialog.dismiss()
+            }
         }
         popupDialog.show()
     }
