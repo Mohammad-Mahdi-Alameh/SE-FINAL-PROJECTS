@@ -145,4 +145,30 @@ class RestApiService {
             }
         )
     }
+    fun editProfile(
+        authedHeaders: AuthenticatedHeaders,
+        editProfileInfo: EditProfileInfo,
+        onResult: (EditProfileResponse?) -> Unit
+    ) {
+        val retrofit = ServiceBuilder.buildService(LaravelRestApi::class.java)
+        retrofit.editProfile(authedHeaders, editProfileInfo).enqueue(
+            object : Callback<EditProfileResponse> {
+                override fun onFailure(call: Call<EditProfileResponse>, t: Throwable) {
+                    Log.d("error", "error in getting response")
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<EditProfileResponse>,
+                    response: Response<EditProfileResponse>
+                ) {
+                    val result = response.body()
+                    Log.d("message", response.toString())
+                    onResult(result)
+
+
+                }
+            }
+        )
+    }
 }
