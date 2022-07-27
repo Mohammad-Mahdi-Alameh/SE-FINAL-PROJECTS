@@ -34,14 +34,14 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var lastnameEdit: EditText
     private lateinit var phonenumberEdit: EditText
     private lateinit var usernameEdit: EditText
-    private lateinit var password: EditText
-    private lateinit var confirmPassword: EditText
+    private lateinit var passwordEdit: EditText
+    private lateinit var confirmPasswordEdit: EditText
     private lateinit var firstName: String
     private lateinit var lastName: String
     private lateinit var phoneNumber: String
     private lateinit var userName: String
     private lateinit var register: Button
-    private lateinit var  public : PublicFunctions
+    private lateinit var public: PublicFunctions
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sharedPref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -56,10 +56,10 @@ class ProfileActivity : AppCompatActivity() {
         phonenumberEdit = findViewById(R.id.phone_number)
         usernameEdit = findViewById(R.id.username)
         register = findViewById(R.id.register_btn)
-        firstName=firstnameEdit.text.toString()
-        lastName=lastnameEdit.text.toString()
-        phoneNumber=phonenumberEdit.text.toString()
-        userName=usernameEdit.text.toString()
+        firstName = firstnameEdit.text.toString()
+        lastName = lastnameEdit.text.toString()
+        phoneNumber = phonenumberEdit.text.toString()
+        userName = usernameEdit.text.toString()
         firstnameEdit.setText(sharedPref.getString("firstname", ""))
         lastnameEdit.setText(sharedPref.getString("lastname", ""))
         phonenumberEdit.setText(sharedPref.getString("phonenumber", ""))
@@ -78,10 +78,22 @@ class ProfileActivity : AppCompatActivity() {
             popupPasswordDialog(this, R.layout.password_dialog)
         }
         register.setOnClickListener {
-            editor.putString("firstname", firstName)
-            editor.putString("lastname", lastName)
-            editor.putString("phonenumber", phoneNumber)
-            editor.putString("username", userName)
+            if (firstName.isEmpty() || lastName.isEmpty() || phoneNumber.isEmpty() ||
+                userName.isEmpty()
+            ) {
+
+                Toast.makeText(
+                    applicationContext,
+                    "Please fill the missing fields !",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            } else {
+                editor.putString("firstname", firstName)
+                editor.putString("lastname", lastName)
+                editor.putString("phonenumber", phoneNumber)
+                editor.putString("username", userName)
+            }
         }
 
 
@@ -102,21 +114,44 @@ class ProfileActivity : AppCompatActivity() {
             ActionBar.LayoutParams.WRAP_CONTENT
         )
         popupDialog.setCancelable(false)
-        password = view.findViewById(R.id.password)
-        confirmPassword = view.findViewById(R.id.c_password)
-        password.setText(public.getDecryptedPassword(this))
-        confirmPassword.setText(public.getDecryptedPassword(this))
+        passwordEdit = view.findViewById(R.id.password)
+        confirmPasswordEdit = view.findViewById(R.id.c_password)
+        passwordEdit.setText(public.getDecryptedPassword(this))
+        confirmPasswordEdit.setText(public.getDecryptedPassword(this))
+        val password = passwordEdit.text.toString()
+        val confirmPassword = confirmPasswordEdit.text.toString()
         view.findViewById<View>(R.id.done_btn).setOnClickListener {
-            if (password.text.toString() != confirmPassword.text.toString()) {
+            if (password != confirmPassword) {
                 Toast.makeText(
                     this,
                     "Passwords don't match !",
                     Toast.LENGTH_SHORT
                 ).show()
-            } else {
-                public.encryptAndSavePassword(this,password.text.toString())
-                popupDialog.dismiss()
-            }
+            } else { //all these validator functions should be public function in
+                // PublicFunctions class cause they are written here and in register activity so to avoid
+                // redundancy and I will fix later
+                if (!phoneNumber.all { char -> char.isDigit() }) {
+                    Toast.makeText(
+                        applicationContext,
+                        "Phone number can contain only numbers !",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                } else {
+                    if (password.length < 6) {
+                        Toast.makeText(
+                            this,
+                            "Password too short ! It should be minimum six characters",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        public.encryptAndSavePassword(this, password)
+                        popupDialog.dismiss()
+                    }
+                }
+            }//all these validator functions should be public function in
+            // PublicFunctions class cause they are written here and in register activity so to avoid
+            // redundancy and I will fix later
         }
         popupDialog.show()
     }
@@ -141,6 +176,7 @@ class ProfileActivity : AppCompatActivity() {
 
         }
     }
+
     private fun requestStoragePermissions() {
         ActivityCompat.requestPermissions(
             this,
@@ -148,6 +184,7 @@ class ProfileActivity : AppCompatActivity() {
             Constants.REQUEST_STORAGE
         )
     }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
