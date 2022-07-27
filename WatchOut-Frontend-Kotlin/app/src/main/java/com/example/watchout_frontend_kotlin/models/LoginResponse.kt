@@ -11,6 +11,6 @@ data class LoginResponse (
     @SerializedName("lastname") val lastname: String?,
     @SerializedName("phonenumber") val phonenumber: Int?,
     @SerializedName("balance") val balance: Int?,
+    @SerializedName("total_reports") val totalReports: Int?,
     @SerializedName("picture") val picture: String?,
-    @SerializedName("is_admin") val is_admin: String?
 )
