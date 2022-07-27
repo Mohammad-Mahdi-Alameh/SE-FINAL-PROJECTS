@@ -16,6 +16,9 @@ import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 
+
+class PublicFunctions{
+
 fun popupAlertDialog(context: Context, id: Int) {
     val view = View.inflate(context, id, null)
     val builder = AlertDialog.Builder(context)
@@ -143,7 +146,7 @@ fun getSavedInitializationVector(context: Context): ByteArray {
     val initializationVector = ois.readObject() as ByteArray
     return initializationVector
 }
-
+}
 //fun logIn(username: String, password: String, context: Context) {
 //    if (username.isEmpty() || password.isEmpty()) {
 //        Toast.makeText(

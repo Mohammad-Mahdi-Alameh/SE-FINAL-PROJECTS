@@ -23,7 +23,7 @@ import androidx.core.app.ActivityCompat
 import com.example.watchout_frontend_kotlin.R
 import com.example.watchout_frontend_kotlin.others.Constants
 import com.example.watchout_frontend_kotlin.others.Constants.IMAGE_REQUEST_CODE
-import com.example.watchout_frontend_kotlin.others.getDecryptedPassword
+import com.example.watchout_frontend_kotlin.others.PublicFunctions
 import com.mikhaellopez.circularimageview.CircularImageView
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -39,6 +39,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var username: EditText
     private lateinit var password: EditText
     private lateinit var confirmPassword: EditText
+    private lateinit var  public : PublicFunctions
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sharedPref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -89,8 +90,8 @@ class ProfileActivity : AppCompatActivity() {
         popupDialog.setCancelable(false)
         password = view.findViewById(R.id.password)
         confirmPassword = view.findViewById(R.id.c_password)
-        password.setText(getDecryptedPassword(this))
-        confirmPassword.setText(getDecryptedPassword(this))
+        password.setText(public.getDecryptedPassword(this))
+        confirmPassword.setText(public.getDecryptedPassword(this))
         view.findViewById<View>(R.id.done_btn).setOnClickListener {
             if (password.text.toString() != confirmPassword.text.toString()) {
                 Toast.makeText(

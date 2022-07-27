@@ -25,7 +25,7 @@ import com.example.watchout_frontend_kotlin.api.RestApiService
 import com.example.watchout_frontend_kotlin.databinding.ActivityMapsBinding
 import com.example.watchout_frontend_kotlin.models.LocationInfo
 import com.example.watchout_frontend_kotlin.others.Constants
-import com.example.watchout_frontend_kotlin.others.popupAlertDialog
+import com.example.watchout_frontend_kotlin.others.PublicFunctions
 import com.example.watchout_frontend_kotlin.services.TrackingService
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -50,6 +50,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var navigationView: NavigationView
     private lateinit var hamburger: ImageView
     private lateinit var coins: TextView
+    private lateinit var public: PublicFunctions
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var dbReference: DatabaseReference = database.getReference("Live-Tracking")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -106,22 +107,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
             bottomSheetView.findViewById<View>(R.id.bump).setOnClickListener {
                 bottomSheetDialog.dismiss()
-                popupAlertDialog(this, R.layout.alert_dialog)
+                public.popupAlertDialog(this, R.layout.alert_dialog)
                 addCoins()
             }
             bottomSheetView.findViewById<View>(R.id.turn).setOnClickListener {
                 bottomSheetDialog.dismiss()
-                popupAlertDialog(this, R.layout.alert_dialog)
+                public.popupAlertDialog(this, R.layout.alert_dialog)
                 addCoins()
             }
             bottomSheetView.findViewById<View>(R.id.hole).setOnClickListener {
                 bottomSheetDialog.dismiss()
-                popupAlertDialog(this, R.layout.alert_dialog)
+                public.popupAlertDialog(this, R.layout.alert_dialog)
                 addCoins()
             }
             bottomSheetView.findViewById<View>(R.id.blockage).setOnClickListener {
                 bottomSheetDialog.dismiss()
-                popupAlertDialog(this, R.layout.alert_dialog)
+                public.popupAlertDialog(this, R.layout.alert_dialog)
                 addCoins()
             }
 

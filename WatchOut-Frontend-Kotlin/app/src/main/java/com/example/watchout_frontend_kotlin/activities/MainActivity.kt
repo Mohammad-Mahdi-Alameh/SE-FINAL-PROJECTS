@@ -16,11 +16,12 @@ import com.example.watchout_frontend_kotlin.R
 import com.example.watchout_frontend_kotlin.api.ApiMainHeadersProvider
 import com.example.watchout_frontend_kotlin.api.RestApiService
 import com.example.watchout_frontend_kotlin.models.LoginInfo
-import com.example.watchout_frontend_kotlin.others.encryptAndSavePassword
+import com.example.watchout_frontend_kotlin.others.PublicFunctions
 
 class MainActivity : AppCompatActivity() {
     private lateinit var  username : EditText
     private lateinit var  password : EditText
+    private lateinit var  public : PublicFunctions
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +71,7 @@ class MainActivity : AppCompatActivity() {
                         editor.putString("total_reports", it?.totalReports.toString())
                         editor.putString("picture", it?.picture)
                         editor.putString("username", username)
-                        encryptAndSavePassword(
+                        public.encryptAndSavePassword(
                             this,
                             password
                         ) // password will be encrypted and saved in shared preferences
