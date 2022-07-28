@@ -121,7 +121,7 @@ class RestApiService {
 
     fun getAllInfras(
         authedHeaders: AuthenticatedHeaders,
-        user_id: String,
+        user_id: Int?,
         onResult: (List<GetInfrasResponse>?) -> Unit
     ) {
         val retrofit = ServiceBuilder.buildService(LaravelRestApi::class.java)
@@ -164,6 +164,32 @@ class RestApiService {
                 ) {
                     val result = response.body()
                     Log.d("message", response.toString())
+                    onResult(result)
+
+
+                }
+            }
+        )
+    }
+    fun addCoins(
+        authedHeaders: AuthenticatedHeaders,
+        user_id: Int,
+        onResult: (AddCoinsResponse?) -> Unit
+    ) {
+        val retrofit = ServiceBuilder.buildService(LaravelRestApi::class.java)
+        retrofit.addCoins(authedHeaders, user_id).enqueue(
+            object : Callback<AddCoinsResponse> {
+                override fun onFailure(call: Call<AddCoinsResponse>, t: Throwable) {
+                    Log.d("error", "error in getting response")
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<AddCoinsResponse>,
+                    response: Response<AddCoinsResponse>
+                ) {
+                    val result = response.body()
+                    Log.d("Result", response.toString())
                     onResult(result)
 
 
