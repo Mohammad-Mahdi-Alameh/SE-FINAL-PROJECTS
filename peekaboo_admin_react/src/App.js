@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./App.scss";
 import Home from "./pages/home/Home";
 import Map from "./pages/map/Map";
@@ -11,7 +11,6 @@ import Sidebar from "./components/sidebar/Sidebar";
 
 function App() {
   return (
-    <BrowserRouter>
       <div className="App">
         <Sidebar />
         <div className="container">
@@ -31,7 +30,6 @@ function App() {
           </Routes>
         </div>
       </div>
-    </BrowserRouter>
   );
 }
 
