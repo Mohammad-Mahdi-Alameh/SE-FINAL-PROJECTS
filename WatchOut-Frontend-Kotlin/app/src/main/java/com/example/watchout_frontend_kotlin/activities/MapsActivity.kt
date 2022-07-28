@@ -24,6 +24,7 @@ import com.example.watchout_frontend_kotlin.R
 import com.example.watchout_frontend_kotlin.api.ApiMainHeadersProvider
 import com.example.watchout_frontend_kotlin.api.RestApiService
 import com.example.watchout_frontend_kotlin.databinding.ActivityMapsBinding
+import com.example.watchout_frontend_kotlin.models.GetNearInfrasInfo
 import com.example.watchout_frontend_kotlin.models.LocationInfo
 import com.example.watchout_frontend_kotlin.models.ReportInfo
 import com.example.watchout_frontend_kotlin.others.Constants
@@ -70,7 +71,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         coins = findViewById(R.id.coins)
-        val balance = sharedPref.getString("balance","0")
+        val balance = sharedPref.getString("balance", "0")
         coins.text = balance
         report = findViewById(R.id.report_btn)
         hamburger = findViewById(R.id.hamburger_btn)
@@ -280,7 +281,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
 
-                if (locationLat != null && locationLong != null) {
+                if (locationLat != null && locationLong != null && speed != null) {
                     // create a LatLng object from location
                     val latLng = LatLng(locationLat, locationLong)
                     //create a marker at the read location and display it on the map
@@ -292,116 +293,119 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     val update = CameraUpdateFactory.newLatLngZoom(latLng, 16.0f)
                     //update the camera with the CameraUpdate object
                     mMap.moveCamera(update)
-                } else {
-                    // if location is null , log an error message
-                    Log.e("Error", "user location cannot be found")
+
+
+
                 }
-            } else {
-                // if location is null , log an error message
-                Log.e("Error", "user location cannot be found")
-            }
-        }
+
+} else {
+    // if location is null , log an error message
+    Log.e("Error", "user location cannot be found")
+}
+}
 
 
-        // show this toast if there is an error while reading from the database
-        override fun onCancelled(error: DatabaseError) {
-            Toast.makeText(applicationContext, "Could not read from database", Toast.LENGTH_LONG)
-                .show()
-        }
+// show this toast if there is an error while reading from the database
+override fun onCancelled(error: DatabaseError) {
+    Toast.makeText(applicationContext, "Could not read from database", Toast.LENGTH_LONG)
+        .show()
+}
 
-    }
 
-    private fun bitmapFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
-        // below line is use to generate a drawable.
-        val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
+}
 
-        // below line is use to set bounds to our vector drawable.
-        vectorDrawable!!.setBounds(
-            0,
-            0,
-            vectorDrawable.intrinsicWidth,
-            vectorDrawable.intrinsicHeight
-        )
+private fun bitmapFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
+    // below line is use to generate a drawable.
+    val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
 
-        // below line is use to create a bitmap for our
-        // drawable which we have added.
-        val bitmap = Bitmap.createBitmap(
-            vectorDrawable.intrinsicWidth,
-            vectorDrawable.intrinsicHeight,
-            Bitmap.Config.ARGB_8888
-        )
+    // below line is use to set bounds to our vector drawable.
+    vectorDrawable!!.setBounds(
+        0,
+        0,
+        vectorDrawable.intrinsicWidth,
+        vectorDrawable.intrinsicHeight
+    )
 
-        // below line is use to add bitmap in our canvas.
-        val canvas = Canvas(bitmap)
+    // below line is use to create a bitmap for our
+    // drawable which we have added.
+    val bitmap = Bitmap.createBitmap(
+        vectorDrawable.intrinsicWidth,
+        vectorDrawable.intrinsicHeight,
+        Bitmap.Config.ARGB_8888
+    )
 
-        // below line is use to draw our
-        // vector drawable in canvas.
-        vectorDrawable.draw(canvas)
+    // below line is use to add bitmap in our canvas.
+    val canvas = Canvas(bitmap)
 
-        // after generating our bitmap we are returning our bitmap.
-        return BitmapDescriptorFactory.fromBitmap(bitmap)
-    }
+    // below line is use to draw our
+    // vector drawable in canvas.
+    vectorDrawable.draw(canvas)
 
-    private fun getAllInfras() {
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-        val jwtToken = sharedPref.getString("token", "")
+    // after generating our bitmap we are returning our bitmap.
+    return BitmapDescriptorFactory.fromBitmap(bitmap)
+}
+
+
+private fun getAllInfras() {
+    val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+    val jwtToken = sharedPref.getString("token", "")
 //        val id =sharedPref.getString("user_id","")
-        val apiService = RestApiService()
-        val authenticatedHeaders =
-            jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
-        if (authenticatedHeaders != null) {
-            apiService.getAllInfras(authenticatedHeaders, null) {
-                if (it?.size != null) {
-                    Log.i("All Infras", Gson().toJson(it))
-                    setMarkers(Gson().toJson(it))
-                } else {
-                    Log.i("Error", "Error")
+    val apiService = RestApiService()
+    val authenticatedHeaders =
+        jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
+    if (authenticatedHeaders != null) {
+        apiService.getAllInfras(authenticatedHeaders) {
+            if (it?.size != null) {
+                Log.i("All Infras", Gson().toJson(it))
+                setMarkers(Gson().toJson(it))
+            } else {
+                Log.i("Error", "Error")
 
-                }
             }
         }
-
     }
 
-    private fun setMarkers(data: String) {
-        val array = JSONArray(data)
-        (0 until array.length()).forEach {
-            var infra = array.getJSONObject(it)
-            var latLng = LatLng(infra["latitude"] as Double, infra["latitude"] as Double)
-            Log.i("lat", infra["latitude"].toString() + infra["longitude"].toString())
-            Log.i("lng", infra["longitude"].toString())
-            if (infra["type"] != null) {
-                when (infra["type"]) {
-                    "hole" -> {
-                        mMap.addMarker(
-                            MarkerOptions().position(latLng)
-                                .icon(bitmapFromVector(applicationContext, R.drawable.ic_hole_icon))
-                        )
-                    }
-                    "blockage" -> {
-                        mMap.addMarker(
-                            MarkerOptions().position(latLng)
-                                .icon(bitmapFromVector(applicationContext, R.drawable.ic_turn_icon))
-                        )
-                    }
-                    "turn" -> {
-                        mMap.addMarker(
-                            MarkerOptions().position(latLng)
-                                .icon(bitmapFromVector(applicationContext, R.drawable.ic_turn_icon))
-                        )
+}
 
-                    }
-                    "bump" -> {
-                        mMap.addMarker(
-                            MarkerOptions().position(latLng)
-                                .icon(bitmapFromVector(applicationContext, R.drawable.ic_bump_icon))
-                        )
-
-                    }
+private fun setMarkers(data: String) {
+    val array = JSONArray(data)
+    (0 until array.length()).forEach {
+        var infra = array.getJSONObject(it)
+        var latLng = LatLng(infra["latitude"] as Double, infra["latitude"] as Double)
+        Log.i("lat", infra["latitude"].toString() + infra["longitude"].toString())
+        Log.i("lng", infra["longitude"].toString())
+        if (infra["type"] != null) {
+            when (infra["type"]) {
+                "hole" -> {
+                    mMap.addMarker(
+                        MarkerOptions().position(latLng)
+                            .icon(bitmapFromVector(applicationContext, R.drawable.ic_hole_icon))
+                    )
                 }
+                "blockage" -> {
+                    mMap.addMarker(
+                        MarkerOptions().position(latLng)
+                            .icon(bitmapFromVector(applicationContext, R.drawable.ic_turn_icon))
+                    )
+                }
+                "turn" -> {
+                    mMap.addMarker(
+                        MarkerOptions().position(latLng)
+                            .icon(bitmapFromVector(applicationContext, R.drawable.ic_turn_icon))
+                    )
 
+                }
+                "bump" -> {
+                    mMap.addMarker(
+                        MarkerOptions().position(latLng)
+                            .icon(bitmapFromVector(applicationContext, R.drawable.ic_bump_icon))
+                    )
+
+                }
             }
+
         }
+    }
 
 //        array?.let {
 //            for (infra in it) {
@@ -409,7 +413,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 //                val latLng = LatLng(json["latitude"] as Double, json["longitude"] as Double)
 //            }
 //        }
-    }
+}
 //    private fun setMarkers(data : String){
 //        val latLng = LatLng(location.latitude, location.longitude)
 //        // create a marker at the exact location
@@ -417,74 +421,118 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 //            .title("You are currently here!"))
 //    }
 
-    private fun getInfraType(v: View): String {
-        val type = ""
-        if (v != null) {
-            when (v.id) {
-                R.id.hole -> {
-                    return type.replace("", "hole")
-                }
-                R.id.turn -> {
-                    return type.replace("", "turn")
-                }
-                R.id.bump -> {
-                    return type.replace("", "bump")
-                }
-                R.id.blockage -> {
-                    return type.replace("", "blockage")
-                }
+private fun getInfraType(v: View): String {
+    val type = ""
+    if (v != null) {
+        when (v.id) {
+            R.id.hole -> {
+                return type.replace("", "hole")
+            }
+            R.id.turn -> {
+                return type.replace("", "turn")
+            }
+            R.id.bump -> {
+                return type.replace("", "bump")
+            }
+            R.id.blockage -> {
+                return type.replace("", "blockage")
             }
         }
-        return type
     }
+    return type
+}
 
-    private fun report(type: String, latitude: Double, longitude: Double) {
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-        val jwtToken = sharedPref.getString("token", "")
-        val apiService = RestApiService()
+private fun report(type: String, latitude: Double, longitude: Double) {
+    val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+    val jwtToken = sharedPref.getString("token", "")
+    val apiService = RestApiService()
+    val authenticatedHeaders =
+        jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
+    if (authenticatedHeaders != null) {
+        val reportInfo = ReportInfo(
+            latitude = latitude,
+            longitude = longitude,
+            type = type,
+            id = sharedPref.getString("user_id", "")?.toInt()
+        )
         val authenticatedHeaders =
-            jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
-        if (authenticatedHeaders != null) {
-            val reportInfo = ReportInfo(
-                latitude = latitude,
-                longitude = longitude,
-                type = type,
-                id = sharedPref.getString("user_id", "")?.toInt()
-            )
-            val authenticatedHeaders =
-                ApiMainHeadersProvider.getAuthenticatedHeaders("")
-            apiService.report(authenticatedHeaders, reportInfo) {
-                if (it?.message == "Infrastructural problem reported successfully") {
-                    Log.i("Report Succeeded", it.message)
-                } else {
-
-                    Log.i("Error", "Report Failed !")
-                }
-            }
-        }
-    }
-
-    private fun setupLocClient() {
-        fusedLocClient =
-            LocationServices.getFusedLocationProviderClient(this)
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun reportFunctionCaller(v: View) {
-        fusedLocClient.lastLocation.addOnCompleteListener {
-            // lastLocation is a task running in the background
-            val location = it.result //obtain location
-            //reference to the database
-            if (location != null) {
-                val type = getInfraType(v)
-                report(type, location.latitude, location.longitude)
+            ApiMainHeadersProvider.getAuthenticatedHeaders("")
+        apiService.report(authenticatedHeaders, reportInfo) {
+            if (it?.message == "Infrastructural problem reported successfully") {
+                Log.i("Report Succeeded", it.message)
             } else {
-                // if location is null , log an error message
-                Log.e("error", "No location found")
+
+                Log.i("Error", "Report Failed !")
             }
-
-
         }
     }
+}
 
+private fun setupLocClient() {
+    fusedLocClient =
+        LocationServices.getFusedLocationProviderClient(this)
+}
+
+@SuppressLint("MissingPermission")
+private fun reportFunctionCaller(v: View) {
+    fusedLocClient.lastLocation.addOnCompleteListener {
+        // lastLocation is a task running in the background
+        val location = it.result //obtain location
+        //reference to the database
+        if (location != null) {
+            val type = getInfraType(v)
+            report(type, location.latitude, location.longitude)
+        } else {
+            // if location is null , log an error message
+            Log.e("error", "No location found")
+        }
+
+
+    }
+}
+
+private fun getDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+    val theta = lon1 - lon2
+    var dist = (Math.sin(deg2rad(lat1))
+            * Math.sin(deg2rad(lat2))
+            + (Math.cos(deg2rad(lat1))
+            * Math.cos(deg2rad(lat2))
+            * Math.cos(deg2rad(theta))))
+    dist = Math.acos(dist)
+    dist = rad2deg(dist)
+    dist *= 60 * 1.1515
+    dist *= 1.609344   //transform dist from miles to km
+    return dist
+}
+
+private fun deg2rad(deg: Double): Double {
+    return deg * Math.PI / 180.0
+}
+
+private fun rad2deg(rad: Double): Double {
+    return rad * 180.0 / Math.PI
+}
+
+private fun getNearInfras(latitude: Double, longitude: Double) {
+    val jwtToken = sharedPref.getString("token", "")
+    val apiService = RestApiService()
+    val authenticatedHeaders =
+        jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
+    if (authenticatedHeaders != null) {
+        val getNearInfrasInfo = GetNearInfrasInfo(
+            base_latitude = latitude,
+            base_longitude = longitude
+        )
+        apiService.getNearInfras(authenticatedHeaders, getNearInfrasInfo) {
+            if (it?.size != null) {
+                Log.i("Near Infras", Gson().toJson(it))
+                editor.putString("Near Infras", Gson().toJson(it))
+            } else {
+                Log.i("Error", "Error")
+
+            }
+        }
+
+    }
+}
 }
