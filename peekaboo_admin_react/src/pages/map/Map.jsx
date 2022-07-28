@@ -4,7 +4,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import compass from "../../compass.svg"
 import mapStyles from "../../mapStyles"
 import Navbar from "../../components/navbar/Navbar";
-import React, { useState, useCallback, useRef ,useEffect} from "react"
+import React, { useState, useCallback, useRef, useEffect } from "react"
 import { formatRelative } from "date-fns";
 import { base_url } from "../../Constants";
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
@@ -33,32 +33,39 @@ const Map = () => {
         getLiveLocation();
     });
 
-        //Infras : Infrastructural problems
-        const getAllInfras = async () => {
-            const res = await fetch(base_url + "/get_all_infras");
-            const data = await res.json();
-            return data;
-          };
-        
-function getLiveLocation(){
-    navigator.geolocation.getCurrentPosition(
-        (position) => {
-            panTo({
-                lat : position.coords.latitude,
-                lng : position.coords.longitude
-            });
-        },
-        () => null
-    );
-}        
-        
-          useEffect(() => {
-            const getData = async () => {
-              const infrasFromServer = await getAllInfras();
-              setInfras(infrasFromServer);
-            };
-            getData();
-          }, []);
+    //Infras : Infrastructural problems
+    const getAllInfras = async () => {
+        const res = await fetch(base_url + "/get_all_infras");
+        const data = await res.json();
+        return data;
+    };
+    useEffect(() => {
+        const getData = async () => {
+            const infrasFromServer = await getAllInfras();
+            setInfras(infrasFromServer);
+            ///////
+        };
+        getData();
+    }, []);
+
+    useEffect(() => {
+
+        console.log(infras)
+
+    }, [infras]);
+
+    function getLiveLocation() {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                panTo({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                });
+            },
+            () => null
+        );
+    }
+
 
     const panTo = React.useCallback(({ lat, lng }) => {
         mapRef.current.panTo({ lat, lng });
