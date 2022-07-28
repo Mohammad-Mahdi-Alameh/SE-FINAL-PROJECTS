@@ -293,8 +293,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     val update = CameraUpdateFactory.newLatLngZoom(latLng, 16.0f)
                     //update the camera with the CameraUpdate object
                     mMap.moveCamera(update)
+                    val nearInfras = getNearInfras(locationLat, locationLong)
+                    val array = JSONArray(nearInfras)
+                    (0 until array.length()).forEach {
+                        var infra = array.getJSONObject(it)
+                        val timeRemaining = getDistance(
+                            locationLat,
+                            locationLong,
+                            infra["latitude"] as Double,
+                            infra["longitude"] as Double
+                        ) * 1000 / speed
+                        if (timeRemaining < 7) {
+//                                sendNotification()
+                            Log.i("hamdella", "hamdella")
+                        }
 
-
+                    }
+                } else {
+                    Log.i("Error", "Error")
 
                 }
 
@@ -536,3 +552,4 @@ private fun getNearInfras(latitude: Double, longitude: Double) {
     }
 }
 }
+
