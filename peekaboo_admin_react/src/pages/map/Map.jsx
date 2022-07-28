@@ -11,6 +11,9 @@ import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocom
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import { Search } from "@mui/icons-material";
+import { indigo } from "@mui/material/colors";
+
+////
 const libraries = ["places"]
 const mapContainerStyle = {
     width: "100%",
@@ -51,6 +54,17 @@ const Map = () => {
     useEffect(() => {
 
         console.log(infras)
+        infras.map(infra => {
+            setMarkers((current) => [
+                ...current,
+                {
+                    lat: infra.latitude,
+                    lng: infra.longitude,
+                    time: new Date()
+                }
+            ])
+        })
+
 
     }, [infras]);
 
