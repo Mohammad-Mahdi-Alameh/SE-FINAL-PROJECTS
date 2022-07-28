@@ -31,17 +31,24 @@ interface LaravelRestApi {
         @Body getNearInfrasInfo: GetNearInfrasInfo
     ): Call<List<GetInfrasResponse>>
 
-    @GET("/api/v1/user/getAllInfras/")
+    @GET("/api/v1/user/get_all_infras")
     fun getAllInfras(
         @HeaderMap authedHeaders: AuthenticatedHeaders,
-        @Query("user_id") user_id: String?,
+        @Query("user_id") user_id: Int?,
     ): Call<List<GetInfrasResponse>>
 
-    @PUT("/api/v1/user/editProfile")
+    @PUT("/api/v1/user/edit_profile")
     fun editProfile(
         @HeaderMap authedHeaders: AuthenticatedHeaders,
         @Body editProfileInfo: EditProfileInfo
     ): Call<EditProfileResponse>
+
+    @PUT("/api/v1/user/addCoins")
+    fun addCoins(
+        @HeaderMap authedHeaders: AuthenticatedHeaders,
+        @Query("user_id") user_id: Int,
+    ): Call<AddCoinsResponse>
+
 
 
 }
