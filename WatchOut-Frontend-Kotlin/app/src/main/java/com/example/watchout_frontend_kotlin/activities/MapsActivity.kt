@@ -60,9 +60,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var public = PublicFunctions()
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var dbReference: DatabaseReference = database.getReference("Live-Tracking")
+    private lateinit var sharedPref: SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupLocClient()
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        editor = sharedPref.edit()
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         report = findViewById(R.id.report_btn)
@@ -154,13 +158,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun addCoins() {
-        //to implement later :
-        // 1)store new value in shared preferences
-        // 2)call api to add it to database
-        // 3)pass userId as a parameter
-        var balance = coins.text.toString().toInt()
-        balance += 5
-        coins.text = balance.toString()
+        val jwtToken = sharedPref.getString("token", "")
+        val userId = sharedPref.getString("user_id", "")?.toInt()
+        val apiService = RestApiService()
+        val authenticatedHeaders =
+            jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
+        if (authenticatedHeaders != null) {
+            if (userId != null) {
+                apiService.addCoins(authenticatedHeaders, userId) {
+                    if (it?.message == "added successfully") {
+                        var balance = coins.text.toString().toInt()
+                        balance += 5
+                        coins.text = balance.toString()
+                        editor.putString("balance", balance.toString())
+                        editor.apply()
+                        editor.commit()
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -350,26 +366,34 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         (0 until array.length()).forEach {
             var infra = array.getJSONObject(it)
             var latLng = LatLng(infra["latitude"] as Double, infra["latitude"] as Double)
-            Log.i("lat",infra["latitude"].toString() + infra["longitude"].toString())
-            Log.i("lng",infra["longitude"].toString())
+            Log.i("lat", infra["latitude"].toString() + infra["longitude"].toString())
+            Log.i("lng", infra["longitude"].toString())
             if (infra["type"] != null) {
                 when (infra["type"]) {
-                    "hole"->{
-                        mMap.addMarker(MarkerOptions().position(latLng).
-                        icon(bitmapFromVector(applicationContext, R.drawable.ic_hole_icon)))
+                    "hole" -> {
+                        mMap.addMarker(
+                            MarkerOptions().position(latLng)
+                                .icon(bitmapFromVector(applicationContext, R.drawable.ic_hole_icon))
+                        )
                     }
-                    "blockage"->{
-                        mMap.addMarker(MarkerOptions().position(latLng).
-                        icon(bitmapFromVector(applicationContext, R.drawable.ic_turn_icon)))
+                    "blockage" -> {
+                        mMap.addMarker(
+                            MarkerOptions().position(latLng)
+                                .icon(bitmapFromVector(applicationContext, R.drawable.ic_turn_icon))
+                        )
                     }
-                    "turn"->{
-                        mMap.addMarker(MarkerOptions().position(latLng).
-                        icon(bitmapFromVector(applicationContext, R.drawable.ic_turn_icon)))
+                    "turn" -> {
+                        mMap.addMarker(
+                            MarkerOptions().position(latLng)
+                                .icon(bitmapFromVector(applicationContext, R.drawable.ic_turn_icon))
+                        )
 
                     }
-                    "bump"->{
-                        mMap.addMarker(MarkerOptions().position(latLng).
-                        icon(bitmapFromVector(applicationContext, R.drawable.ic_bump_icon)))
+                    "bump" -> {
+                        mMap.addMarker(
+                            MarkerOptions().position(latLng)
+                                .icon(bitmapFromVector(applicationContext, R.drawable.ic_bump_icon))
+                        )
 
                     }
                 }
@@ -383,7 +407,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 //                val latLng = LatLng(json["latitude"] as Double, json["longitude"] as Double)
 //            }
 //        }
-}
+    }
 //    private fun setMarkers(data : String){
 //        val latLng = LatLng(location.latitude, location.longitude)
 //        // create a marker at the exact location
@@ -391,74 +415,74 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 //            .title("You are currently here!"))
 //    }
 
-private fun getInfraType(v: View): String {
-    val type = ""
-    if (v != null) {
-        when (v.id) {
-            R.id.hole -> {
-                return type.replace("", "hole")
-            }
-            R.id.turn -> {
-                return type.replace("", "turn")
-            }
-            R.id.bump -> {
-                return type.replace("", "bump")
-            }
-            R.id.blockage -> {
-                return type.replace("", "blockage")
+    private fun getInfraType(v: View): String {
+        val type = ""
+        if (v != null) {
+            when (v.id) {
+                R.id.hole -> {
+                    return type.replace("", "hole")
+                }
+                R.id.turn -> {
+                    return type.replace("", "turn")
+                }
+                R.id.bump -> {
+                    return type.replace("", "bump")
+                }
+                R.id.blockage -> {
+                    return type.replace("", "blockage")
+                }
             }
         }
+        return type
     }
-    return type
-}
 
-private fun report(type: String, latitude: Double, longitude: Double) {
-    val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-    val jwtToken = sharedPref.getString("token", "")
-    val apiService = RestApiService()
-    val authenticatedHeaders =
-        jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
-    if (authenticatedHeaders != null) {
-        val reportInfo = ReportInfo(
-            latitude = latitude,
-            longitude = longitude,
-            type = type,
-            id = sharedPref.getString("user_id", "")?.toInt()
-        )
+    private fun report(type: String, latitude: Double, longitude: Double) {
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        val jwtToken = sharedPref.getString("token", "")
+        val apiService = RestApiService()
         val authenticatedHeaders =
-            ApiMainHeadersProvider.getAuthenticatedHeaders("")
-        apiService.report(authenticatedHeaders, reportInfo) {
-            if (it?.message == "Infrastructural problem reported successfully") {
-                Log.i("Report Succeeded", it.message)
-            } else {
+            jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
+        if (authenticatedHeaders != null) {
+            val reportInfo = ReportInfo(
+                latitude = latitude,
+                longitude = longitude,
+                type = type,
+                id = sharedPref.getString("user_id", "")?.toInt()
+            )
+            val authenticatedHeaders =
+                ApiMainHeadersProvider.getAuthenticatedHeaders("")
+            apiService.report(authenticatedHeaders, reportInfo) {
+                if (it?.message == "Infrastructural problem reported successfully") {
+                    Log.i("Report Succeeded", it.message)
+                } else {
 
-                Log.i("Error", "Report Failed !")
+                    Log.i("Error", "Report Failed !")
+                }
             }
         }
     }
-}
 
-private fun setupLocClient() {
-    fusedLocClient =
-        LocationServices.getFusedLocationProviderClient(this)
-}
-
-@SuppressLint("MissingPermission")
-private fun reportFunctionCaller(v: View) {
-    fusedLocClient.lastLocation.addOnCompleteListener {
-        // lastLocation is a task running in the background
-        val location = it.result //obtain location
-        //reference to the database
-        if (location != null) {
-            val type = getInfraType(v)
-            report(type, location.latitude, location.longitude)
-        } else {
-            // if location is null , log an error message
-            Log.e("error", "No location found")
-        }
-
-
+    private fun setupLocClient() {
+        fusedLocClient =
+            LocationServices.getFusedLocationProviderClient(this)
     }
-}
+
+    @SuppressLint("MissingPermission")
+    private fun reportFunctionCaller(v: View) {
+        fusedLocClient.lastLocation.addOnCompleteListener {
+            // lastLocation is a task running in the background
+            val location = it.result //obtain location
+            //reference to the database
+            if (location != null) {
+                val type = getInfraType(v)
+                report(type, location.latitude, location.longitude)
+            } else {
+                // if location is null , log an error message
+                Log.e("error", "No location found")
+            }
+
+
+        }
+    }
 
 }
