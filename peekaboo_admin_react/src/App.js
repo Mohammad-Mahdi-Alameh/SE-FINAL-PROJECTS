@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route,useNavigate } from "react-router-dom";
 import "./App.scss";
 import Home from "./pages/home/Home";
 import Map from "./pages/map/Map";
@@ -10,6 +10,13 @@ import Navbar from "./components/navbar/Navbar";
 import Sidebar from "./components/sidebar/Sidebar";
 
 function App() {
+  let navigate = useNavigate();
+  let token=localStorage.getItem("token");
+  useEffect(() => {
+  
+  if(!token){
+    navigate('/login');
+  }},[])
   return (
       <div className="App">
         <Sidebar />
