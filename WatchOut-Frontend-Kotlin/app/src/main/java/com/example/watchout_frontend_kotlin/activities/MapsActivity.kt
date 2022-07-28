@@ -69,9 +69,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         editor = sharedPref.edit()
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        coins = findViewById(R.id.coins)
+        val balance = sharedPref.getString("balance","0")
+        coins.text = balance
         report = findViewById(R.id.report_btn)
         hamburger = findViewById(R.id.hamburger_btn)
-        coins = findViewById(R.id.coins)
         drawerLayout = findViewById(R.id.drawer_layout)
         hamburger.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
