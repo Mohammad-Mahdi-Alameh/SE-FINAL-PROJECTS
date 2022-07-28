@@ -1,6 +1,7 @@
 package com.example.watchout_frontend_kotlin.activities
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -44,6 +45,7 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
+import org.json.JSONArray
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -60,7 +62,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var dbReference: DatabaseReference = database.getReference("Live-Tracking")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getAllInfras()
         setupLocClient()
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -173,6 +174,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        getAllInfras()
         dbReference = Firebase.database.reference
         dbReference.addValueEventListener(locListener)
 
@@ -325,14 +327,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun getAllInfras() {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         val jwtToken = sharedPref.getString("token", "")
+//        val id =sharedPref.getString("user_id","")
         val apiService = RestApiService()
         val authenticatedHeaders =
             jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
         if (authenticatedHeaders != null) {
-            apiService.getAllInfras(authenticatedHeaders, "") {
+            apiService.getAllInfras(authenticatedHeaders, null) {
                 if (it?.size != null) {
                     Log.i("All Infras", Gson().toJson(it))
-                    showResult(Gson().toJson(it))
+                    setMarkers(Gson().toJson(it))
                 } else {
                     Log.i("Error", "Error")
 
@@ -342,76 +345,120 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
-    private fun showResult(data: String) {
-        Log.i("All Infras", data)
-    }
+    private fun setMarkers(data: String) {
+        val array = JSONArray(data)
+        (0 until array.length()).forEach {
+            var infra = array.getJSONObject(it)
+            var latLng = LatLng(infra["latitude"] as Double, infra["latitude"] as Double)
+            Log.i("lat",infra["latitude"].toString() + infra["longitude"].toString())
+            Log.i("lng",infra["longitude"].toString())
+            if (infra["type"] != null) {
+                when (infra["type"]) {
+                    "hole"->{
+                        mMap.addMarker(MarkerOptions().position(latLng).
+                        icon(bitmapFromVector(applicationContext, R.drawable.ic_hole_icon)))
+                    }
+                    "blockage"->{
+                        mMap.addMarker(MarkerOptions().position(latLng).
+                        icon(bitmapFromVector(applicationContext, R.drawable.ic_turn_icon)))
+                    }
+                    "turn"->{
+                        mMap.addMarker(MarkerOptions().position(latLng).
+                        icon(bitmapFromVector(applicationContext, R.drawable.ic_turn_icon)))
 
-    private fun getInfraType(v: View): String {
-        val type = ""
-        if (v != null) {
-            when (v.id) {
-                R.id.hole -> {
-                    return type.replace("", "hole")
+                    }
+                    "bump"->{
+                        mMap.addMarker(MarkerOptions().position(latLng).
+                        icon(bitmapFromVector(applicationContext, R.drawable.ic_bump_icon)))
+
+                    }
                 }
-                R.id.turn -> {
-                    return type.replace("", "turn")
-                }
-                R.id.bump -> {
-                    return type.replace("", "bump")
-                }
-                R.id.blockage -> {
-                    return type.replace("", "blockage")
-                }
+
             }
         }
-        return type
-    }
 
-    private fun report(type: String, latitude: Double, longitude: Double) {
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-        val jwtToken = sharedPref.getString("token", "")
-        val apiService = RestApiService()
+//        array?.let {
+//            for (infra in it) {
+//                val json = JSONObject(infra.toString())
+//                val latLng = LatLng(json["latitude"] as Double, json["longitude"] as Double)
+//            }
+//        }
+}
+//    private fun setMarkers(data : String){
+//        val latLng = LatLng(location.latitude, location.longitude)
+//        // create a marker at the exact location
+//        map.addMarker(MarkerOptions().position(latLng)
+//            .title("You are currently here!"))
+//    }
+
+private fun getInfraType(v: View): String {
+    val type = ""
+    if (v != null) {
+        when (v.id) {
+            R.id.hole -> {
+                return type.replace("", "hole")
+            }
+            R.id.turn -> {
+                return type.replace("", "turn")
+            }
+            R.id.bump -> {
+                return type.replace("", "bump")
+            }
+            R.id.blockage -> {
+                return type.replace("", "blockage")
+            }
+        }
+    }
+    return type
+}
+
+private fun report(type: String, latitude: Double, longitude: Double) {
+    val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+    val jwtToken = sharedPref.getString("token", "")
+    val apiService = RestApiService()
+    val authenticatedHeaders =
+        jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
+    if (authenticatedHeaders != null) {
+        val reportInfo = ReportInfo(
+            latitude = latitude,
+            longitude = longitude,
+            type = type,
+            id = sharedPref.getString("user_id", "")?.toInt()
+        )
         val authenticatedHeaders =
-            jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
-        if (authenticatedHeaders != null) {
-            val reportInfo = ReportInfo(
-                latitude = latitude,
-                longitude = longitude,
-                type = type,
-                id = sharedPref.getString("user_id", "")?.toInt()
-            )
-            val authenticatedHeaders =
-                ApiMainHeadersProvider.getAuthenticatedHeaders("")
-            apiService.report( authenticatedHeaders,reportInfo) {
-                if (it?.message == "Infrastructural problem reported successfully") {
-                    Log.i("Report Succeeded", it.message)
-                } else {
+            ApiMainHeadersProvider.getAuthenticatedHeaders("")
+        apiService.report(authenticatedHeaders, reportInfo) {
+            if (it?.message == "Infrastructural problem reported successfully") {
+                Log.i("Report Succeeded", it.message)
+            } else {
 
-                    Log.i("Error", "Report Failed !")
-                }
+                Log.i("Error", "Report Failed !")
             }
         }
     }
-    private fun setupLocClient() {
-        fusedLocClient =
-            LocationServices.getFusedLocationProviderClient(this)
-    }
+}
 
-    private fun reportFunctionCaller(v :View) {
-            fusedLocClient.lastLocation.addOnCompleteListener {
-                // lastLocation is a task running in the background
-                val location = it.result //obtain location
-                //reference to the database
-                if (location != null) {
-                    val type = getInfraType(v)
-                    report(type,location.latitude,location.longitude)
-                } else {
-                    // if location is null , log an error message
-                    Log.e("error", "No location found")
-                }
+private fun setupLocClient() {
+    fusedLocClient =
+        LocationServices.getFusedLocationProviderClient(this)
+}
 
-
-
-            }
+@SuppressLint("MissingPermission")
+private fun reportFunctionCaller(v: View) {
+    fusedLocClient.lastLocation.addOnCompleteListener {
+        // lastLocation is a task running in the background
+        val location = it.result //obtain location
+        //reference to the database
+        if (location != null) {
+            val type = getInfraType(v)
+            report(type, location.latitude, location.longitude)
+        } else {
+            // if location is null , log an error message
+            Log.e("error", "No location found")
         }
+
+
     }
+}
+
+}
