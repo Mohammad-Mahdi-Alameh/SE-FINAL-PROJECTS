@@ -294,19 +294,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     //update the camera with the CameraUpdate object
                     mMap.moveCamera(update)
                     val nearInfras = getNearInfras(locationLat, locationLong)
-                    val array = JSONArray(nearInfras)
-                    (0 until array.length()).forEach {
-                        var infra = array.getJSONObject(it)
-                        val timeRemaining = getDistance(
-                            locationLat,
-                            locationLong,
-                            infra["latitude"] as Double,
-                            infra["longitude"] as Double
-                        ) * 1000 / speed
-                        if (timeRemaining < 7) {
-//                                sendNotification()
-                            Log.i("hamdella", "hamdella")
-                        }
+//                    val array = JSONArray(nearInfras)
+//                    (0 until array.length()).forEach {
+//                        var infra = array.getJSONObject(it)
+//                        val timeRemaining = getDistance(
+//                            locationLat,
+//                            locationLong,
+//                            infra["latitude"] as Double,
+//                            infra["longitude"] as Double
+//                        ) * 1000 / speed
+//                        if (timeRemaining < 7) {
+////                                sendNotification()
+//                            Log.i("hamdella", "hamdella")
+//                        }
 
                     }
                 } else {
@@ -314,10 +314,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 }
 
-} else {
-    // if location is null , log an error message
-    Log.e("Error", "user location cannot be found")
-}
 }
 
 
@@ -370,7 +366,7 @@ private fun getAllInfras() {
     val authenticatedHeaders =
         jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
     if (authenticatedHeaders != null) {
-        apiService.getAllInfras(authenticatedHeaders) {
+        apiService.getAllInfras(authenticatedHeaders,0) {
             if (it?.size != null) {
                 Log.i("All Infras", Gson().toJson(it))
                 setMarkers(Gson().toJson(it))
@@ -387,7 +383,7 @@ private fun setMarkers(data: String) {
     val array = JSONArray(data)
     (0 until array.length()).forEach {
         var infra = array.getJSONObject(it)
-        var latLng = LatLng(infra["latitude"] as Double, infra["latitude"] as Double)
+        var latLng = LatLng(infra["latitude"] as Double, infra["longitude"] as Double)
         Log.i("lat", infra["latitude"].toString() + infra["longitude"].toString())
         Log.i("lng", infra["longitude"].toString())
         if (infra["type"] != null) {
@@ -395,26 +391,26 @@ private fun setMarkers(data: String) {
                 "hole" -> {
                     mMap.addMarker(
                         MarkerOptions().position(latLng)
-                            .icon(bitmapFromVector(applicationContext, R.drawable.ic_hole_icon))
+                            .icon(bitmapFromVector(applicationContext, R.drawable.hole_marker))
                     )
                 }
                 "blockage" -> {
                     mMap.addMarker(
                         MarkerOptions().position(latLng)
-                            .icon(bitmapFromVector(applicationContext, R.drawable.ic_turn_icon))
+                            .icon(bitmapFromVector(applicationContext, R.drawable.blockage_marker))
                     )
                 }
                 "turn" -> {
                     mMap.addMarker(
                         MarkerOptions().position(latLng)
-                            .icon(bitmapFromVector(applicationContext, R.drawable.ic_turn_icon))
+                            .icon(bitmapFromVector(applicationContext, R.drawable.turn_marker))
                     )
 
                 }
                 "bump" -> {
                     mMap.addMarker(
                         MarkerOptions().position(latLng)
-                            .icon(bitmapFromVector(applicationContext, R.drawable.ic_bump_icon))
+                            .icon(bitmapFromVector(applicationContext, R.drawable.bump_marker))
                     )
 
                 }
