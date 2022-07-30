@@ -77,5 +77,10 @@ dependencies {
     //Drawer
     implementation 'com.google.android.material:material:1.2.0-alpha04'
 
+    //RecyclerView
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
+
+    //CardView
+    implementation("androidx.cardview:cardview:1.0.0")
 
 }
