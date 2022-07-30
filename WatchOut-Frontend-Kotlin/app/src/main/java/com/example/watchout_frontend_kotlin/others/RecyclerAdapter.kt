@@ -70,6 +70,29 @@ class RecyclerAdapter(c: Context) : RecyclerView.Adapter<RecyclerAdapter.ViewHol
 
     }
 
+    private fun getLogoType(type: String): Int {
+        if (type != null) {
+            when (type) {
+                "hole" -> {
+                    return R.drawable.ic_hole_icon
+
+                }
+                "blockage" -> {
+                    return R.drawable.ic_blockage_icon
+                }
+                "turn" -> {
+                    return R.drawable.turn_icon
+                }
+                "bump" -> {
+                    return R.drawable.ic_bump_icon
+
+                }
+            }
+
+
+        }
+            return 0
+    }
 
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
