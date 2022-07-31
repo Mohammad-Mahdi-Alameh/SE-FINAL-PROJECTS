@@ -51,8 +51,9 @@ import org.json.JSONArray
 import java.time.LocalDateTime
 
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
-    GoogleMap.OnMapClickListener , GoogleMap.OnMarkerClickListener,GoogleMap.OnInfoWindowClickListener{
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
+    GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener,
+    GoogleMap.OnInfoWindowClickListener {
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
     private lateinit var drawerLayout: DrawerLayout
@@ -113,12 +114,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
         mapFragment.getMapAsync(this)
         trackCurrentLocation(this)
         report.setOnClickListener {
-           showBottomSheet()
+            showBottomSheet(0.0, 0.0)
         }
 
     }
 
-    private fun showBottomSheet() {
+    private fun showBottomSheet(latitude: Double, longitude: Double) {
         val bottomSheetDialog = BottomSheetDialog(
             this, R.style.BottomSheetDialogTheme
         )
@@ -131,25 +132,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
         }
         bottomSheetView.findViewById<View>(R.id.bump).setOnClickListener {
             bottomSheetDialog.dismiss()
-            reportFunctionCaller(it)
+            reportFunctionCaller(it, latitude, longitude)
             public.popupAlertDialog(this, R.layout.alert_dialog)
             addCoins()
         }
         bottomSheetView.findViewById<View>(R.id.turn).setOnClickListener {
             bottomSheetDialog.dismiss()
-            reportFunctionCaller(it)
+            reportFunctionCaller(it, latitude, longitude)
             public.popupAlertDialog(this, R.layout.alert_dialog)
             addCoins()
         }
         bottomSheetView.findViewById<View>(R.id.hole).setOnClickListener {
             bottomSheetDialog.dismiss()
-            reportFunctionCaller(it)
+            reportFunctionCaller(it, latitude, longitude)
             public.popupAlertDialog(this, R.layout.alert_dialog)
             addCoins()
         }
         bottomSheetView.findViewById<View>(R.id.blockage).setOnClickListener {
             bottomSheetDialog.dismiss()
-            reportFunctionCaller(it)
+            reportFunctionCaller(it, latitude, longitude)
             public.popupAlertDialog(this, R.layout.alert_dialog)
             addCoins()
         }
@@ -223,7 +224,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
                 snippet.setTextColor(Color.GRAY)
                 snippet.marginBottom
                 snippet.text = marker.snippet
-                val report = TextView (applicationContext)
+                val report = TextView(applicationContext)
                 report.text = "Press this box to report false alarm"
                 report.gravity = Gravity.CENTER
                 report.setTextColor(Color.BLACK)
@@ -329,12 +330,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
                     //update the camera with the CameraUpdate object
                     mMap.moveCamera(update)
 
-                                    } else {
-                                        Log.i("Error", "Error")
-
-                                    }
+                } else {
+                    Log.i("Error", "Error")
 
                 }
+
+            }
         }
 
         // show this toast if there is an error while reading from the database
@@ -416,7 +417,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
         }
     }
 
-    private fun addMarker(latitude: Double, longitude: Double, type: String, dateCreated: String, id: Int) {
+    private fun addMarker(
+        latitude: Double,
+        longitude: Double,
+        type: String,
+        dateCreated: String,
+        id: Int
+    ) {
 
         latLng = LatLng(latitude, longitude)
 
@@ -426,7 +433,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
                     mMap.addMarker(
                         MarkerOptions().position(latLng)
                             .icon(bitmapFromVector(applicationContext, R.drawable.hole_marker))
-                            .title("Hole").snippet(" id : $id \n $latLng\n Created at : $dateCreated")
+                            .title("Hole")
+                            .snippet(" id : $id \n $latLng\n Created at : $dateCreated")
                     )
 
                 }
@@ -437,8 +445,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
                                 bitmapFromVector(
                                     applicationContext,
                                     R.drawable.blockage_marker
-                                ))
-                            .title("Blockage").snippet(" id : $id \n $latLng\n Created at : $dateCreated")
+                                )
+                            )
+                            .title("Blockage")
+                            .snippet(" id : $id \n $latLng\n Created at : $dateCreated")
                     )
 
                 }
@@ -446,7 +456,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
                     mMap.addMarker(
                         MarkerOptions().position(latLng)
                             .icon(bitmapFromVector(applicationContext, R.drawable.turn_marker))
-                            .title("Sharp Turn").snippet(" id : $id \n $latLng\n Created at : $dateCreated")
+                            .title("Sharp Turn")
+                            .snippet(" id : $id \n $latLng\n Created at : $dateCreated")
                     )
 
                 }
@@ -454,7 +465,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
                     mMap.addMarker(
                         MarkerOptions().position(latLng)
                             .icon(bitmapFromVector(applicationContext, R.drawable.bump_marker))
-                            .title("Hard Bump").snippet(" id : $id \n $latLng\n Created at : $dateCreated")
+                            .title("Hard Bump")
+                            .snippet(" id : $id \n $latLng\n Created at : $dateCreated")
                     )
 
                 }
@@ -521,7 +533,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
                     Log.i("Report Succeeded", it.message)
                     if (id != null) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            addMarker(latitude, longitude, type , LocalDateTime.now().toString(),id)
+                            addMarker(latitude, longitude, type, LocalDateTime.now().toString(), id)
                         }
                     }
                 } else {
@@ -538,20 +550,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
     }
 
     @SuppressLint("MissingPermission")
-    private fun reportFunctionCaller(v: View) {
-        fusedLocClient.lastLocation.addOnCompleteListener {
-            // lastLocation is a task running in the background
-            val location = it.result //obtain location
-            //reference to the database
-            if (location != null) {
-                val type = getInfraType(v)
-                report(type, location.latitude, location.longitude)
-            } else {
-                // if location is null , log an error message
-                Log.e("error", "No location found")
+    private fun reportFunctionCaller(v: View, latitude: Double, longitude: Double) {
+        val type = getInfraType(v)
+        if (latitude != 0.0 && longitude != 0.0) {
+                report(type , latitude , longitude)
+        } else {
+            fusedLocClient.lastLocation.addOnCompleteListener {
+                // lastLocation is a task running in the background
+                val location = it.result //obtain location
+                //reference to the database
+                if (location != null) {
+                    report(type, location.latitude, location.longitude)
+                } else {
+                    // if location is null , log an error message
+                    Log.e("error", "No location found")
+                }
+
+
             }
-
-
         }
     }
 
@@ -608,9 +624,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
     }
 
     override fun onInfoWindowClick(marker: Marker) {
-      var infraId =  (marker.snippet?.subSequence(6,8) ?: null).toString()
-        if(!infraId[1].isDigit()){
-            infraId= infraId[0].toString()
+        var infraId = (marker.snippet?.subSequence(6, 8) ?: null).toString()
+        if (!infraId[1].isDigit()) {
+            infraId = infraId[0].toString()
         }
         jwtToken = sharedPref.getString("token", "").toString()
         val apiService = RestApiService()
@@ -619,7 +635,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
         if (authenticatedHeaders != null) {
             apiService.reportFalseInfra(authenticatedHeaders, infraId.toInt()) {
                 if (it?.message == "reported successfully") {
-                    Toast.makeText(applicationContext, "Thanks for your feedback ! The admin will check it asap !", Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        applicationContext,
+                        "Thanks for your feedback ! The admin will check it asap !",
+                        Toast.LENGTH_LONG
+                    )
                         .show()
                 } else {
                     Log.i("Error", "Error")
@@ -633,7 +653,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
     }
 
     override fun onMapClick(latLng: LatLng) {
-            showBottomSheet()
+        showBottomSheet(latLng.latitude, latLng.longitude)
     }
 
 }
