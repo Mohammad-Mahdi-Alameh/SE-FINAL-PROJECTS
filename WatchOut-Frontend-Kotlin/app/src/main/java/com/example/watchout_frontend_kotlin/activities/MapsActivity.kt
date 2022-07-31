@@ -36,10 +36,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.*
@@ -47,9 +44,10 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import org.json.JSONArray
+import java.time.LocalDateTime
 
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnMapClickListener , GoogleMap.OnMarkerClickListener{
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
     private lateinit var drawerLayout: DrawerLayout
@@ -64,6 +62,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var dbReference: DatabaseReference = database.getReference("Live-Tracking")
     private lateinit var sharedPref: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
+    private lateinit var jwtToken: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupLocClient()
@@ -89,11 +88,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     startActivity(Intent(this, ProfileActivity::class.java))
                     finish()
                 }
-                R.id.history -> Toast.makeText(
-                    this,
-                    "Your Report History is Clicked",
-                    Toast.LENGTH_SHORT
-                ).show()
+                R.id.history -> {
+                    startActivity(Intent(this, HistoryActivity::class.java))
+                    finish()
+                }
                 R.id.logout -> {
                     //linking to the logout api will be done later
                     logout()
@@ -267,7 +265,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    var locListener = object : ValueEventListener {
+    private var locListener = object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
             if (snapshot.exists()) {
                 //get the exact longitude and latitude and speed from the database "Live Tracking"
@@ -282,21 +280,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 if (locationLat != null && locationLong != null && speed != null) {
                     // create a LatLng object from location
-                    val latLng = LatLng(locationLat, locationLong)
+                    latLng = LatLng(locationLat, locationLong)
                     //create a marker at the read location and display it on the map
                     mMap.addMarker(
                         MarkerOptions().position(latLng)
                             .icon(bitmapFromVector(applicationContext, R.drawable.ic_tracker))
                     )
                     //specify how the map camera is updated
-                    val update = CameraUpdateFactory.newLatLngZoom(latLng, 16.0f)
+                    val update = CameraUpdateFactory.newLatLngZoom(latLng, 30.0f)
                     //update the camera with the CameraUpdate object
                     mMap.moveCamera(update)
 
-                    } else {
-                        Log.i("Error", "Error")
+                                    } else {
+                                        Log.i("Error", "Error")
 
-                    }
+                                    }
 
                 }
         }
@@ -367,16 +365,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val array = JSONArray(data)
         (0 until array.length()).forEach {
             var infra = array.getJSONObject(it)
-            addMarker(
-                infra["latitude"] as Double,
-                infra["longitude"] as Double,
-                infra["type"] as String
-            )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                addMarker(
+                    infra["latitude"] as Double,
+                    infra["longitude"] as Double,
+                    infra["type"] as String,
+                    infra["created_at"] as String,
+                    infra["user_id"] as Int
+                )
+            }
 
         }
     }
 
-    private fun addMarker(latitude: Double, longitude: Double, type: String) {
+    private fun addMarker(latitude: Double, longitude: Double, type: String, datecreated: String, createdBy: Int) {
 
         latLng = LatLng(latitude, longitude)
 
@@ -387,6 +389,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         MarkerOptions().position(latLng)
                             .icon(bitmapFromVector(applicationContext, R.drawable.hole_marker))
                     )
+
                 }
                 "blockage" -> {
                     mMap.addMarker(
@@ -395,9 +398,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                 bitmapFromVector(
                                     applicationContext,
                                     R.drawable.blockage_marker
-                                )
-                            )
+                                ))
                     )
+
                 }
                 "turn" -> {
                     mMap.addMarker(
@@ -457,6 +460,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun report(type: String, latitude: Double, longitude: Double) {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         val jwtToken = sharedPref.getString("token", "")
+        val id = sharedPref.getString("user_id", "")?.toInt()
         val apiService = RestApiService()
         val authenticatedHeaders =
             jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
@@ -465,7 +469,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 latitude = latitude,
                 longitude = longitude,
                 type = type,
-                id = sharedPref.getString("user_id", "")?.toInt()
+                id = id
             )
             val authenticatedHeaders =
                 ApiMainHeadersProvider.getAuthenticatedHeaders("")
@@ -473,7 +477,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 if (it?.message == "Infrastructural problem reported successfully") {
                     val latLng = LatLng(latitude, longitude)
                     Log.i("Report Succeeded", it.message)
-                    addMarker(latitude,longitude,type)
+                    if (id != null) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            addMarker(latitude, longitude, type , LocalDateTime.now().toString(),id)
+                        }
+                    }
                 } else {
 
                     Log.i("Error", "Report Failed !")
@@ -528,19 +536,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun getNearInfras(latitude: Double, longitude: Double) {
-        val jwtToken = sharedPref.getString("token", "")
+        jwtToken = sharedPref.getString("token", "").toString()
         val apiService = RestApiService()
         val authenticatedHeaders =
             jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
         if (authenticatedHeaders != null) {
             val getNearInfrasInfo = GetNearInfrasInfo(
                 base_latitude = latitude,
-                base_longitude = longitude
+                base_longitude = longitude,
             )
             apiService.getNearInfras(authenticatedHeaders, getNearInfrasInfo) {
-                if (it?.size != null) {
+                if (it?.size != 0) {
                     Log.i("Near Infras", Gson().toJson(it))
                     editor.putString("Near Infras", Gson().toJson(it))
+                    editor.apply()
+                    editor.commit()
                 } else {
                     Log.i("Error", "Error")
 
@@ -549,5 +559,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         }
     }
+
+    override fun onMapClick(p0: LatLng) {
+
+    }
+
+    override fun onMarkerClick(p0: Marker): Boolean {
+        TODO("Not yet implemented")
+    }
+
 }
 
