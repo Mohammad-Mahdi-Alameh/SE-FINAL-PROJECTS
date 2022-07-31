@@ -51,7 +51,8 @@ import org.json.JSONArray
 import java.time.LocalDateTime
 
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnMapClickListener , GoogleMap.OnMarkerClickListener{
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
+    GoogleMap.OnMapClickListener , GoogleMap.OnMarkerClickListener,GoogleMap.OnInfoWindowClickListener{
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
     private lateinit var drawerLayout: DrawerLayout
@@ -199,6 +200,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnMapCl
         getAllInfras()
         dbReference = Firebase.database.reference
         dbReference.addValueEventListener(locListener)
+        googleMap.setOnInfoWindowClickListener(this)
         mMap.setInfoWindowAdapter(object : GoogleMap.InfoWindowAdapter {
             override fun getInfoWindow(arg0: Marker): View? {
                 return null
@@ -216,11 +218,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnMapCl
                 snippet.setTextColor(Color.GRAY)
                 snippet.marginBottom
                 snippet.text = marker.snippet
-                val button = Button (applicationContext)
-                button.text = "Report false alarm"
+                val report = TextView (applicationContext)
+                report.text = "Press this box to report false alarm"
+                report.gravity = Gravity.CENTER
+                report.setTextColor(Color.BLACK)
                 info.addView(title)
                 info.addView(snippet)
-                info.addView(button)
+                info.addView(report)
                 return info
             }
         })
@@ -598,6 +602,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnMapCl
     }
 
     override fun onMarkerClick(p0: Marker): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun onInfoWindowClick(marker: Marker) {
         TODO("Not yet implemented")
     }
 
