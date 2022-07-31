@@ -113,45 +113,49 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
         mapFragment.getMapAsync(this)
         trackCurrentLocation(this)
         report.setOnClickListener {
-            val bottomSheetDialog = BottomSheetDialog(
-                this, R.style.BottomSheetDialogTheme
-            )
-            val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
-                R.layout.layout_bottom_sheet,
-                findViewById<LinearLayout>(R.id.bottomSheet)
-            )
-            bottomSheetView.findViewById<View>(R.id.cancel_btn).setOnClickListener {
-                bottomSheetDialog.dismiss()
-            }
-            bottomSheetView.findViewById<View>(R.id.bump).setOnClickListener {
-                bottomSheetDialog.dismiss()
-                reportFunctionCaller(it)
-                public.popupAlertDialog(this, R.layout.alert_dialog)
-                addCoins()
-            }
-            bottomSheetView.findViewById<View>(R.id.turn).setOnClickListener {
-                bottomSheetDialog.dismiss()
-                reportFunctionCaller(it)
-                public.popupAlertDialog(this, R.layout.alert_dialog)
-                addCoins()
-            }
-            bottomSheetView.findViewById<View>(R.id.hole).setOnClickListener {
-                bottomSheetDialog.dismiss()
-                reportFunctionCaller(it)
-                public.popupAlertDialog(this, R.layout.alert_dialog)
-                addCoins()
-            }
-            bottomSheetView.findViewById<View>(R.id.blockage).setOnClickListener {
-                bottomSheetDialog.dismiss()
-                reportFunctionCaller(it)
-                public.popupAlertDialog(this, R.layout.alert_dialog)
-                addCoins()
-            }
-
-            bottomSheetDialog.setContentView(bottomSheetView)
-            bottomSheetDialog.show()
+           showBottomSheet()
         }
 
+    }
+
+    private fun showBottomSheet() {
+        val bottomSheetDialog = BottomSheetDialog(
+            this, R.style.BottomSheetDialogTheme
+        )
+        val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
+            R.layout.layout_bottom_sheet,
+            findViewById<LinearLayout>(R.id.bottomSheet)
+        )
+        bottomSheetView.findViewById<View>(R.id.cancel_btn).setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+        bottomSheetView.findViewById<View>(R.id.bump).setOnClickListener {
+            bottomSheetDialog.dismiss()
+            reportFunctionCaller(it)
+            public.popupAlertDialog(this, R.layout.alert_dialog)
+            addCoins()
+        }
+        bottomSheetView.findViewById<View>(R.id.turn).setOnClickListener {
+            bottomSheetDialog.dismiss()
+            reportFunctionCaller(it)
+            public.popupAlertDialog(this, R.layout.alert_dialog)
+            addCoins()
+        }
+        bottomSheetView.findViewById<View>(R.id.hole).setOnClickListener {
+            bottomSheetDialog.dismiss()
+            reportFunctionCaller(it)
+            public.popupAlertDialog(this, R.layout.alert_dialog)
+            addCoins()
+        }
+        bottomSheetView.findViewById<View>(R.id.blockage).setOnClickListener {
+            bottomSheetDialog.dismiss()
+            reportFunctionCaller(it)
+            public.popupAlertDialog(this, R.layout.alert_dialog)
+            addCoins()
+        }
+
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
     }
 
     private fun logout() {
@@ -201,6 +205,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
         dbReference = Firebase.database.reference
         dbReference.addValueEventListener(locListener)
         googleMap.setOnInfoWindowClickListener(this)
+        googleMap.setOnMapClickListener(this)
         mMap.setInfoWindowAdapter(object : GoogleMap.InfoWindowAdapter {
             override fun getInfoWindow(arg0: Marker): View? {
                 return null
@@ -597,9 +602,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
         }
     }
 
-    override fun onMapClick(p0: LatLng) {
-
-    }
 
     override fun onMarkerClick(p0: Marker): Boolean {
         TODO("Not yet implemented")
@@ -628,6 +630,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
         }
 
 
+    }
+
+    override fun onMapClick(latLng: LatLng) {
+            showBottomSheet()
     }
 
 }
