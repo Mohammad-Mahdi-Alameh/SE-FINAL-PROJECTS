@@ -41,13 +41,19 @@ interface LaravelRestApi {
     fun editProfile(
         @HeaderMap authedHeaders: AuthenticatedHeaders,
         @Body editProfileInfo: EditProfileInfo
-    ): Call<EditProfileResponse>
+    ): Call<SingleMessageResponse>
 
     @PUT("/api/v1/user/addCoins")
     fun addCoins(
         @HeaderMap authedHeaders: AuthenticatedHeaders,
         @Query("user_id") user_id: Int,
     ): Call<AddCoinsResponse>
+
+    @PUT("/api/v1/user/reportFalseInfra/{infra_id}")
+    fun reportFalseInfra(
+        @HeaderMap authedHeaders: AuthenticatedHeaders,
+        @Path("infra_id") infra_d: Int,
+    ): Call<SingleMessageResponse>
 
 
 
