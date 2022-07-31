@@ -8,10 +8,13 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -195,6 +198,27 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnMapCl
         getAllInfras()
         dbReference = Firebase.database.reference
         dbReference.addValueEventListener(locListener)
+        mMap.setInfoWindowAdapter(object : GoogleMap.InfoWindowAdapter {
+            override fun getInfoWindow(arg0: Marker): View? {
+                return null
+            }
+
+            override fun getInfoContents(marker: Marker): View? {
+                val info = LinearLayout(applicationContext)
+                info.orientation = LinearLayout.VERTICAL
+                val title = TextView(applicationContext)
+                title.setTextColor(Color.BLACK)
+                title.gravity = Gravity.CENTER
+                title.setTypeface(null, Typeface.BOLD)
+                title.text = marker.title
+                val snippet = TextView(applicationContext)
+                snippet.setTextColor(Color.GRAY)
+                snippet.text = marker.snippet
+                info.addView(title)
+                info.addView(snippet)
+                return info
+            }
+        })
 
     }
 
