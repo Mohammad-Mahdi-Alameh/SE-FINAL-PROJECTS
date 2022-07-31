@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.core.view.marginBottom
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.watchout_frontend_kotlin.R
 import com.example.watchout_frontend_kotlin.api.ApiMainHeadersProvider
@@ -213,9 +214,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnMapCl
                 title.text = marker.title
                 val snippet = TextView(applicationContext)
                 snippet.setTextColor(Color.GRAY)
+                snippet.marginBottom
                 snippet.text = marker.snippet
+                val button = Button (applicationContext)
+                button.text = "Report false alarm"
                 info.addView(title)
                 info.addView(snippet)
+                info.addView(button)
                 return info
             }
         })
@@ -395,14 +400,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnMapCl
                     infra["longitude"] as Double,
                     infra["type"] as String,
                     infra["created_at"] as String,
-                    infra["user_id"] as Int
+                    infra["id"] as Int
                 )
             }
 
         }
     }
 
-    private fun addMarker(latitude: Double, longitude: Double, type: String, datecreated: String, createdBy: Int) {
+    private fun addMarker(latitude: Double, longitude: Double, type: String, dateCreated: String, id: Int) {
 
         latLng = LatLng(latitude, longitude)
 
@@ -412,6 +417,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnMapCl
                     mMap.addMarker(
                         MarkerOptions().position(latLng)
                             .icon(bitmapFromVector(applicationContext, R.drawable.hole_marker))
+                            .title("Hole").snippet(" id : $id \n $latLng\n Created at : $dateCreated")
                     )
 
                 }
@@ -423,6 +429,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnMapCl
                                     applicationContext,
                                     R.drawable.blockage_marker
                                 ))
+                            .title("Blockage").snippet(" id : $id \n $latLng\n Created at : $dateCreated")
                     )
 
                 }
@@ -430,6 +437,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnMapCl
                     mMap.addMarker(
                         MarkerOptions().position(latLng)
                             .icon(bitmapFromVector(applicationContext, R.drawable.turn_marker))
+                            .title("Sharp Turn").snippet(" id : $id \n $latLng\n Created at : $dateCreated")
                     )
 
                 }
@@ -437,6 +445,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnMapCl
                     mMap.addMarker(
                         MarkerOptions().position(latLng)
                             .icon(bitmapFromVector(applicationContext, R.drawable.bump_marker))
+                            .title("Hard Bump").snippet(" id : $id \n $latLng\n Created at : $dateCreated")
                     )
 
                 }
