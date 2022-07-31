@@ -606,7 +606,28 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback ,
     }
 
     override fun onInfoWindowClick(marker: Marker) {
-        TODO("Not yet implemented")
+      var infraId =  (marker.snippet?.subSequence(6,8) ?: null).toString()
+        if(!infraId[1].isDigit()){
+            infraId= infraId[0].toString()
+        }
+        jwtToken = sharedPref.getString("token", "").toString()
+        val apiService = RestApiService()
+        val authenticatedHeaders =
+            jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
+        if (authenticatedHeaders != null) {
+            apiService.reportFalseInfra(authenticatedHeaders, infraId.toInt()) {
+                if (it?.message == "reported successfully") {
+                    Toast.makeText(applicationContext, "Thanks for your feedback ! The admin will check it asap !", Toast.LENGTH_LONG)
+                        .show()
+                } else {
+                    Log.i("Error", "Error")
+
+                }
+            }
+
+        }
+
+
     }
 
 }
