@@ -30,6 +30,7 @@ const Map = () => {
     const [markers, setMarkers] = useState([])
     const [infras, setInfras] = useState([])
     const [selected, setSelected] = useState(null)
+    const [clicked, setClicked] = useState(null)
 
     const mapRef = React.useRef();
     const onMapLoad = React.useCallback((map) => {
@@ -109,14 +110,16 @@ const Map = () => {
     }, []);
 
     const onMapClick = React.useCallback((event) =>
-        setMarkers((current) => [
-            ...current,
-            {
-                lat: event.latLng.lat(),
-                lng: event.latLng.lng(),
-                time: new Date()
-            }
-        ]));
+        // setMarkers((current) => [
+        //     ...current,
+        //     {
+        //         lat: event.latLng.lat(),
+        //         lng: event.latLng.lng(),
+        //         time: new Date()
+        //     }
+        // ])
+        setClicked(event)
+        );
 
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -205,6 +208,14 @@ const Map = () => {
 
                         <p> {selected.by}</p>
                         <button onClick={()=>handleDelete(selected.id)}>Delete</button>
+                    </div>
+
+                </InfoWindow>
+
+                ) : null}
+            {
+                clicked ? (<InfoWindow position={{ lat: clicked.latLng.lat(), lng: clicked.latLng.lng() }} onCloseClick={() => { setClicked(null) }}>
+                    <div>
                     </div>
 
                 </InfoWindow>
