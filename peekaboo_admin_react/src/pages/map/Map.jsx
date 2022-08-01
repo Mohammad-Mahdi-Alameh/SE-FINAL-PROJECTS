@@ -197,6 +197,7 @@ const Map = () => {
                     position={{ lat: marker.lat, lng: marker.lng }}
                     onClick={() => {
                         setSelected(marker);
+                        setClicked(null)
                     }} 
                   />
 
