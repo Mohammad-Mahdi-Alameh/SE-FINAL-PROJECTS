@@ -9,6 +9,7 @@ const Login = () => {
     const navigate=useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    var axios = require('axios');
     var data = JSON.stringify({
         "username": username,
         "password": password
@@ -28,11 +29,16 @@ const Login = () => {
           alert("Please fill missing fields !");
           return;
         }
-        fetch(base_url+'/login', config)
+        axios(config)
           .then(function (response) {
-            console.log(response.json());
+            let result = response.data;
+            console.log(response.data)
+            if(result.success == true){
             localStorage.setItem("token", response.data.token);
-            navigate("/");
+            navigate("/");}
+            else{
+            alert("Wrong Username or password !")
+            }
           })
           .catch(function (error) {
             alert("Wrong Username or password !")
