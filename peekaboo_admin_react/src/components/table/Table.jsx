@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate , Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import { base_url , userColumns } from "../../Constants";
+import axios from "axios";
 
 
 const Table = () => {
@@ -12,10 +13,8 @@ const Table = () => {
 
 
   const handleDelete = async (id) => {
-    const res = await fetch(base_url + "/delete_user/" + id, {
-      method: "PUT",
-    });
-    const result = await res.json();
+    const res = await axios.put(base_url + "/admin/delete_user/" + id);
+    const result = await res.data;
     if (result.message == "Deleted successfully") {
       setUsers(users.filter((item) => item.id !== id));
     }
@@ -46,8 +45,8 @@ const Table = () => {
 
 
   const getUsers = async () => {
-    const res = await fetch(base_url + "/users");
-    const data = await res.json();
+    const res = await axios.get(base_url + "/admin/users");
+    const data = await res.data;
     return data;
   };
 
