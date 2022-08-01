@@ -102,11 +102,16 @@ const Map = () => {
         );
     }
 
-
+    function handleDrag(marker){
+            // console.log(marker.lat)
+    
+    ondragend = (event) =>{
+        console.log(event)
+    }
+    }
     const panTo = React.useCallback(({ lat, lng }) => {
         mapRef.current.panTo({ lat, lng });
         mapRef.current.setZoom(14);
-        console.log(lat, lng);
     }, []);
 
     const onMapClick = React.useCallback((event) =>
@@ -179,6 +184,7 @@ const Map = () => {
             </div>
         </div>)
     }
+    
 
 
 
@@ -217,6 +223,15 @@ const Map = () => {
             {
                 clicked ? (<InfoWindow position={{ lat: clicked.latLng.lat(), lng: clicked.latLng.lng() }} onCloseClick={() => { setClicked(null) }}>
                     <div>
+                            <input type={"radio"} name={"infra_type"} value={"Hole"}/>
+                            <label for={"Hole"}>Hole</label><br/>
+                            <input type={"radio"} name={"infra_type"} value={"Bump"}/>
+                            <label for={"Bump"}>Bump</label><br/>
+                            <input type={"radio"} name={"infra_type"} value={"Turn"}/>
+                            <label for={"Turn"}>Turn</label><br/>
+                            <input type={"radio"} name={"infra_type"} value={"Blockage"}/>
+                            <label for={"Blockage"}>Blockage</label><br/>
+                            <button>Add</button>
                     </div>
 
                 </InfoWindow>
