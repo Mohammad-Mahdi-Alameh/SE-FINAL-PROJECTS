@@ -39,8 +39,8 @@ const Map = () => {
 
     //Infras : Infrastructural problems
     const getAllInfras = async () => {
-        const res = await fetch(base_url + "/get_all_infras/0");
-        const data = await res.json();
+        const res = await axios.get(base_url + "/get_all_infras/0");
+        const data = await res.data;
         return data;
     };
    
