@@ -1,59 +1,64 @@
 import "./view.scss"
 import { useState, useEffect } from "react";
-import { base_url } from "../../Constants";
+import { useParams } from "react-router-dom"
+import { base_url, infrasColumns } from "../../Constants";
+import { DataGrid } from "@mui/x-data-grid";
 
 
 const View = () => {
   var axios = require('axios');
-    let [info, setInfo] = useState([]);
-    const [infras, setInfras] = useState([]);
-    const [id, setId] = useState(0);
-    let urlString = window.location.href;
-    let paramString = urlString.split('?')[1];
-    let queryString = new URLSearchParams(paramString);
-    for (var pair of queryString.entries()) {
-        setId(pair[1])
-    }
-    const fetchInfo = async () => {
+  let { userId } = useParams();
+  let [info, setInfo] = useState([]);
+  const [infras, setInfras] = useState([]);
+  const [infrasLoading, setInfrasLoading] = useState(false)
+  const [profileLoading, setProfileLoading] = useState(false)
+  // let navigate=useNavigate();
 
-            const res = await axios.get(base_url +"/users/" + id);
-            const data = await res.data;
-            return data;
+  const fetchInfo = async () => {
 
-    };
-    useEffect(() => {
-        const getInfo = async () => {
-            const serverInfo = await fetchInfo();
-            setInfo(serverInfo[0]);
-        };
-        const getData = async () => {
-          const infrasFromServer = await getInfras();
-          setInfras(infrasFromServer);
-        };
-        getData();
-        getInfo();
-
-    }, []);
-
-   
-  
-   
-  
-  //getting infras reported by this user
-    const getInfras = async () => {
-      const res = await axios.get(base_url + "/get_all_infras/" + user_id);
+    try {
+      const res = await axios.get(base_url + "/users/" + userId);
       const data = await res.data;
       return data;
+    }
+    catch (error) {
+      console.log(error)
+    }
+
+  };
+
+  const getInfras = async () => {
+    try {
+      const res = await axios.get(base_url + "/get_all_infras/" + userId);
+      const data = await res.data;
+      return data;
+    }
+    catch (error) {
+      console.log(error)
+    }
+  };
+
+  useEffect(() => {
+
+    const getInfo = async () => {
+      const serverInfo = await fetchInfo();
+      console.log(serverInfo)
+      setInfo(serverInfo);
+      setProfileLoading(true)
     };
-  
-  
-  
-  
+    const getData = async () => {
+      const infrasFromServer = await getInfras();
+      setInfras(infrasFromServer);
+      setInfrasLoading(true)
+    };
+    getInfo();
+    getData();
+  }, []);
 
 
 
-    return (<div className="view">
-    <div className="singleContainer">
+  return (<div className="view">
+    {profileLoading && <div className="singleContainer">
       <div className="top">
         <div className="left">
           <h1 className="title">Information</h1>
@@ -67,31 +72,45 @@ const View = () => {
               <h1 className="itemTitle">{info.firstname}{" "}{info.lastname}</h1>
               <div className="detailItem">
                 <span className="itemKey">Username :</span>
-                <span className="itemValue">{" "+info.username}</span>
+                <span className="itemValue">{" " + info.username}</span>
               </div>
               <div className="detailItem">
                 <span className="itemKey">Phone :</span>
-                <span className="itemValue">{" "+info.phonenumber}</span>
+                <span className="itemValue">{" " + info.phonenumber}</span>
               </div>
-               <div className="detailItem">
+              <div className="detailItem">
                 <span className="itemKey">Toral Reports :</span>
-                <span className="itemValue">{" "+info.total_reports}</span>
-              </div> 
+                <span className="itemValue">{" " + info.total_reports}</span>
+              </div>
               <div className="detailItem">
                 <span className="itemKey">Balance : </span>
                 <span className="itemValue">
-                 {info.balance}
+                  {info.balance}
                 </span>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>}
+    <div>
+      {infrasLoading && <div className="table">
+        <div className="tableTitle">
+          ///
+        </div>
+        <DataGrid
+          className="datagrid"
+          rows={infras}
+          columns={infrasColumns}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          checkboxSelection
+        />
+      </div>}
     </div>
-   
   </div>)
 
 
 }
 
-export default View;
+export default View
