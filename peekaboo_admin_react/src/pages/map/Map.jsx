@@ -60,6 +60,7 @@ const Map = () => {
             setMarkers((current) => [
                 ...current,
                 {
+                    id: infra.id,
                     lat: infra.latitude,
                     lng: infra.longitude,
                     type: infra.type,
@@ -74,6 +75,18 @@ const Map = () => {
 
 
     }, [infras]);
+
+    const handleDelete = async (id) => {
+        try{  const res = await axios.put(base_url + "/fix_infra/" + id);
+            setInfras(infras.filter((item) => item.id !== id));
+            setMarkers(markers.filter((item) => item.id !== id));
+            setSelected(null);
+          }
+          catch(err){
+            console.log(err)
+          }
+      
+        };
 
 
     function getLiveLocation() {
@@ -191,7 +204,7 @@ const Map = () => {
                         <p> {selected.type}</p>
 
                         <p> {selected.by}</p>
-                        <button>Delete</button>
+                        <button onClick={()=>handleDelete(selected.id)}>Delete</button>
                     </div>
 
                 </InfoWindow>
