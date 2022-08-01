@@ -23,7 +23,28 @@ export const userColumns = [
   {
     field: "total_reports",
     headerName: "Total Reports",
-    width: 230,
+    width: 100,
+  },
+];
+
+export const falseInfrasColumns = [
+
+  {
+    field: "latitude",
+    headerName: "Latitude",
+    width: 150,
+    
+  },
+  {
+    field: "longitude",
+    headerName: "Longitude",
+    width: 150,
+  },
+
+  {
+    field: "type",
+    headerName: "Type",
+    width: 100,
   },
 ];
 

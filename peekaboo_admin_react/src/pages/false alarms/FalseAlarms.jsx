@@ -1,18 +1,38 @@
 import "./false-alarms.scss"
 import { DataGrid } from "@mui/x-data-grid";
-import {  base_url } from "../../Constants";
+import { falseInfrasColumns , base_url } from "../../Constants";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const FalseAlarms = () => {
     const [falseInfras, setFalseInfras] = useState([]);
   
- const getFalseInfras = async () => {
+   
+  
+  
+    const handleAccept = async (id) => {
+        const res = await axios.put(base_url + "/delete_infra/" + id);
+        const result = await res.data;
+        if (result.message == "Deleted successfully") {
+          setFalseInfras(falseInfras.filter((item) => item.id !== id));
+        }
+    
+      };
+    const handleReject = async (id) => {
+        const res = await axios.put(base_url + "/reset_infra_status/" + id);
+        const result = await res.data;
+        if (result.message == "Reseted successfully") {
+          setFalseInfras(falseInfras.filter((item) => item.id !== id));
+        }
+    
+      };
+
+    const getFalseInfras = async () => {
       const res = await axios.get(base_url + "/false_infras");
       const data = await res.data;
       return data;
     };
+  
   
   
   
@@ -31,7 +51,7 @@ const FalseAlarms = () => {
         <DataGrid
           className="datagrid"
           rows={falseInfras}
-          columns={}
+          columns={falseInfrasColumns}
           pageSize={5}
           rowsPerPageOptions={[5]}
           checkboxSelection
