@@ -12,6 +12,7 @@ import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption 
 import "@reach/combobox/styles.css";
 import { Search } from "@mui/icons-material";
 import { indigo } from "@mui/material/colors";
+import axios from "axios";
 
 ////
 const libraries = ["places"]
@@ -38,10 +39,11 @@ const Map = () => {
 
     //Infras : Infrastructural problems
     const getAllInfras = async () => {
-        const res = await fetch(base_url + "/get_all_infras");
+        const res = await fetch(base_url + "/get_all_infras/0");
         const data = await res.json();
         return data;
     };
+   
     useEffect(() => {
         const getData = async () => {
             const infrasFromServer = await getAllInfras();
@@ -53,20 +55,26 @@ const Map = () => {
 
     useEffect(() => {
 
-        console.log(infras)
+        // console.log(infras)
         infras.map(infra => {
             setMarkers((current) => [
                 ...current,
                 {
                     lat: infra.latitude,
                     lng: infra.longitude,
-                    time: new Date()
+                    type: infra.type,
+                    date: infra.created_at,
+                    by: infra.user_id
+
+                    /////
+                    // time: new Date()
                 }
             ])
         })
 
 
     }, [infras]);
+
 
     function getLiveLocation() {
         navigator.geolocation.getCurrentPosition(
@@ -167,19 +175,23 @@ const Map = () => {
             onLoad={onMapLoad}
         >
 
-            {markers.map((marker) => (
+            {markers.map((marker,index) => (
                 <Marker
-                    key={marker.time.toISOString()}
+                    key={index}
                     position={{ lat: marker.lat, lng: marker.lng }}
                     onClick={() => {
                         setSelected(marker);
-                    }} />
+                    }} 
+                  />
 
             ))}
             {
                 selected ? (<InfoWindow position={{ lat: selected.lat, lng: selected.lng }} onCloseClick={() => { setSelected(null) }}>
                     <div>
-                        <p>Created at {formatRelative(selected.time, new Date())}</p>
+                        <p> {selected.type}</p>
+
+                        <p> {selected.by}</p>
+                        <button>Delete</button>
                     </div>
 
                 </InfoWindow>
