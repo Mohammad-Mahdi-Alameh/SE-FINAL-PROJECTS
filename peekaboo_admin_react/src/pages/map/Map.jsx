@@ -2,31 +2,22 @@ import { GoogleMap, InfoWindow, Marker, MarkerClusterer, useLoadScript } from "@
 import "../../index.scss"
 import SearchBar from "../../components/SearchBar";
 import compass from "../../compass.svg"
-import mapStyles from "../../mapStyles"
+import mapStyles from "./mapStyles"
 import React, { useState, useCallback, useRef, useEffect } from "react"
 import { formatRelative } from "date-fns";
 import { base_url } from "../../Constants";
 import "@reach/combobox/styles.css";
 import axios from "axios";
+import { libraries,mapContainerStyle,options } from "./mapConstants";
 
 ////
-const libraries = ["places"]
-const mapContainerStyle = {
-    width: "100%",
-    height: "100vh"
-}
-const options = {
-    styles: mapStyles,
-    disableDefaultUI: true,
-    zoomControl: true,
-}
+
 
 const Map = () => {
     const [markers, setMarkers] = useState([])
     const [infras, setInfras] = useState([])
     const [selected, setSelected] = useState(null)
     const [clicked, setClicked] = useState(null)
-
     const mapRef = React.useRef();
     const onMapLoad = React.useCallback((map) => {
         mapRef.current = map;
