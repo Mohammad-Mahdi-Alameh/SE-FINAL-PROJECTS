@@ -52,7 +52,7 @@ export const infrasColumns = [
   },
 ];
 export const falseInfrasColumns = [
-
+  
   {
     field: "latitude",
     headerName: "Latitude",
@@ -72,7 +72,7 @@ export const falseInfrasColumns = [
   },
 ];
 
-export function infraExtractor(infra){
+export function infraDataExtractor(infra){
 var infraJSON = {
 
   id: infra.id,
@@ -87,6 +87,20 @@ var infraJSON = {
 
 }
 
+export function getMarker(type){
+  switch(type) {
+    case "Hole":
+      return "/hole_marker.svg"
+    case "Bump":
+      return "/bump_marker.svg"
+    case "Blockage":
+      return "/blockage_marker.svg"
+    case "Turn":
+      return "/turn_marker.svg"
+    default:
+      return ""
+  }
+}
 
 
 

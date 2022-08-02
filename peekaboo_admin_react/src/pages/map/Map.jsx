@@ -7,7 +7,7 @@ import { GoogleMap, InfoWindow, Marker, MarkerClusterer, useLoadScript } from "@
 //Components
 import SearchBar from "../../components/SearchBar";
 //Constants
-import { base_url, infraDataExtractor } from "../../Constants";
+import { base_url, infraDataExtractor, getMarker } from "../../Constants";
 import { libraries, mapContainerStyle, options } from "./mapConstants";
 //Axios
 import axios from "axios";
@@ -103,23 +103,23 @@ const Map = () => {
     };
 
     const handleAdd = async () => {
-        if(infraType ){
-        axios(config)
-            .then(function (response) {
-                const addedInfra = response.data["infra"];
-                setMarkers((current) => [
-                    ...current,
-                    infraDataExtractor(addedInfra)
-                ]);
-                setClicked(null);
-            })
-            .catch(function (error) {
-                alert("Adding Infra failed !")
-            });
-    }else{
-        setClicked(null);
+        if (infraType) {
+            axios(config)
+                .then(function (response) {
+                    const addedInfra = response.data["infra"];
+                    setMarkers((current) => [
+                        ...current,
+                        infraDataExtractor(addedInfra)
+                    ]);
+                    setClicked(null);
+                })
+                .catch(function (error) {
+                    alert("Adding Infra failed !")
+                });
+        } else {
+            setClicked(null);
+        }
     }
-}
 
     function getLiveLocation() {
         navigator.geolocation.getCurrentPosition(
@@ -171,6 +171,12 @@ const Map = () => {
                         setSelected(marker);
                         setClicked(null)
                     }}
+                    icon={
+                        {
+                            url : getMarker(marker.type),
+                            scaledSize : new window.google.maps.Size(27,37),
+                        }
+                    }
                 />
 
             ))}
