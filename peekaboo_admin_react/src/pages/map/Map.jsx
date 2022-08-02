@@ -14,7 +14,7 @@ import axios from "axios";
 //Svg's
 import compass from "../../compass.svg"
 
-//Infras : Infrastructural problems
+//Using Infras as a shortcut of Infrastructural problems//
 
 const Map = () => {
     //useState()
@@ -22,6 +22,9 @@ const Map = () => {
     const [infras, setInfras] = useState([])
     const [selected, setSelected] = useState(null)
     const [clicked, setClicked] = useState(null)
+    const [infraType, setInfraType] = useState("")
+    const [lat, setLat] = useState()
+    const [lng, setLng] = useState()
     ////
 
     //useRef()
@@ -153,7 +156,8 @@ const Map = () => {
 
             ))}
             {
-                selected ? (<InfoWindow position={{ lat: selected.lat, lng: selected.lng }} onCloseClick={() => { setSelected(null) }}>
+                selected ? (<InfoWindow position={{ lat: selected.lat, lng: selected.lng }}
+                    onCloseClick={() => { setSelected(null) }}>
                     <div>
                         <p> {selected.type}</p>
 
@@ -166,15 +170,21 @@ const Map = () => {
                 ) : null}
             {
                 clicked ? (<InfoWindow position={{ lat: clicked.latLng.lat(), lng: clicked.latLng.lng() }} onCloseClick={() => { setClicked(null) }}>
-                    <div>
-                        <input type={"radio"} name={"infra_type"} value={"Hole"} />
-                        <label for={"Hole"}>Hole</label><br />
-                        <input type={"radio"} name={"infra_type"} value={"Bump"} />
-                        <label for={"Bump"}>Bump</label><br />
-                        <input type={"radio"} name={"infra_type"} value={"Turn"} />
-                        <label for={"Turn"}>Turn</label><br />
-                        <input type={"radio"} name={"infra_type"} value={"Blockage"} />
-                        <label for={"Blockage"}>Blockage</label><br />
+                    <div className="infowindow">
+                        <form onChange={(e) => {
+                            setInfraType(e.target.value);
+                            setLat(clicked.latLng.lat());
+                            setLng(clicked.latLng.lng());
+                        }}>
+                            <input type={"radio"} name={"infra_type"} value={"Hole"} />
+                            <label for={"Hole"}>Hole</label><br />
+                            <input type={"radio"} name={"infra_type"} value={"Bump"} />
+                            <label for={"Bump"}>Bump</label><br />
+                            <input type={"radio"} name={"infra_type"} value={"Turn"} />
+                            <label for={"Turn"}>Turn</label><br />
+                            <input type={"radio"} name={"infra_type"} value={"Blockage"} />
+                            <label for={"Blockage"}>Blockage</label><br />
+                        </form>
                         <input type={"submit"} value="Add" />
                     </div>
 
