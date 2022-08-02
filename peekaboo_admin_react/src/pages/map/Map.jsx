@@ -27,6 +27,23 @@ const Map = () => {
     const [lng, setLng] = useState()
     ////
 
+    //axios configuration
+    var data = JSON.stringify({
+        "latitude": lat,
+        "longitude": lng,
+        "type": infraType,
+        "user_id": 0
+    });
+    var config = {
+        method: 'post',
+        url: base_url + '/report',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: data
+    };
+    ////
+
     //useRef()
     const mapRef = React.useRef();
     ////
@@ -60,7 +77,7 @@ const Map = () => {
         infras.map(infra => {
             setMarkers((current) => [
                 ...current,
-                infraExtractor(infra)
+                infraDataExtractor(infra)
             ])
         })
     }, [infras]);
@@ -84,6 +101,25 @@ const Map = () => {
             console.log(err)
         }
     };
+
+    const handleAdd = async () => {
+        if(infraType ){
+        axios(config)
+            .then(function (response) {
+                const addedInfra = response.data["infra"];
+                setMarkers((current) => [
+                    ...current,
+                    infraDataExtractor(addedInfra)
+                ]);
+                setClicked(null);
+            })
+            .catch(function (error) {
+                alert("Adding Infra failed !")
+            });
+    }else{
+        setClicked(null);
+    }
+}
 
     function getLiveLocation() {
         navigator.geolocation.getCurrentPosition(
@@ -168,7 +204,7 @@ const Map = () => {
                             <input type={"radio"} name={"infra_type"} value={"Blockage"} />
                             <label for={"Blockage"}>Blockage</label><br />
                         </form>
-                        <input type={"submit"} value="Add" />
+                        <input type={"submit"} value="Add" onClick={handleAdd} />
                     </div>
 
                 </InfoWindow>
