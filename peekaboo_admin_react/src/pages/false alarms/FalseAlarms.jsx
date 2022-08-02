@@ -28,6 +28,30 @@ const FalseAlarms = () => {
   }, []);
   ////
 
+  //Constants
+  const actionColumn = [
+    {
+      field: "action",
+      headerName: "Action",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <div className="cellAction">
+            <div className="negativeButton"
+              onClick={() => handleReject(params.row.id)}>
+              Reject</div>
+            <div
+              className="positiveButton"
+              onClick={() => handleAccept(params.row.id)}>
+              Accept
+            </div>
+          </div>
+        );
+      },
+    },
+  ];
+  ////
+
   //functions and handlers
   const getFalseInfras = async () => {
     const res = await axios.get(base_url + "/false_infras");
@@ -61,7 +85,7 @@ const FalseAlarms = () => {
       <DataGrid
         className="datagrid"
         rows={falseInfras}
-        columns={falseInfrasColumns}
+        columns={falseInfrasColumns.concat(actionColumn)}
         pageSize={5}
         rowsPerPageOptions={[5]}
         checkboxSelection
