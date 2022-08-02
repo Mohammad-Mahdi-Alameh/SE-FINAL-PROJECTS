@@ -7,7 +7,7 @@ import { GoogleMap, InfoWindow, Marker, MarkerClusterer, useLoadScript } from "@
 //Components
 import SearchBar from "../../components/SearchBar";
 //Constants
-import { base_url } from "../../Constants";
+import { base_url, infraDataExtractor } from "../../Constants";
 import { libraries, mapContainerStyle, options } from "./mapConstants";
 //Axios
 import axios from "axios";
@@ -22,7 +22,7 @@ const Map = () => {
     const [infras, setInfras] = useState([])
     const [selected, setSelected] = useState(null)
     const [clicked, setClicked] = useState(null)
-    const [infraType, setInfraType] = useState("")
+    const [infraType, setInfraType] = useState()
     const [lat, setLat] = useState()
     const [lng, setLng] = useState()
     ////
@@ -43,14 +43,6 @@ const Map = () => {
     }, []);
 
     const onMapClick = React.useCallback((event) =>
-        // setMarkers((current) => [
-        //     ...current,
-        //     {
-        //         lat: event.latLng.lat(),
-        //         lng: event.latLng.lng(),
-        //         time: new Date()
-        //     }
-        // ])
         setClicked(event)
     );
     ////
@@ -68,15 +60,7 @@ const Map = () => {
         infras.map(infra => {
             setMarkers((current) => [
                 ...current,
-                {
-                    id: infra.id,
-                    lat: infra.latitude,
-                    lng: infra.longitude,
-                    type: infra.type,
-                    date: infra.created_at,
-                    by: infra.user_id
-                    // time: new Date()
-                }
+                infraExtractor(infra)
             ])
         })
     }, [infras]);
@@ -99,7 +83,6 @@ const Map = () => {
         catch (err) {
             console.log(err)
         }
-
     };
 
     function getLiveLocation() {

@@ -72,6 +72,22 @@ export const falseInfrasColumns = [
   },
 ];
 
+export function infraExtractor(infra){
+var infraJSON = {
+
+  id: infra.id,
+  lat: infra.latitude,
+  lng: infra.longitude,
+  type: infra.type,
+  date: infra.created_at,
+  by: infra.user_id
+  
+}
+  return infraJSON;
+
+}
+
+
 
 
 export const base_url = "http://192.168.0.100:8000/api/v1/admin";
