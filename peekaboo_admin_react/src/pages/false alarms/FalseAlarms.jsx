@@ -14,6 +14,7 @@ import axios from "axios";
 const FalseAlarms = () => {
   //useState()
   const [falseInfras, setFalseInfras] = useState([]);
+  const [falseInfrasLoading, setFalseInfrasLoading] = useState(false)
   ////
 
   //useEffect()
@@ -21,6 +22,7 @@ const FalseAlarms = () => {
     const getData = async () => {
       const falseInfrasFromServer = await getFalseInfras();
       setFalseInfras(falseInfrasFromServer);
+      setFalseInfrasLoading(true);
     };
     getData();
   }, []);
@@ -52,7 +54,7 @@ const FalseAlarms = () => {
   ////
 
   return (<>
-    {falseInfras.length>0 && <div className="table">
+    {falseInfrasLoading && <div className="table">
       <div className="tableTitle">
          ////
       </div>
