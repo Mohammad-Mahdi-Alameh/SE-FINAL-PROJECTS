@@ -26,7 +26,31 @@ export const userColumns = [
     width: 100,
   },
 ];
+export const infrasColumns = [
+  {
+    field: "latitude",
+    headerName: "Latitude",
+    width: 120,
+    
+  },
+  {
+    field: "longitude",
+    headerName: "Longitude",
+    width: 120,
+  },
 
+  {
+    field: "type",
+    headerName: "Type",
+    width: 100,
+  },
+
+  {
+    field: "created_at",
+    headerName: "Reported at",
+    width: 100,
+  },
+];
 export const falseInfrasColumns = [
 
   {
