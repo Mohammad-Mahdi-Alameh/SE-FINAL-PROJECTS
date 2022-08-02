@@ -1,17 +1,12 @@
 import { GoogleMap, InfoWindow, Marker, MarkerClusterer, useLoadScript } from "@react-google-maps/api"
-import "./map.scss"
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import "../../index.scss"
+import SearchBar from "../../components/SearchBar";
 import compass from "../../compass.svg"
 import mapStyles from "../../mapStyles"
-import Navbar from "../../components/navbar/Navbar";
 import React, { useState, useCallback, useRef, useEffect } from "react"
 import { formatRelative } from "date-fns";
 import { base_url } from "../../Constants";
-import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
-import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from "@reach/combobox";
 import "@reach/combobox/styles.css";
-import { Search } from "@mui/icons-material";
-import { indigo } from "@mui/material/colors";
 import axios from "axios";
 
 ////
@@ -144,51 +139,8 @@ const Map = () => {
     }
 
 
-    function Search({ panTo }) {
-        const { ready, value, suggestions: { status, data }, setValue, clearSuggestions } = usePlacesAutocomplete({
-            requestOptions: {
-                location: {
-                    lat: () => 43.653225,
-                    lng: () => -79.383186,
-                },
-                radius: 200 * 1000,
-            }
-        })
-        return (<div className="wrapper">
-            <div className="search"><Combobox
-                onSelect={async (address) => {
-                    setValue(address, false);
-                    clearSuggestions();
-                    try {
-                        const results = await getGeocode({ address });
-                        const { lat, lng } = getLatLng(results[0]);
-                        panTo({ lat, lng });
-                    } catch (error) {
-                        console.log("error")
-                    }
-                }} >
-                <ComboboxInput value={value} onChange={(e) => {
-                    setValue(e.target.value);
-                }}
-                    disable={!ready}
-                    placeholder="Enter an address"
-                />
-                <ComboboxPopover>
-                    <ComboboxList>
-                        {status === "OK" && data.map(({ id, description }) => (<ComboboxOption key={id} value={description} />))}
-                    </ComboboxList>
-                </ComboboxPopover>
-
-            </Combobox>
-                <SearchOutlinedIcon />
-            </div>
-        </div>)
-    }
-    
-
-
-
     return (<div className="map">
+
         <GoogleMap
             mapContainerStyle={mapContainerStyle}
             zoom={8}
@@ -222,7 +174,7 @@ const Map = () => {
                 ) : null}
             {
                 clicked ? (<InfoWindow position={{ lat: clicked.latLng.lat(), lng: clicked.latLng.lng() }} onCloseClick={() => { setClicked(null) }}>
-                    <div>
+                 <div>
                             <input type={"radio"} name={"infra_type"} value={"Hole"}/>
                             <label for={"Hole"}>Hole</label><br/>
                             <input type={"radio"} name={"infra_type"} value={"Bump"}/>
@@ -231,7 +183,7 @@ const Map = () => {
                             <label for={"Turn"}>Turn</label><br/>
                             <input type={"radio"} name={"infra_type"} value={"Blockage"}/>
                             <label for={"Blockage"}>Blockage</label><br/>
-                            <button>Add</button>
+                            <input type={"submit"} value="Add"  />
                     </div>
 
                 </InfoWindow>
@@ -243,7 +195,7 @@ const Map = () => {
 
 
         </GoogleMap>
-        <Search panTo={panTo} />
+        <SearchBar panTo={panTo} />
         <Locate panTo={panTo} />
     </div>)
 
