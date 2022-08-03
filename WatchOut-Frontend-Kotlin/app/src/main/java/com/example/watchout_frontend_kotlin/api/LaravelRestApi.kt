@@ -6,7 +6,7 @@ import retrofit2.http.*
 
 interface LaravelRestApi {
 
-    @POST("/api/v1/login")
+    @POST("/api/v1/user/login")
     fun logIn(
         @HeaderMap authedHeaders: PublicHeaders,
         @Body loginInfo: LoginInfo
@@ -25,16 +25,16 @@ interface LaravelRestApi {
     ): Call<ReportResponse>
 
     //infras : infrastructural problems
-    @POST("/api/v1/user/getNearInfras")
+    @POST("/api/v1/user/get_near_infras")
     fun getNearInfras(
         @HeaderMap authedHeaders: AuthenticatedHeaders,
         @Body getNearInfrasInfo: GetNearInfrasInfo
     ): Call<List<GetInfrasResponse>>
 
-    @GET("/api/v1/user/get_all_infras")
+    @GET("/api/v1/user/get_all_infras/{user_id}")
     fun getAllInfras(
         @HeaderMap authedHeaders: AuthenticatedHeaders,
-        @Query("user_id") user_id: Int?,
+        @Path("user_id") id: Int,
     ): Call<List<GetInfrasResponse>>
 
     @PUT("/api/v1/user/edit_profile")
@@ -43,16 +43,16 @@ interface LaravelRestApi {
         @Body editProfileInfo: EditProfileInfo
     ): Call<SingleMessageResponse>
 
-    @PUT("/api/v1/user/addCoins")
+    @PUT("/api/v1/user/add_coins/{user_id}")
     fun addCoins(
         @HeaderMap authedHeaders: AuthenticatedHeaders,
-        @Query("user_id") user_id: Int,
+        @Path("user_id") userId: Int,
     ): Call<AddCoinsResponse>
 
-    @PUT("/api/v1/user/reportFalseInfra/{infra_id}")
+    @PUT("/api/v1/user/false_infra/{infra_id}")
     fun reportFalseInfra(
         @HeaderMap authedHeaders: AuthenticatedHeaders,
-        @Path("infra_id") infra_d: Int,
+        @Path("infra_id") infraId: Int,
     ): Call<SingleMessageResponse>
 
 
