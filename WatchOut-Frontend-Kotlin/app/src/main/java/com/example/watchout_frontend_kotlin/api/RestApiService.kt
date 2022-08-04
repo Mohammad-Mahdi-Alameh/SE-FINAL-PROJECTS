@@ -121,11 +121,11 @@ class RestApiService {
 
     fun getAllInfras(
         authedHeaders: AuthenticatedHeaders,
-        user_id: Int?,
+        userId: Int,
         onResult: (List<GetInfrasResponse>?) -> Unit
     ) {
         val retrofit = ServiceBuilder.buildService(LaravelRestApi::class.java)
-        retrofit.getAllInfras(authedHeaders, user_id).enqueue(
+        retrofit.getAllInfras(authedHeaders,userId).enqueue(
             object : Callback<List<GetInfrasResponse>> {
                 override fun onFailure(call: Call<List<GetInfrasResponse>>, t: Throwable) {
                     Log.d("error", "error in getting response")
@@ -173,11 +173,11 @@ class RestApiService {
     }
     fun addCoins(
         authedHeaders: AuthenticatedHeaders,
-        user_id: Int,
+        userId: Int,
         onResult: (AddCoinsResponse?) -> Unit
     ) {
         val retrofit = ServiceBuilder.buildService(LaravelRestApi::class.java)
-        retrofit.addCoins(authedHeaders, user_id).enqueue(
+        retrofit.addCoins(authedHeaders, userId).enqueue(
             object : Callback<AddCoinsResponse> {
                 override fun onFailure(call: Call<AddCoinsResponse>, t: Throwable) {
                     Log.d("error", "error in getting response")
@@ -204,6 +204,31 @@ class RestApiService {
     ) {
         val retrofit = ServiceBuilder.buildService(LaravelRestApi::class.java)
         retrofit.reportFalseInfra(authedHeaders, infraId).enqueue(
+            object : Callback<SingleMessageResponse> {
+                override fun onFailure(call: Call<SingleMessageResponse>, t: Throwable) {
+                    Log.d("error", "error in getting response")
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<SingleMessageResponse>,
+                    response: Response<SingleMessageResponse>
+                ) {
+                    val result = response.body()
+                    Log.d("Result", response.toString())
+                    onResult(result)
+
+
+                }
+            }
+        )
+    }
+    fun logout(
+        authedHeaders: AuthenticatedHeaders,
+        onResult: (SingleMessageResponse?) -> Unit
+    ) {
+        val retrofit = ServiceBuilder.buildService(LaravelRestApi::class.java)
+        retrofit.logout(authedHeaders).enqueue(
             object : Callback<SingleMessageResponse> {
                 override fun onFailure(call: Call<SingleMessageResponse>, t: Throwable) {
                     Log.d("error", "error in getting response")
