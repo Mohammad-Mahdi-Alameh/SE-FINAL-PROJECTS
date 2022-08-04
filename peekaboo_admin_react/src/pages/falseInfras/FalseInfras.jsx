@@ -5,13 +5,14 @@ import "../../index.scss"
 //Components
 import { DataGrid } from "@mui/x-data-grid";
 //Constants
-import { falseInfrasColumns, base_url } from "../../Constants";
+import { falseInfrasColumns  } from "../../Utilities";
+import { base_url } from "../../Utilities/Constants";
 //Axios
 import axios from "axios";
 
 //Using Infras as a shortcut of Infrastructural problems//
 
-const FalseAlarms = () => {
+const FalseInfras = () => {
   //useState()
   const [falseInfras, setFalseInfras] = useState([]);
   const [falseInfrasLoading, setFalseInfrasLoading] = useState(false)
@@ -28,8 +29,8 @@ const FalseAlarms = () => {
   }, []);
   ////
 
-  //Constants
-  const actionColumn = [
+   //Constants
+   const actionColumn = [
     {
       field: "action",
       headerName: "Action",
@@ -80,7 +81,8 @@ const FalseAlarms = () => {
   return (<>
     {falseInfrasLoading && <div className="table">
       <div className="tableTitle">
-         ////
+        False Infras
+         
       </div>
       <DataGrid
         className="datagrid"
@@ -95,4 +97,4 @@ const FalseAlarms = () => {
   );
 }
 
-export default FalseAlarms;
+export default FalseInfras;
