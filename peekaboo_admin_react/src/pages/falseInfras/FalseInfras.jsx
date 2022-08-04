@@ -5,7 +5,7 @@ import "../../index.scss"
 //Components
 import { DataGrid } from "@mui/x-data-grid";
 //Constants
-import { falseInfrasColumns  } from "../../Utilities";
+import { falseInfrasColumns , actionColumn } from "../../Utilities";
 import { base_url } from "../../Utilities/Constants";
 //Axios
 import axios from "axios";
@@ -27,30 +27,6 @@ const FalseInfras = () => {
     };
     getData();
   }, []);
-  ////
-
-   //Constants
-   const actionColumn = [
-    {
-      field: "action",
-      headerName: "Action",
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <div className="cellAction">
-            <div className="negativeButton"
-              onClick={() => handleReject(params.row.id)}>
-              Reject</div>
-            <div
-              className="positiveButton"
-              onClick={() => handleAccept(params.row.id)}>
-              Accept
-            </div>
-          </div>
-        );
-      },
-    },
-  ];
   ////
 
   //functions and handlers
@@ -87,7 +63,7 @@ const FalseInfras = () => {
       <DataGrid
         className="datagrid"
         rows={falseInfras}
-        columns={falseInfrasColumns.concat(actionColumn)}
+        columns={falseInfrasColumns.concat(actionColumn(handleReject,handleAccept,"Reject","Accept"))}
         pageSize={5}
         rowsPerPageOptions={[5]}
         checkboxSelection
