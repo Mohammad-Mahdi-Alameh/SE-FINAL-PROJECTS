@@ -75,7 +75,7 @@ class ProfileActivity : AppCompatActivity() {
             finish()
         }
         editPassword.setOnClickListener {
-            popupPasswordDialog(this, R.layout.password_dialog)
+            popupPasswordDialog(this, R.layout.password_dialog, editor)
         }
         update.setOnClickListener {
             firstName = firstnameEdit.text.toString()
@@ -101,12 +101,7 @@ class ProfileActivity : AppCompatActivity() {
                     )
                         .show()
                 } else {
-                    editor.putString("firstname", firstName)
-                    editor.putString("lastname", lastName)
-                    editor.putString("phonenumber", phoneNumber)
-                    editor.putString("username", userName)
-                    editor.apply()
-                    editor.commit()
+
                     val jwtToken = sharedPref.getString("token", "")
                     val apiService = RestApiService()
                     val editProfileInfo = EditProfileInfo(
@@ -116,15 +111,21 @@ class ProfileActivity : AppCompatActivity() {
                         phonenumber = sharedPref.getString("phonenumber", "")?.toInt(),
                         picture = sharedPref.getString("picture", ""),
                         username = sharedPref.getString("firstname", ""),
-                        password = public.getDecryptedPassword(this),
-                        c_password = public.getDecryptedPassword(this)
+                        password = sharedPref.getString("password", ""),
                     )
+
                     val authenticatedHeaders =
                         jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
                     if (authenticatedHeaders != null) {
                         apiService.editProfile(authenticatedHeaders, editProfileInfo) {
                             if (it?.message == "updated successfully") {
-
+                                editor.putString("firstname", firstName)
+                                editor.putString("lastname", lastName)
+                                editor.putString("phonenumber", phoneNumber)
+                                editor.putString("username", userName)
+                                editor.remove("password")
+                                editor.apply()
+                                editor.commit()
                                 Log.i("message", "User edited successfully")
                                 startActivity(Intent(this, MainActivity::class.java))
                                 finish()
@@ -137,7 +138,7 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun popupPasswordDialog(context: Context, id: Int) {
+    private fun popupPasswordDialog(context: Context, id: Int, editor: SharedPreferences.Editor) {
         val view = View.inflate(context, id, null)
         val builder = AlertDialog.Builder(context)
         builder.setView(view)
@@ -156,33 +157,31 @@ class ProfileActivity : AppCompatActivity() {
         confirmPasswordEdit = view.findViewById(R.id.c_password)
         passwordEdit.setText(public.getDecryptedPassword(this))
         confirmPasswordEdit.setText(public.getDecryptedPassword(this))
-        val password = passwordEdit.text.toString()
-        val confirmPassword = confirmPasswordEdit.text.toString()
         view.findViewById<View>(R.id.done_btn).setOnClickListener {
+            val password = passwordEdit.text.toString()
+            val confirmPassword = confirmPasswordEdit.text.toString()
             if (password != confirmPassword) {
                 Toast.makeText(
                     this,
                     "Passwords don't match !",
                     Toast.LENGTH_SHORT
                 ).show()
-            } else { //all these validator functions should be public function in
-                // PublicFunctions class cause they are written here and in register activity so to avoid
-                // redundancy and I will fix later
+            } else {
 
-//                if (password.length < 6) {
-//                    Toast.makeText(
-//                        this,
-//                        "Password too short ! It should be minimum six characters",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-            public.encryptAndSavePassword(this, password)
-            popupDialog.dismiss()
+                if (password.length < 6) {
+                    Toast.makeText(
+                        this,
+                        "Password too short ! It should be minimum six characters",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    public.encryptAndSavePassword(this, password)
+                    editor.putString("password", password)
+                    popupDialog.dismiss()
+                }
             }
 
-        }//all these validator functions should be public function in
-        // PublicFunctions class cause they are written here and in register activity so to avoid
-        // redundancy and I will fix later
+        }
 
         popupDialog.show()
     }
