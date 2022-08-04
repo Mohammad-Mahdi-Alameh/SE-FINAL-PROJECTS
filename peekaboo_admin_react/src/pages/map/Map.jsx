@@ -6,8 +6,10 @@ import "../../index.scss"
 import { GoogleMap, InfoWindow, Marker, MarkerClusterer, useLoadScript } from "@react-google-maps/api"
 //Components
 import SearchBar from "../../components/SearchBar";
+//Utilities
+import { infraDataExtractor, getMarker } from "../../Utilities";
 //Constants
-import { base_url, infraDataExtractor, getMarker } from "../../Constants";
+import { base_url } from "../../Constants";
 import { libraries, mapContainerStyle, options } from "./mapConstants";
 //Axios
 import axios from "axios";
@@ -173,8 +175,8 @@ const Map = () => {
                     }}
                     icon={
                         {
-                            url : getMarker(marker.type),
-                            scaledSize : new window.google.maps.Size(27,37),
+                            url: getMarker(marker.type),
+                            scaledSize: new window.google.maps.Size(27, 37),
                         }
                     }
                 />
@@ -183,11 +185,10 @@ const Map = () => {
             {
                 selected ? (<InfoWindow position={{ lat: selected.lat, lng: selected.lng }}
                     onCloseClick={() => { setSelected(null) }}>
-                    <div>
+                    <div className="delete-infowindow">
                         <p> {selected.type}</p>
 
-                        <p> {selected.by}</p>
-                        <button onClick={() => handleDelete(selected.id)}>Delete</button>
+                        <input type={"submit"} value="Fix" onClick={() => handleDelete(selected.id)}/>
                     </div>
 
                 </InfoWindow>
