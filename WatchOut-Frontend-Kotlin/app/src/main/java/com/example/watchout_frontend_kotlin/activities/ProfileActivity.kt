@@ -71,6 +71,9 @@ class ProfileActivity : AppCompatActivity() {
         lastnameEdit.setText(sharedPref.getString("lastname", ""))
         phonenumberEdit.setText(sharedPref.getString("phonenumber", ""))
         usernameEdit.setText(sharedPref.getString("username", ""))
+        if (getDecodedImage() != null) {
+            profilePhoto.setImageBitmap(getDecodedImage())
+        }
         profilePhoto.setOnClickListener {
             pickImageGallery()
         }
@@ -287,4 +290,16 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
+    private fun getDecodedImage(): Bitmap? {
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        val picture = sharedPref.getString("picture", "")
+        if (picture != null) {
+            if (picture.isNotEmpty()) {
+
+                val imageBytes = Base64.decode(picture, Base64.DEFAULT)
+                return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+            }
+        }
+        return null
+    }
 }
