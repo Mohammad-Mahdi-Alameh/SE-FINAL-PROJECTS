@@ -20,15 +20,14 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import com.example.watchout_frontend_kotlin.R
-import com.example.watchout_frontend_kotlin.activities.MainActivity
-import com.example.watchout_frontend_kotlin.others.Constants.SERVICE_CHANNEL_ID
-import com.example.watchout_frontend_kotlin.others.Constants.SERVICE_CHANNEL_NAME
-import com.example.watchout_frontend_kotlin.others.Constants.SERVICE_NOTIFICATION_ID
+import com.example.watchout_frontend_kotlin.activities.MapsActivity
+import com.example.watchout_frontend_kotlin.utilities.Constants.SERVICE_CHANNEL_ID
+import com.example.watchout_frontend_kotlin.utilities.Constants.SERVICE_CHANNEL_NAME
+import com.example.watchout_frontend_kotlin.utilities.Constants.SERVICE_NOTIFICATION_ID
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class TrackingService : Service() {
-//    private lateinit var fusedLocClient: FusedLocationProviderClient
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var dbReference: DatabaseReference = database.getReference("Live-Tracking")
 
@@ -36,16 +35,10 @@ class TrackingService : Service() {
         return null
     }
 
-//    private fun setupLocClient() {
-//        fusedLocClient =
-//            LocationServices.getFusedLocationProviderClient(this)
-//    }
-
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
     }
-
 
     @SuppressLint("MissingPermission")
     //although permission is given and everything is perfect and its working fine
@@ -124,7 +117,7 @@ class TrackingService : Service() {
             createNotificationChannel()
         }
 
-        val notificationIntent = Intent(this, MainActivity::class.java)
+        val notificationIntent = Intent(this, MapsActivity::class.java)
 
         val pendingIntent = PendingIntent.getActivity(
             this,
