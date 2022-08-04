@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -21,7 +20,7 @@ import com.example.watchout_frontend_kotlin.others.PublicFunctions
 class MainActivity : AppCompatActivity() {
     private lateinit var  username : EditText
     private lateinit var  password : EditText
-    private lateinit var  public : PublicFunctions
+    private var  public = PublicFunctions()
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,14 +29,14 @@ class MainActivity : AppCompatActivity() {
         username = findViewById(R.id.username)
         password = findViewById(R.id.password)
         val register = findViewById<TextView>(R.id.navigateToRegister)
-        val signin_btn = findViewById<Button>(R.id.signin_btn)
+        val signinBtn = findViewById<Button>(R.id.signin_btn)
         register.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
             finish()
 
         }
-        signin_btn.setOnClickListener {
+        signinBtn.setOnClickListener {
             val username = username.text.toString()
             val password = password.text.toString()
             if (username.isEmpty() || password.isEmpty()) {
@@ -59,7 +58,6 @@ class MainActivity : AppCompatActivity() {
 
                 apiService.login(authenticatedHeaders,loginInfo) {
                     if (it?.token != null) {
-                        Log.i("token", it.token)
                         val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
                         val editor: SharedPreferences.Editor = sharedPref.edit()
                         editor.putString("token", it.token)
@@ -69,6 +67,7 @@ class MainActivity : AppCompatActivity() {
                         editor.putString("phonenumber", it?.phonenumber.toString())
                         editor.putString("balance", it?.balance.toString())
                         editor.putString("total_reports", it?.totalReports.toString())
+                        editor.putString("total_false_infras", it?.totalFalseInfras.toString())
                         editor.putString("picture", it?.picture)
                         editor.putString("username", username)
                         public.encryptAndSavePassword(
