@@ -33,7 +33,6 @@ import com.example.watchout_frontend_kotlin.models.LocationInfo
 import com.example.watchout_frontend_kotlin.models.ReportInfo
 import com.example.watchout_frontend_kotlin.others.Constants
 import com.example.watchout_frontend_kotlin.others.PublicFunctions
-import com.example.watchout_frontend_kotlin.others.RecyclerAdapter
 import com.example.watchout_frontend_kotlin.services.TrackingService
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -63,7 +62,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     private lateinit var coins: TextView
     private lateinit var report: Button
     private lateinit var latLng: LatLng
-    private lateinit var adapter: RecyclerAdapter
     private lateinit var fusedLocClient: FusedLocationProviderClient
     private var public = PublicFunctions()
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -87,6 +85,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         hamburger.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
+        //managing the drawer navigation
         navigationView = findViewById(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
             val id = item.itemId
@@ -124,7 +123,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         }
 
     }
-
+    //function showing the bottom sheet (dialog) and managing it and adding the needed listeners
     private fun showBottomSheet(latitude: Double, longitude: Double) {
         val bottomSheetDialog = BottomSheetDialog(
             this, R.style.BottomSheetDialogTheme
@@ -164,7 +163,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()
     }
-
+    //logout
     private fun logout() {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         val editor: SharedPreferences.Editor = sharedPref.edit()
@@ -174,7 +173,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
-
+    //function to add coins to the user balance
     private fun addCoins() {
         val jwtToken = sharedPref.getString("token", "")
         val userId = sharedPref.getString("user_id", "")?.toInt()
@@ -197,15 +196,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         }
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+    //writing everything we need when the map finished loading an dis ready to be used
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         getAllInfras()
@@ -243,6 +234,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
 
     }
 
+    //function to start the foreground service
     private fun startTrackingService(context: Context) {
         val startServiceIntent = Intent(context, TrackingService::class.java)
 
@@ -255,11 +247,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
 
     }
 
+    //function to stop the foreground service
     private fun stopTrackingService(context: Context) {
         val stopServiceIntent = Intent(context, TrackingService::class.java)
         context.stopService(stopServiceIntent)
     }
 
+    //function that gives the green light to the startTrackingFunction to start after
+    // granting location permissions, and if no request them
     private fun trackCurrentLocation(context: Context?) {
 
         //Check all location permission granted or not
@@ -279,6 +274,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         }
     }
 
+    //function to request location permissions
     private fun requestLocPermissions() {
         ActivityCompat.requestPermissions(
             this,
@@ -287,6 +283,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         )
     }
 
+    //function to handle the result of the  location request
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -310,9 +307,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         }
     }
 
+    //this listener is the responsible to handle every updates of the live location,
+    // sent from our foreground service The "TrackingService"
     private var locListener = object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
             if (snapshot.exists()) {
+                sharedPref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+                val nearInfras = sharedPref.getString("Near Infras", "")
                 //get the exact longitude and latitude and speed from the database "Live Tracking"
                 val location = snapshot.child("Live-Tracking").getValue(LocationInfo::class.java)
                 val locationLat = location?.latitude
@@ -330,20 +331,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
                     mMap.addMarker(
                         MarkerOptions().position(latLng)
                             .icon(bitmapFromVector(applicationContext, R.drawable.ic_tracker))
+                            .zIndex(
+                                10.0F
+                            )
                     )
                     //specify how the map camera is updated
-                    val update = CameraUpdateFactory.newLatLngZoom(latLng, 30.0f)
+                    val update = CameraUpdateFactory.newLatLngZoom(latLng, 16.0f)
                     //update the camera with the CameraUpdate object
                     mMap.moveCamera(update)
 
-                } else {
+                            } else {
                     Log.i("Error", "Error")
 
                 }
 
             }
         }
-
         // show this toast if there is an error while reading from the database
         override fun onCancelled(error: DatabaseError) {
             Toast.makeText(applicationContext, "Could not read from database", Toast.LENGTH_LONG)
@@ -384,11 +387,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 
-
+    //function to get all infras from database
     private fun getAllInfras() {
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         val jwtToken = sharedPref.getString("token", "")
-//        val id =sharedPref.getString("user_id","")
         val apiService = RestApiService()
         val authenticatedHeaders =
             jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
@@ -406,6 +408,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
 
     }
 
+    //function that traverses list of all infras and call addMarker function for every infra
     private fun setMarkers(data: String) {
         val array = JSONArray(data)
         (0 until array.length()).forEach {
@@ -423,6 +426,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         }
     }
 
+    //function to add the convenient marker for a specific infra according to its type
     private fun addMarker(
         latitude: Double,
         longitude: Double,
@@ -482,19 +486,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
 
 
     }
-
-//        array?.let {
-//            for (infra in it) {
-//                val json = JSONObject(infra.toString())
-//                val latLng = LatLng(json["latitude"] as Double, json["longitude"] as Double)
-//            }
-//        }
-//    private fun setMarkers(data : String){
-//        val latLng = LatLng(location.latitude, location.longitude)
-//        // create a marker at the exact location
-//        map.addMarker(MarkerOptions().position(latLng)
-//            .title("You are currently here!"))
-//    }
 
     private fun getInfraType(v: View): String {
         val type = ""
@@ -600,7 +591,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         return rad * 180.0 / Math.PI
     }
 
-    private fun getNearInfras(latitude: Double, longitude: Double) {
+    private fun getNearInfras(latitude: Double, longitude: Double, speed: Double) {
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        editor = sharedPref.edit()
         jwtToken = sharedPref.getString("token", "").toString()
         val apiService = RestApiService()
         val authenticatedHeaders =
@@ -644,7 +637,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
                 if (it?.message == "reported successfully") {
                     Toast.makeText(
                         applicationContext,
-                        "Thanks for your feedback ! The admin will check it asap !",
+                        "Thanks for your feedback ! The Admin will check it ASAP !",
                         Toast.LENGTH_LONG
                     )
                         .show()
