@@ -351,7 +351,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
                     val update = CameraUpdateFactory.newLatLngZoom(latLng, 16.0f)
                     //update the camera with the CameraUpdate object
                     mMap.moveCamera(update)
-
+                    if (nearInfras != null) {
+                    }
+                    if (nearInfras != null) {
+                        if (nearInfras.isNotEmpty()) {
+                            if (checkValidity(locationLat, locationLong, nearInfras)) {      //if near infras from shared preferences exist ,
+                                Log.i("yarab", nearInfras)                              //then check if the user is maximum far 2km from them
+                                                                                            //else get new list,and if validated, then keep tracking them
+                                makeUserSafe(locationLat, locationLong, speed, nearInfras)  //and when they still have 7 seconds to reach infra, send the
+                                                                                            //notification,and of course time remaining is being calculated
+                            } else {                                                        //by diving distance remaining on speed
+                                getNearInfras(locationLat, locationLong, speed)
+                            }
+                        } else {
+                            getNearInfras(locationLat, locationLong, speed)
+                        }
+                    }
                 }
             }
         }
@@ -365,7 +380,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
 
     }
 
+    //function that initiates the sending of the notification
+    // to the user if he is less than 7 seconds to reach an infra
+    private fun makeUserSafe(liveLat: Double, liveLong: Double, speed: Double, nearInfras: String) {
+        val array = JSONArray(nearInfras)
+        (0 until array.length()).forEach {
+            var infra = array.getJSONObject(it)
+            val timeRemaining = getDistance(
+                liveLat,
+                liveLong,
+                infra["latitude"] as Double,
+                infra["longitude"] as Double
+            ) / speed
+            if (timeRemaining < 7) {
+                Log.i("hamdella", timeRemaining.toString())
+                sendNotification(applicationContext)
+            }
 
+        }
+
+    }
 
     //function that checks if the list of near infras are up-to-date
     // (by checking if it far from live position more than 2km, and if so it should be replaced by new list)
@@ -640,6 +674,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
                     editor.putString("Near Infras", Gson().toJson(it))
                     editor.apply()
                     editor.commit()
+                    makeUserSafe(latitude, longitude, speed, Gson().toJson(it))
                 } else {
                     Log.i("Error", "Error")
 
