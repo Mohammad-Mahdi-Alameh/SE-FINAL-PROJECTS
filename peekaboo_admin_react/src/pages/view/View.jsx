@@ -1,18 +1,25 @@
-import "./view.scss"
+//React Hooks
 import { useState, useEffect } from "react";
+//React Router Dom
 import { useParams } from "react-router-dom"
-import { base_url, infrasColumns } from "../../Constants";
+//Components
 import { DataGrid } from "@mui/x-data-grid";
+//Utilities
+import {  infrasColumns } from "../../Utilities/Utilities";
+//Constants
+import { base_url } from "../../Utilities/Constants";
+//axios
+import axios from "axios";
+//SVG's
+import profile_icon from "../../profile_icon.svg"
 
 
 const View = () => {
-  var axios = require('axios');
   let { userId } = useParams();
   let [info, setInfo] = useState([]);
   const [infras, setInfras] = useState([]);
   const [infrasLoading, setInfrasLoading] = useState(false)
   const [profileLoading, setProfileLoading] = useState(false)
-  // let navigate=useNavigate();
 
   const fetchInfo = async () => {
 
@@ -61,10 +68,9 @@ const View = () => {
     {profileLoading && <div className="singleContainer">
       <div className="top">
         <div className="left">
-          <h1 className="title">Information</h1>
-          <div className="item">
+            <div className="item">
             <img
-              src={info.picture}
+              src={info.picture ? info.picture : profile_icon}
               alt=""
               className="itemImg"
             />
@@ -96,7 +102,7 @@ const View = () => {
     <div>
       {infrasLoading && <div className="table">
         <div className="tableTitle">
-          ///
+          Report History
         </div>
         <DataGrid
           className="datagrid"
