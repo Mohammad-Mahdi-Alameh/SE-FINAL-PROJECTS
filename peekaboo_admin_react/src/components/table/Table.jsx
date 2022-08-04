@@ -1,8 +1,14 @@
-import "./table.scss";
+//React Hooks
 import { useState, useEffect } from "react";
+//React router Dom
 import { useNavigate , Link } from "react-router-dom";
+//Components
 import { DataGrid } from "@mui/x-data-grid";
-import { base_url , userColumns } from "../../Constants";
+//Utilities
+import { userColumns ,actionColumn } from "../../Utilities";
+//Constants
+import { base_url  } from "../../Utilities/Constants";
+//axios
 import axios from "axios";
 
 
@@ -11,41 +17,30 @@ const Table = () => {
   const [users, setUsers] = useState([]);
 
 
-
+  //function to delete user from the database and remove it from the datagrid
   const handleDelete = async (id) => {
-    const res = await axios.put(base_url + "/admin/delete_user/" + id);
+  try{  const res = await axios.put(base_url + "/delete_user/" + id);
     const result = await res.data;
-    if (result.message == "Deleted successfully") {
+    console.log(result.message);
       setUsers(users.filter((item) => item.id !== id));
+      console.log(users);
+
+      // /
+    }
+    catch(err){
+      console.log(err)
     }
 
   };
 
-  const actionColumn = [
-    {
-      field: "action",
-      headerName: "Action",
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <div className="cellAction">
-            <div className="viewButton"
-              onClick={() =>navigate('/users/'+params.row.id)}>View</div>
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
-            >
-              Delete
-            </div>
-          </div>
-        );
-      },
-    },
-  ];
+  //function to navigate to the view user page
+  const handleView = (id) => {
+    navigate('/users/'+id);
+  }
 
-
+//function to get all users from database
   const getUsers = async () => {
-    const res = await axios.get(base_url + "/admin/users");
+    const res = await axios.get(base_url + "/users");
     const data = await res.data;
     return data;
   };
@@ -63,15 +58,15 @@ const Table = () => {
   return (<>
     {users.length>0 && <div className="table">
       <div className="tableTitle">
-        Add New User
-        <Link to="/users/add" className="link">
+        Users
+        {/* <Link to="/users/add" className="link">
           Add New
-        </Link>
+        </Link> */}
       </div>
       <DataGrid
         className="datagrid"
         rows={users}
-        columns={userColumns.concat(actionColumn)}
+        columns={userColumns.concat(actionColumn(handleDelete,handleView,"Delete","View"))}
         pageSize={5}
         rowsPerPageOptions={[5]}
         checkboxSelection
