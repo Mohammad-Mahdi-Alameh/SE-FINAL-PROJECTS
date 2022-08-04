@@ -1,9 +1,16 @@
-import "../index.scss";
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+//React
 import React from "react"
+//Style File
+import "../index.scss";
+//Mui Icons
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+//Use-Places-Autocomplete imports
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
+//Combobox
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from "@reach/combobox";
+//Combobox Style
 import "@reach/combobox/styles.css";
+
 const SearchBar = ({panTo}) => {
     const { ready, value, suggestions: { status, data }, setValue, clearSuggestions } = usePlacesAutocomplete({
         requestOptions: {
