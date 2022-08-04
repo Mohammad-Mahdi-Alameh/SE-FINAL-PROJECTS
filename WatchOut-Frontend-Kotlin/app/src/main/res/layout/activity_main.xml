@@ -43,12 +43,12 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_marginBottom="7dp"
                     android:fontFamily="@font/peekaboo"
                     android:gravity="start"
                     android:text="SIGN IN"
-                    android:layout_marginTop="17dp"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginBottom="7dp"
                     android:textColor="@color/white"
                     android:textFontWeight="900"
                     android:textSize="25sp" />
@@ -62,7 +62,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="9dp"
                     android:background="@drawable/rounded_corner_input"
-                    android:hint="@string/user_name"
+                    android:hint="Username"
                     app:boxStrokeColor="@color/transparentColor"
                     app:boxStrokeWidth="0dp"
                     app:hintTextColor="#4E4A4A">
@@ -86,7 +86,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="5dp"
                     android:background="@drawable/rounded_corner_input"
-                    android:hint="@string/password"
+                    android:hint="Password"
                     app:boxStrokeColor="@color/transparentColor"
                     app:boxStrokeWidth="0dp"
                     app:endIconMode="password_toggle"
@@ -131,28 +131,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="170dp"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_marginTop="170dp">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="167dp"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
             android:fontFamily="@font/peekaboo"
             android:text="Don't have an account ?"
-            android:textColor="@color/white">
-        </TextView>
+            android:textColor="@color/white"
+            android:textSize="15dp"></TextView>
+
         <TextView
             android:id="@+id/navigateToRegister"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:textFontWeight="900"
             android:fontFamily="@font/peekaboo"
             android:text="Register"
-            android:textColor="@color/cyan">
-        </TextView>
+            android:textColor="@color/cyan"
+            android:textFontWeight="900"
+            android:textSize="15dp"></TextView>
 
     </LinearLayout>
 </LinearLayout>
