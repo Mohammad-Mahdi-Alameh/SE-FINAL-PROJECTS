@@ -17,15 +17,15 @@ import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
-import com.example.watchout_frontend_kotlin.activities.HomeActivity
-import com.example.watchout_frontend_kotlin.models.LocationInfo
-import com.example.watchout_frontend_kotlin.others.Constants.CHANNEL_ID
-import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import com.example.watchout_frontend_kotlin.R
+import com.example.watchout_frontend_kotlin.activities.MainActivity
+import com.example.watchout_frontend_kotlin.others.Constants.SERVICE_CHANNEL_ID
+import com.example.watchout_frontend_kotlin.others.Constants.SERVICE_CHANNEL_NAME
+import com.example.watchout_frontend_kotlin.others.Constants.SERVICE_NOTIFICATION_ID
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class TrackingService : Service() {
 //    private lateinit var fusedLocClient: FusedLocationProviderClient
@@ -107,39 +107,12 @@ class TrackingService : Service() {
         }
     }
 
-    private val locListener = object : ValueEventListener {
-        override fun onDataChange(snapshot: DataSnapshot) {
-            if (snapshot.exists()) {
-                //get the exact longitude and latitude and speed from the database "Live Tracking"
-                val location = snapshot.child("Live-Tracking").getValue(LocationInfo::class.java)
-                val locationLat = location?.latitude
-                val locationLong = location?.longitude
-                val speed = location?.speed
 
-                Log.i("lat", locationLat.toString())
-                Log.i("long", locationLong.toString())
-                Log.i("speed", speed.toString())
-            } else {
-                // if location is null , log an error message
-                Log.e("Error", "user location cannot be found")
-            }
-        }
-
-
-        // show this toast if there is an error while reading from the database
-        override fun onCancelled(error: DatabaseError) {
-            Toast.makeText(applicationContext, "Could not read from database", Toast.LENGTH_LONG)
-                .show()
-        }
-
-    }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         showNotification()
 //        setupLocClient()
         trackCurrentLocation(this)
-        dbReference = Firebase.database.reference
-        dbReference.addValueEventListener(locListener)
         return START_STICKY
     }
 
@@ -151,26 +124,27 @@ class TrackingService : Service() {
             createNotificationChannel()
         }
 
-        val notificationIntent = Intent(this, HomeActivity::class.java)
+        val notificationIntent = Intent(this, MainActivity::class.java)
 
         val pendingIntent = PendingIntent.getActivity(
             this,
             0, notificationIntent, PendingIntent.FLAG_IMMUTABLE
         )
 
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+        val notification = NotificationCompat.Builder(this, SERVICE_CHANNEL_ID)
             .setContentTitle("Location Service")
-            .setContentText("WatchOut! is running")
+            .setContentText("PEEKABOO is tracking you !")
             .setContentIntent(pendingIntent)
+            .setSmallIcon(R.drawable.app_peekaboo)
             .setOngoing(true)
             .build()
-        startForeground(1, notification)
+        startForeground(SERVICE_NOTIFICATION_ID, notification)
     }
 
     private fun createNotificationChannel() {
         val serviceChannel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel(
-                CHANNEL_ID, "Location Service Channel",
+                SERVICE_CHANNEL_ID, SERVICE_CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_DEFAULT
             )
         } else {
