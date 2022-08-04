@@ -12,17 +12,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.watchout_frontend_kotlin.R
 import com.example.watchout_frontend_kotlin.api.ApiMainHeadersProvider
 import com.example.watchout_frontend_kotlin.api.RestApiService
+import com.example.watchout_frontend_kotlin.models.UserInfras
 import com.google.gson.Gson
 import org.json.JSONArray
 
 class RecyclerAdapter(c: Context) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+    private var infraList = mutableListOf<UserInfras>()
+
     var context = c
+
     var sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
 
     var totalReports = sharedPref.getString("total_reports", "")
 
     override fun getItemCount(): Int {
-
         return totalReports?.toInt() ?: 0
     }
 
@@ -33,31 +36,35 @@ class RecyclerAdapter(c: Context) : RecyclerView.Adapter<RecyclerAdapter.ViewHol
 
     override fun onBindViewHolder(holder: RecyclerAdapter.ViewHolder, position: Int) {
         var jwtToken = sharedPref.getString("token", "")
-        var id = sharedPref.getString("user_id", "")?.toInt()
+        val userId = sharedPref.getString("user_id", "")?.toInt()
         val apiService = RestApiService()
         val authenticatedHeaders =
             jwtToken?.let { ApiMainHeadersProvider.getAuthenticatedHeaders(it) }
         if (authenticatedHeaders != null) {
-            if (id != null) {
-                apiService.getAllInfras(authenticatedHeaders, id) {
-                    if (it?.size != null) {
-                        Log.i("All Infras", Gson().toJson(it))
-                        val array = JSONArray(Gson().toJson(it))
-                        val latitude = mutableListOf<Double>()
-                        val longitude = mutableListOf<Double>()
-                        val type = mutableListOf<Int>()
-                        val date = mutableListOf<String>()
+            if (userId != null) {
+                apiService.getAllInfras(authenticatedHeaders, userId) { list ->
+                    if (list?.size != null) {
+                        Log.i("All Infras", Gson().toJson(list))
+                        val array = JSONArray(Gson().toJson(list))
+                        val typeMarker = mutableListOf<Int>()
                         (0 until array.length()).forEach {
                             var infra = array.getJSONObject(it)
-                            latitude.add(infra["latitude"] as Double)
-                            longitude.add(infra["longitude"] as Double)
-                            type.add(getLogoType(infra["type"] as String))
-                            date.add(infra["created_at"] as String)
+                              typeMarker.add(getLogoType(infra["type"] as String))
+
+                            val fetchedInfra = UserInfras(
+                                latitude = infra["latitude"] as Double,
+                                longitude = infra["longitude"] as Double,
+                                type = infra["type"] as String,
+                                date = infra["created_at"] as String ,
+                            )
+
+                            infraList.add(fetchedInfra)
+
                         }
-                        holder.itemLatitude.text = "Lat : " + latitude[position].toString()
-                        holder.itemLongitude.text = "Long : " + longitude[position].toString()
-                        holder.itemDate.text = "Date Created : " + date[position]
-                        holder.itemType.setImageResource(type[position])
+                        holder.itemLatitude.text = "Lat : " + infraList[position].latitude.toString()
+                        holder.itemLongitude.text = "Long : " + infraList[position].longitude.toString()
+                        holder.itemDate.text = infraList[position].date?.split(".")?.get(0) ?: ""
+                        holder.itemType.setImageResource(typeMarker[position])
 
 
                     } else {
@@ -73,17 +80,17 @@ class RecyclerAdapter(c: Context) : RecyclerView.Adapter<RecyclerAdapter.ViewHol
     private fun getLogoType(type: String): Int {
         if (type != null) {
             when (type) {
-                "hole" -> {
+                "Hole" -> {
                     return R.drawable.ic_hole_icon
 
                 }
-                "blockage" -> {
+                "Blockage" -> {
                     return R.drawable.ic_blockage_icon
                 }
-                "turn" -> {
+                "Turn" -> {
                     return R.drawable.turn_icon
                 }
-                "bump" -> {
+                "Bump" -> {
                     return R.drawable.ic_bump_icon
 
                 }
@@ -106,6 +113,10 @@ class RecyclerAdapter(c: Context) : RecyclerView.Adapter<RecyclerAdapter.ViewHol
             itemLatitude = itemView.findViewById(R.id.latitude)
             itemLongitude = itemView.findViewById(R.id.longitude)
             itemDate = itemView.findViewById(R.id.date)
+
         }
+
     }
+
+
 }
