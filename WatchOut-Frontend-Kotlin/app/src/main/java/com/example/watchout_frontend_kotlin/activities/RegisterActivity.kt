@@ -2,7 +2,6 @@ package com.example.watchout_frontend_kotlin.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -84,32 +83,40 @@ class RegisterActivity : AppCompatActivity() {
                 ApiMainHeadersProvider.getPublicHeaders()
             apiService.signUp(authenticatedHeaders,signupInfo) {
                 if (it?.message == "User successfully registered") {
-                    Log.i("message", "User added successfully")
+                    Toast.makeText(
+                        applicationContext,
+                        "User added successfully",
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 } else {
                     //Error on laravel validator because password < 6
                     if (password.length < 6) {
-                        Log.i(
-                            "Signup Error",
-                            "Password too short ! It should be minimum six characters"
+                        Toast.makeText(
+                            applicationContext,
+                            "Password too short ! It should be minimum six characters",
+                            Toast.LENGTH_LONG
                         )
+                            .show()
                     }
                     //Error on laravel validator because username exists already
                     else
-                        Log.i("Signup Error", "Username exists please choose another one !")
+                        Toast.makeText(
+                            applicationContext,
+                            "Username exists please choose another one !",
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
                 }
             }
         }
     }
 
-    private fun checkToken() {
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-        val token = sharedPref.getString("token", "")
-        if (token?.isEmpty() == false) {
-            val intent = Intent(this, MapsActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }

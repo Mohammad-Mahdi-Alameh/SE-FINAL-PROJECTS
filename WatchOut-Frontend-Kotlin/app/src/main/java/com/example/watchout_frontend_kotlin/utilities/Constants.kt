@@ -1,4 +1,4 @@
-package com.example.watchout_frontend_kotlin.others
+package com.example.watchout_frontend_kotlin.utilities
 
 object Constants  {
     const val SERVICE_CHANNEL_ID = "4"

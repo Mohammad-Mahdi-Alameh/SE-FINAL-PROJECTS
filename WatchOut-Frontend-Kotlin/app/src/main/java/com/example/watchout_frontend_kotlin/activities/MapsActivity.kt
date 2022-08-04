@@ -78,6 +78,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     //Utilities
     private var public = Utilities()
 
+    //Variables
+    private lateinit var balance: String
+
     //Firebase
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var dbReference: DatabaseReference = database.getReference("Live-Tracking")
@@ -86,19 +89,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     private lateinit var sharedPref: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
     private lateinit var jwtToken: String
-    //Intents
-//    private lateinit var notificationIntent: Intent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupLocClient()
+        //Creating notification Channel
         createNotificationChannel(INFRA_CHANNEL_ID, INFRA_CHANNEL_NAME)
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         editor = sharedPref.edit()
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         coins = findViewById(R.id.coins)
-        val balance = sharedPref.getString("balance", "0")
+        balance = sharedPref.getString("balance", "0").toString()
         coins.text = balance
         report = findViewById(R.id.report_btn)
         hamburger = findViewById(R.id.hamburger_btn)
@@ -391,20 +393,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
                                     locationLong,
                                     nearInfras
                                 )
-                            ) {      //if near infras from shared preferences exist ,
-                                Log.i(
-                                    "yarab",
-                                    nearInfras
-                                )                              //then check if the user is maximum far 2km from them
-                                //else get new list,and if validated, then keep tracking them
-                                makeUserSafe(
-                                    locationLat,
-                                    locationLong,
+                            ) {                     //if near infras from shared preferences exist ,
+                                                    //then check if the user is maximum far 2km from them
+                                                    //else get new list,and if validated, then keep tracking them
+                                makeUserSafe(       //and when they still have 7 seconds to reach infra, send the
+                                    locationLat,    //notification,and of course time remaining is being calculated
+                                    locationLong,   //by diving distance remaining on speed
                                     speed,
                                     nearInfras
-                                )  //and when they still have 7 seconds to reach infra, send the
-                                //notification,and of course time remaining is being calculated
-                            } else {                                                        //by diving distance remaining on speed
+                                )
+
+                            } else {
                                 getNearInfras(locationLat, locationLong, speed)
                             }
                         } else {
@@ -425,7 +424,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     }
 
     //function that initiates the sending of the notification
-// to the user if he is less than 7 seconds to reach an infra
+    // to the user if he is less than 7 seconds to reach an infra
     private fun makeUserSafe(liveLat: Double, liveLong: Double, speed: Double, nearInfras: String) {
         val array = JSONArray(nearInfras)
         (0 until array.length()).forEach {
@@ -437,7 +436,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
                 infra["longitude"] as Double
             ) / speed
             if (timeRemaining < 7) {
-                Log.i("hamdella", timeRemaining.toString())
                 sendNotification(applicationContext)
             }
 
@@ -466,10 +464,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     }
 
     private fun bitmapFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
-        // below line is use to generate a drawable.
+        // generating a drawable.
         val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
 
-        // below line is use to set bounds to our vector drawable.
+        //setting bounds to our vector drawable.
         vectorDrawable!!.setBounds(
             0,
             0,
@@ -477,7 +475,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
             vectorDrawable.intrinsicHeight
         )
 
-        // below line is use to create a bitmap for our
+        //creating a bitmap for our
         // drawable which we have added.
         val bitmap = Bitmap.createBitmap(
             vectorDrawable.intrinsicWidth,
@@ -485,11 +483,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
             Bitmap.Config.ARGB_8888
         )
 
-        // below line is use to add bitmap in our canvas.
+        //adding bitmap in our canvas.
         val canvas = Canvas(bitmap)
 
-        // below line is use to draw our
-        // vector drawable in canvas.
+        //drawing our vector drawable in canvas.
         vectorDrawable.draw(canvas)
 
         // after generating our bitmap we are returning our bitmap.
@@ -506,10 +503,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         if (authenticatedHeaders != null) {
             apiService.getAllInfras(authenticatedHeaders, 0) {
                 if (it?.size != null) {
-                    Log.i("All Infras", Gson().toJson(it))
                     setMarkers(Gson().toJson(it))
                 } else {
-                    Log.i("Error", "Error")
+                    Toast.makeText(
+                        this,
+                        "Error in getting infras ! Try Again !",
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
 
                 }
             }
@@ -635,8 +636,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
                 ApiMainHeadersProvider.getAuthenticatedHeaders("")
             apiService.report(authenticatedHeaders, reportInfo) {
                 if (it?.message == "Infrastructural problem reported successfully") {
-                    val latLng = LatLng(latitude, longitude)
-                    Log.i("Report Succeeded", it.message)
                     if (id != null) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             addMarker(latitude, longitude, type, LocalDateTime.now().toString(), id)
@@ -644,8 +643,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
                         }
                     }
                 } else {
-
-                    Log.i("Error", "Report Failed !")
+                    Toast.makeText(
+                        this,
+                        "Reporting failed ! Try Again !",
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
                 }
             }
         }
@@ -669,8 +672,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
                 if (location != null) {
                     report(type, location.latitude, location.longitude)
                 } else {
-                    // if location is null , log an error message
-                    Log.e("error", "No location found")
+                    Toast.makeText(
+                        this,
+                        "Couldn't find location ! Try Again !",
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
                 }
 
 
@@ -714,13 +721,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
             )
             apiService.getNearInfras(authenticatedHeaders, getNearInfrasInfo) {
                 if (it?.size != 0) {
-                    Log.i("Near Infras", Gson().toJson(it))
                     editor.putString("Near Infras", Gson().toJson(it))
                     editor.apply()
                     editor.commit()
                     makeUserSafe(latitude, longitude, speed, Gson().toJson(it))
                 } else {
-                    Log.i("Error", "Error")
+                    Toast.makeText(
+                        this,
+                        "Couldn't get near infras ! Try Again !",
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
 
                 }
             }

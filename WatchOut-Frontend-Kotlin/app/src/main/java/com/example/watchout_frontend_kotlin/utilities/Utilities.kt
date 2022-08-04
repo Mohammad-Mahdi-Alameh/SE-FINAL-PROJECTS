@@ -1,4 +1,4 @@
-package com.example.watchout_frontend_kotlin.others
+package com.example.watchout_frontend_kotlin.utilities
 
 import android.content.Context
 import android.preference.PreferenceManager
@@ -17,7 +17,7 @@ import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 
 
-class PublicFunctions{
+class Utilities{
 
 fun popupAlertDialog(context: Context, id: Int) {
     val view = View.inflate(context, id, null)
@@ -96,6 +96,9 @@ fun getDecryptedPassword(context: Context): String {
 
     return decryptedPassword.toString()
 }
+//val imageBytes = Base64.decode(sharedPref.getString("picture", ""), Base64.DEFAULT)
+//val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+//profilePhoto.setImageBitmap(decodedImage)
 
 fun decrypt(context: Context, dataToDecrypt: ByteArray): ByteArray {
     val cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING")

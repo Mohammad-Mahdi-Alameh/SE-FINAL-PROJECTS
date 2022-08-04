@@ -15,12 +15,12 @@ import com.example.watchout_frontend_kotlin.R
 import com.example.watchout_frontend_kotlin.api.ApiMainHeadersProvider
 import com.example.watchout_frontend_kotlin.api.RestApiService
 import com.example.watchout_frontend_kotlin.models.LoginInfo
-import com.example.watchout_frontend_kotlin.others.PublicFunctions
+import com.example.watchout_frontend_kotlin.utilities.Utilities
 
 class MainActivity : AppCompatActivity() {
     private lateinit var  username : EditText
     private lateinit var  password : EditText
-    private var  public = PublicFunctions()
+    private var  public = Utilities()
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.watchout_frontend_kotlin.R
-import com.example.watchout_frontend_kotlin.others.RecyclerAdapter
+import com.example.watchout_frontend_kotlin.adapters.RecyclerAdapter
 
 class HistoryActivity : AppCompatActivity() {
     private var layoutManager : RecyclerView.LayoutManager? = null
