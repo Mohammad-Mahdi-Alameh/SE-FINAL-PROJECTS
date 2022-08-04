@@ -26,7 +26,7 @@
                 android:text="Congratulations !"
                 android:textColor="@color/cyan"
                 android:textFontWeight="900"
-                android:textSize="17dp" />
+                android:textSize="23dp" />
 
             <TextView
                 android:id="@+id/text_2"
@@ -40,25 +40,27 @@
                 android:text="Five coins were added to your account !"
                 android:textColor="@color/white"
                 android:textFontWeight="900"
-                android:textSize="17dp" />
+                android:textSize="18dp" />
 
             <Button
                 android:id="@+id/okay_btn"
-                android:layout_width="127dp"
+                android:layout_width="match_parent"
                 android:layout_height="57dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="25dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginEnd="7dp"
                 android:elevation="15dp"
                 android:fontFamily="@font/inter_extrabold"
-                android:textFontWeight="900"
                 android:gravity="center"
                 android:padding="7sp"
                 android:text="OKAY"
                 android:textAllCaps="false"
                 android:textColor="@color/textColor"
+                android:textFontWeight="900"
                 android:textSize="20sp"
                 app:backgroundTint="@color/cyan"
                 app:shapeAppearanceOverlay="@style/Button_b" />

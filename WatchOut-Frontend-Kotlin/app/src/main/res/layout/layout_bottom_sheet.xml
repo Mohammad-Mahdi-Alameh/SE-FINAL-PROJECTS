@@ -70,7 +70,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_turn_icon">
+            android:src="@drawable/turn_icon">
 
         </ImageView>
 
@@ -166,7 +166,7 @@
         android:gravity="center"
         android:padding="5sp"
         android:text="CANCEL"
-        android:textColor="@color/black"
+        android:textColor="@color/pinkColor"
         android:textFontWeight="900"
         android:textSize="20sp" />
 
