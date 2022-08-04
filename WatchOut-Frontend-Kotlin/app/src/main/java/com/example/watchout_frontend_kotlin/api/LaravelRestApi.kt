@@ -55,6 +55,11 @@ interface LaravelRestApi {
         @Path("infra_id") infraId: Int,
     ): Call<SingleMessageResponse>
 
+    @POST("/api/v1/user/logout")
+    fun logout(
+        @HeaderMap authedHeaders: AuthenticatedHeaders,
+    ): Call<SingleMessageResponse>
+
 
 
 }
