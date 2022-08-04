@@ -33,6 +33,7 @@ import com.example.watchout_frontend_kotlin.models.LocationInfo
 import com.example.watchout_frontend_kotlin.models.ReportInfo
 import com.example.watchout_frontend_kotlin.others.Constants
 import com.example.watchout_frontend_kotlin.others.PublicFunctions
+import com.example.watchout_frontend_kotlin.others.RecyclerAdapter
 import com.example.watchout_frontend_kotlin.services.TrackingService
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -62,6 +63,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     private lateinit var coins: TextView
     private lateinit var report: Button
     private lateinit var latLng: LatLng
+    private lateinit var adapter: RecyclerAdapter
     private lateinit var fusedLocClient: FusedLocationProviderClient
     private var public = PublicFunctions()
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -96,6 +98,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
                 }
                 R.id.history -> {
                     startActivity(Intent(this, HistoryActivity::class.java))
+                    finish()
+                }
+                R.id.requests -> {
+                    startActivity(Intent(this, RequestsActivity::class.java))
                     finish()
                 }
                 R.id.logout -> {
@@ -426,19 +432,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     ) {
 
         latLng = LatLng(latitude, longitude)
-
+        val date = dateCreated?.split(".")?.get(0) ?: ""
         if (type != null) {
             when (type) {
-                "hole" -> {
+                "Hole" -> {
                     mMap.addMarker(
                         MarkerOptions().position(latLng)
                             .icon(bitmapFromVector(applicationContext, R.drawable.hole_marker))
                             .title("Hole")
-                            .snippet(" id : $id \n $latLng\n Created at : $dateCreated")
+                            .snippet(" id : $id \n $latLng\n Created at : $date")
                     )
 
                 }
-                "blockage" -> {
+                "Blockage" -> {
                     mMap.addMarker(
                         MarkerOptions().position(latLng)
                             .icon(
@@ -448,25 +454,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
                                 )
                             )
                             .title("Blockage")
-                            .snippet(" id : $id \n $latLng\n Created at : $dateCreated")
+                            .snippet(" id : $id \n $latLng\n Created at : $date")
                     )
 
                 }
-                "turn" -> {
+                "Turn" -> {
                     mMap.addMarker(
                         MarkerOptions().position(latLng)
                             .icon(bitmapFromVector(applicationContext, R.drawable.turn_marker))
                             .title("Sharp Turn")
-                            .snippet(" id : $id \n $latLng\n Created at : $dateCreated")
+                            .snippet(" id : $id \n $latLng\n Created at : $date")
                     )
 
                 }
-                "bump" -> {
+                "Bump" -> {
                     mMap.addMarker(
                         MarkerOptions().position(latLng)
                             .icon(bitmapFromVector(applicationContext, R.drawable.bump_marker))
                             .title("Hard Bump")
-                            .snippet(" id : $id \n $latLng\n Created at : $dateCreated")
+                            .snippet(" id : $id \n $latLng\n Created at : $date")
                     )
 
                 }
@@ -495,16 +501,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         if (v != null) {
             when (v.id) {
                 R.id.hole -> {
-                    return type.replace("", "hole")
+                    return type.replace("", "Hole")
                 }
                 R.id.turn -> {
-                    return type.replace("", "turn")
+                    return type.replace("", "Turn")
                 }
                 R.id.bump -> {
-                    return type.replace("", "bump")
+                    return type.replace("", "Bump")
                 }
                 R.id.blockage -> {
-                    return type.replace("", "blockage")
+                    return type.replace("", "Blockage")
                 }
             }
         }
@@ -534,6 +540,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
                     if (id != null) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             addMarker(latitude, longitude, type, LocalDateTime.now().toString(), id)
+
                         }
                     }
                 } else {
@@ -553,7 +560,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     private fun reportFunctionCaller(v: View, latitude: Double, longitude: Double) {
         val type = getInfraType(v)
         if (latitude != 0.0 && longitude != 0.0) {
-                report(type , latitude , longitude)
+            report(type, latitude, longitude)
         } else {
             fusedLocClient.lastLocation.addOnCompleteListener {
                 // lastLocation is a task running in the background
