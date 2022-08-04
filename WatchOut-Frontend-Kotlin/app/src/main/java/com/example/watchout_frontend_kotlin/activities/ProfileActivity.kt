@@ -22,14 +22,15 @@ import com.example.watchout_frontend_kotlin.R
 import com.example.watchout_frontend_kotlin.api.ApiMainHeadersProvider
 import com.example.watchout_frontend_kotlin.api.RestApiService
 import com.example.watchout_frontend_kotlin.models.EditProfileInfo
-import com.example.watchout_frontend_kotlin.others.Constants
-import com.example.watchout_frontend_kotlin.others.Constants.IMAGE_REQUEST_CODE
-import com.example.watchout_frontend_kotlin.others.PublicFunctions
+import com.example.watchout_frontend_kotlin.utilities.Constants
+import com.example.watchout_frontend_kotlin.utilities.Constants.IMAGE_REQUEST_CODE
+import com.example.watchout_frontend_kotlin.utilities.Utilities
 import com.mikhaellopez.circularimageview.CircularImageView
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 
 class ProfileActivity : AppCompatActivity() {
+    //Views
     private lateinit var profilePhoto: CircularImageView
     private lateinit var setPhoto: ImageView
     private lateinit var backArrow: ImageView
@@ -45,7 +46,10 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var phoneNumber: String
     private lateinit var userName: String
     private lateinit var update: Button
-    private var public = PublicFunctions()
+    //Utilities
+    private var public = Utilities()
+    //Shared Preferences
+    private lateinit var sharedPref : SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sharedPref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -109,9 +113,9 @@ class ProfileActivity : AppCompatActivity() {
                         firstname = sharedPref.getString("firstname", ""),
                         lastname = sharedPref.getString("lastname", ""),
                         phonenumber = sharedPref.getString("phonenumber", "")?.toInt(),
-                        picture = sharedPref.getString("picture", ""),
+                        picture = sharedPref.getString("picture",""),
                         username = sharedPref.getString("firstname", ""),
-                        password = sharedPref.getString("password", ""),
+                        password = getPassword(),
                     )
 
                     val authenticatedHeaders =
@@ -127,7 +131,7 @@ class ProfileActivity : AppCompatActivity() {
                                 editor.apply()
                                 editor.commit()
                                 Log.i("message", "User edited successfully")
-                                startActivity(Intent(this, MainActivity::class.java))
+                                startActivity(Intent(this, MapsActivity::class.java))
                                 finish()
                             }
                         }
@@ -240,7 +244,7 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val sharedPref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        sharedPref= PreferenceManager.getDefaultSharedPreferences(this)
         val editor: SharedPreferences.Editor = sharedPref.edit()
         if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
             profilePhoto.setImageURI(data?.data)
@@ -267,6 +271,14 @@ class ProfileActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
+
+    }
+    private fun getPassword(): String? {
+        sharedPref= PreferenceManager.getDefaultSharedPreferences(this)
+          if(sharedPref.getString("password","")?.isEmpty() == true)  {
+              return public.getDecryptedPassword(this)
+          }
+        return sharedPref.getString("password","")
 
     }
 
