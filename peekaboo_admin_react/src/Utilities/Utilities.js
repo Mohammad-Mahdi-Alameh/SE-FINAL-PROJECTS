@@ -101,3 +101,26 @@ export function getMarker(type) {
   }
 }
 
+export function actionColumn(negativeFunction,positiveFunction,negativeButtonText,positiveButtonText) {
+  return [
+    {
+      field: "action",
+      headerName: "Action",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <div className="cellAction">
+            <div className="negativeButton"
+              onClick={() => {negativeFunction(params.row.id)}}>
+              {negativeButtonText}</div>
+            <div
+              className="positiveButton"
+              onClick={() => {positiveFunction(params.row.id)}}>
+              {positiveButtonText}
+            </div>
+          </div>
+        );
+      },
+    }
+  ]
+}
