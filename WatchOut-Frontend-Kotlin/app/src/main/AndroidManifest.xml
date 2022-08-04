@@ -21,6 +21,9 @@
         android:theme="@style/Theme.WatchOutFrontendKotlin"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.RequestsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.HistoryActivity"
             android:exported="false" />
 
@@ -38,10 +41,7 @@
         <activity
             android:name=".activities.RegisterActivity"
             android:exported="false"
-            android:parentActivityName=".activities.LoginActivity" />
-        <activity
-            android:name=".activities.LoginActivity"
-            android:exported="false" />
+            android:parentActivityName=".activities.MainActivity" />
 
         <service
             android:name=".services.TrackingService"
@@ -60,9 +60,6 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity
-            android:name=".activities.HomeActivity"
-            android:exported="false" />
         <activity
             android:name=".activities.MainActivity"
             android:exported="true">
