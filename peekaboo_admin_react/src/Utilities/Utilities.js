@@ -8,7 +8,7 @@ export const userColumns = [
     renderCell: (params) => {
       return (
         <div className="cellWithImg">
-          <img className="cellImg" src={params.row.picture ? params.row.picture : profile_icon} alt=""/>
+          <img className="cellImg" src={params.row.picture ? params.row.picture : profile_icon} alt="" />
           {params.row.firstname}{" "}{params.row.lastname}
         </div>
       );
@@ -31,7 +31,7 @@ export const infrasColumns = [
     field: "latitude",
     headerName: "Latitude",
     width: 120,
-    
+
   },
   {
     field: "longitude",
@@ -42,22 +42,21 @@ export const infrasColumns = [
   {
     field: "type",
     headerName: "Type",
-    width: 100,
+    width: 80,
   },
 
   {
     field: "created_at",
     headerName: "Reported at",
-    width: 100,
+    width: 140,
   },
 ];
 export const falseInfrasColumns = [
-  
   {
     field: "latitude",
     headerName: "Latitude",
     width: 150,
-    
+
   },
   {
     field: "longitude",
@@ -72,23 +71,23 @@ export const falseInfrasColumns = [
   },
 ];
 
-export function infraDataExtractor(infra){
-var infraJSON = {
+export function infraDataExtractor(infra) {
+  var infraJSON = {
 
-  id: infra.id,
-  lat: infra.latitude,
-  lng: infra.longitude,
-  type: infra.type,
-  date: infra.created_at,
-  by: infra.user_id
-  
-}
+    id: infra.id,
+    lat: infra.latitude,
+    lng: infra.longitude,
+    type: infra.type,
+    date: infra.created_at,
+    by: infra.user_id
+
+  }
   return infraJSON;
 
 }
 
-export function getMarker(type){
-  switch(type) {
+export function getMarker(type) {
+  switch (type) {
     case "Hole":
       return "/hole_marker.svg"
     case "Bump":
@@ -102,6 +101,3 @@ export function getMarker(type){
   }
 }
 
-
-
-export const base_url = "http://192.168.0.100:8000/api/v1/admin";
