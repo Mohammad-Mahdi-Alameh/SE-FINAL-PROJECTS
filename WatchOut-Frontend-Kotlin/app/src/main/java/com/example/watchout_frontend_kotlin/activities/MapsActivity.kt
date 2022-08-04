@@ -2,6 +2,9 @@ package com.example.watchout_frontend_kotlin.activities
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -10,6 +13,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -20,6 +24,8 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.marginBottom
@@ -32,6 +38,8 @@ import com.example.watchout_frontend_kotlin.models.GetNearInfrasInfo
 import com.example.watchout_frontend_kotlin.models.LocationInfo
 import com.example.watchout_frontend_kotlin.models.ReportInfo
 import com.example.watchout_frontend_kotlin.others.Constants
+import com.example.watchout_frontend_kotlin.others.Constants.INFRA_CHANNEL_ID
+import com.example.watchout_frontend_kotlin.others.Constants.INFRA_NOTIFICATION_ID
 import com.example.watchout_frontend_kotlin.others.PublicFunctions
 import com.example.watchout_frontend_kotlin.services.TrackingService
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -654,6 +662,32 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
 
     override fun onMapClick(latLng: LatLng) {
         showBottomSheet(latLng.latitude, latLng.longitude)
+    }
+
+    fun sendNotification(c: Context) {
+        val notificationManager = NotificationManagerCompat.from(c)
+        val notification = NotificationCompat.Builder(c, INFRA_CHANNEL_ID)
+            .setContentTitle("Caution ! Infra Ahead ")
+            .setContentText("Press to open app , or press below button to report false a false alarm ")
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setSmallIcon(R.drawable.app_peekaboo)
+            .setSound(Uri.parse("${ContentResolver.SCHEME_ANDROID_RESOURCE}://${c.packageName}/${R.raw.infra_notification}"))
+            .build()
+        notificationManager.notify(INFRA_NOTIFICATION_ID, notification)
+
+    }
+
+    private fun createNotificationChannel(channelId: String, channelName: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel =
+                NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH)
+                    .apply {
+                        lightColor = Color.CYAN
+                        enableLights(true)
+                    }
+            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(channel)
+        }
     }
 
 }
