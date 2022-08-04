@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.provider.MediaStore
@@ -46,10 +47,12 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var phoneNumber: String
     private lateinit var userName: String
     private lateinit var update: Button
+
     //Utilities
     private var public = Utilities()
+
     //Shared Preferences
-    private lateinit var sharedPref : SharedPreferences
+    private lateinit var sharedPref: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sharedPref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -113,7 +116,7 @@ class ProfileActivity : AppCompatActivity() {
                         firstname = sharedPref.getString("firstname", ""),
                         lastname = sharedPref.getString("lastname", ""),
                         phonenumber = sharedPref.getString("phonenumber", "")?.toInt(),
-                        picture = sharedPref.getString("picture",""),
+                        picture = sharedPref.getString("picture", ""),
                         username = sharedPref.getString("firstname", ""),
                         password = getPassword(),
                     )
@@ -244,7 +247,7 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        sharedPref= PreferenceManager.getDefaultSharedPreferences(this)
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         val editor: SharedPreferences.Editor = sharedPref.edit()
         if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
             profilePhoto.setImageURI(data?.data)
@@ -273,12 +276,14 @@ class ProfileActivity : AppCompatActivity() {
         }
 
     }
+
     private fun getPassword(): String? {
-        sharedPref= PreferenceManager.getDefaultSharedPreferences(this)
-          if(sharedPref.getString("password","")?.isEmpty() == true)  {
-              return public.getDecryptedPassword(this)
-          }
-        return sharedPref.getString("password","")
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        val password = sharedPref.getString("password", "")
+        if (password?.isEmpty() == true) {
+            return public.getDecryptedPassword(this)
+        }
+        return password
 
     }
 

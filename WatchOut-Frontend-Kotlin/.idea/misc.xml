@@ -4,48 +4,66 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.13" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable-v24/turn_marker.xml" value="0.137" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/blockage_marker.xml" value="0.137" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/bottom_sheet_background.xml" value="0.1145" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/bump_icon.xml" value="0.1065" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/bump_marker.xml" value="0.137" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/bump_tracker.xml" value="0.1365" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/hole_marker.xml" value="0.1365" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/home_icon.xml" value="0.11" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_accepted.xml" value="0.1115" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.1" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.1" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.1" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_blockage_icon.xml" value="0.1" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_blue_circle_svgrepo_com.xml" value="0.1145" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_bump_icon.xml" value="0.1785" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_bump_svgrepo_com.xml" value="0.1" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_circle_svgrepo_com.xml" value="0.1145" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_coin.xml" value="0.1" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_group_1.xml" value="0.1" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_hole_icon.xml" value="0.12" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_home__2_.xml" value="0.1065" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_icons8_home.xml" value="0.1065" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_launcher_background.xml" value="0.13" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_left_arrow.xml" value="0.1145" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_left_arrow_purple.xml" value="0.1115" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_left_arrow_svgrepo_com.xml" value="0.1145" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_pending.xml" value="0.1115" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_profile_svgrepo_com__1_.xml" value="0.1" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_rejected.xml" value="0.1115" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_turn_icon.xml" value="0.1" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/ic_user_profile_3.xml" value="0.1" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/map_icon.xml" value="0.1065" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/notification_peekaboo.xml" value="0.1785" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/profile_icon.xml" value="0.1065" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/report_background.xml" value="0.1" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/rounded_corner.xml" value="0.1" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/rounded_corner_input.xml" value="0.188" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/toggle_container.xml" value="0.1" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/toggled_button.xml" value="0.1" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/turn_icon.xml" value="0.1785" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/drawable/turn_marker.xml" value="0.1545" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/font-v26/peekaboo.xml" value="0.20666666666666667" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/font/inter_bold.xml" value="0.17445887445887445" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/font/inter_extrabold.xml" value="0.13240740740740742" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/font/peekaboo.xml" value="0.13240740740740742" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/activity_history.xml" value="0.11277173913043478" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/activity_lock_screen_actitvity.xml" value="0.1513157894736842" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/activity_login.xml" value="0.125" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/activity_main.xml" value="0.165" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/activity_map.xml" value="0.14175724637681159" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/activity_maps.xml" value="0.165" />
-        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/activity_profile.xml" value="0.335" />
-        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/activity_register.xml" value="0.1513157894736842" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/activity_profile.xml" value="0.25" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/activity_register.xml" value="0.165" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/activity_report.xml" value="0.1" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/activity_report2.xml" value="0.1513157894736842" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/activity_request.xml" value="0.1513157894736842" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/activity_test.xml" value="0.14175724637681159" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/alert_dialog.xml" value="0.1" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/card_view.xml" value="0.1" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/content_report.xml" value="0.1513157894736842" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/dialog.xml" value="0.1" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/fragment_first.xml" value="0.1513157894736842" />
@@ -59,9 +77,10 @@
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/fragment_second.xml" value="0.1513157894736842" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/fragment_two.xml" value="0.1513157894736842" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/layout_bottom_sheet.xml" value="0.1" />
-        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/nav_header.xml" value="0.1118659420289855" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/nav_header.xml" value="0.1" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/password_dialog.xml" value="0.335" />
-        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/menu/nav_header_menu.xml" value="0.1" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/layout/request_view.xml" value="0.25" />
+        <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/menu/nav_header_menu.xml" value="0.125" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/menu/nav_menu.xml" value="0.1513157894736842" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/menu/top_navbar.xml" value="0.1513157894736842" />
         <entry key="..\:/Users/mmwal/Desktop/SE/Assignments/FINAL/WatchOut/WatchOut-Frontend-Kotlin/app/src/main/res/mipmap-anydpi-v26/report.xml" value="0.1" />
