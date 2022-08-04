@@ -96,9 +96,7 @@ fun getDecryptedPassword(context: Context): String {
 
     return decryptedPassword.toString()
 }
-//val imageBytes = Base64.decode(sharedPref.getString("picture", ""), Base64.DEFAULT)
-//val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-//profilePhoto.setImageBitmap(decodedImage)
+
 
 fun decrypt(context: Context, dataToDecrypt: ByteArray): ByteArray {
     val cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING")
