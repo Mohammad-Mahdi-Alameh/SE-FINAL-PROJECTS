@@ -39,6 +39,7 @@ import com.example.watchout_frontend_kotlin.models.LocationInfo
 import com.example.watchout_frontend_kotlin.models.ReportInfo
 import com.example.watchout_frontend_kotlin.others.Constants
 import com.example.watchout_frontend_kotlin.others.Constants.INFRA_CHANNEL_ID
+import com.example.watchout_frontend_kotlin.others.Constants.INFRA_CHANNEL_NAME
 import com.example.watchout_frontend_kotlin.others.Constants.INFRA_NOTIFICATION_ID
 import com.example.watchout_frontend_kotlin.others.PublicFunctions
 import com.example.watchout_frontend_kotlin.services.TrackingService
@@ -80,6 +81,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupLocClient()
+        createNotificationChannel(INFRA_CHANNEL_ID, INFRA_CHANNEL_NAME)
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         editor = sharedPref.edit()
         binding = ActivityMapsBinding.inflate(layoutInflater)
@@ -204,7 +206,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         }
     }
 
-    //writing everything we need when the map finished loading an dis ready to be used
+    //putting the markers and setting the listener on the firebase and setting the info window
+    // settings and its on click and the map onclick
+    // when the map finishes loading and is ready to be used
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         getAllInfras()
@@ -348,13 +352,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
                     //update the camera with the CameraUpdate object
                     mMap.moveCamera(update)
 
-                            } else {
-                    Log.i("Error", "Error")
-
                 }
-
             }
         }
+
         // show this toast if there is an error while reading from the database
         override fun onCancelled(error: DatabaseError) {
             Toast.makeText(applicationContext, "Could not read from database", Toast.LENGTH_LONG)
@@ -362,6 +363,28 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         }
 
 
+    }
+
+
+
+    //function that checks if the list of near infras are up-to-date
+    // (by checking if it far from live position more than 2km, and if so it should be replaced by new list)
+    private fun checkValidity(liveLat: Double, liveLong: Double, nearInfras: String): Boolean {
+        val array = JSONArray(nearInfras)
+        (0 until array.length()).forEach { it ->
+            var infra = array.getJSONObject(it)
+            val distance = getDistance(
+                liveLat,
+                liveLong,
+                infra["latitude"] as Double,
+                infra["longitude"] as Double
+            )
+
+            if (distance > 2) {
+                return false
+            }
+        }
+        return true
     }
 
     private fun bitmapFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
