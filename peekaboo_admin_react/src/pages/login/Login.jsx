@@ -1,9 +1,11 @@
-import "./login.scss"
+//React Hooks
 import { useState } from 'react';
+//React Router Dom
 import {useNavigate } from "react-router-dom";
-
-import logo from "../../PEEKABOO-white.svg"
-import { base_url } from "../../Constants";
+//Constants
+import { base_url } from "../../Utilities/Constants";
+//SVG's
+import logo from "../../assets/PEEKABOO-white.svg"
 
 const Login = () => {
     const navigate=useNavigate();
@@ -14,6 +16,7 @@ const Login = () => {
         "username": username,
         "password": password
       });
+    //Axios configuration
     var config = {
         method: 'post',
         url: base_url+'/login',
@@ -41,7 +44,7 @@ const Login = () => {
             }
           })
           .catch(function (error) {
-            alert("Wrong Username or password !")
+            alert("Login failed ! Try Again !")
           });
     
         setUsername("");
