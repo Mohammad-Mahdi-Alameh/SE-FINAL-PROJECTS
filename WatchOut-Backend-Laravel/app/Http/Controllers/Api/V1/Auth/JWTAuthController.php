@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\Auth;
 use Illuminate\Http\Request;
 
 use App\Models\User;
+use App\Models\InfrastructuralProblem;
 
 use App\Http\Controllers\Controller;
 use JWTAuth;
@@ -56,6 +57,7 @@ class JWTAuthController extends Controller
         $user->username = $request->username;
         $user->password = bcrypt( $request->password);
         $user->balance = 0;
+        $user->total_reports = 0;
         $user->is_admin = 0;
 
         $user->save();
@@ -83,6 +85,9 @@ class JWTAuthController extends Controller
             ]);
         }
         $user = Auth::user();
+
+        $totalFalseInfras = InfrastructuralProblem::where("false_infra",1)->count();
+
         return response()->json([
             'success' => true,
             'token' => $jwt_token,
@@ -92,7 +97,9 @@ class JWTAuthController extends Controller
             'phonenumber' => $user->phonenumber,
             'picture' => $user->picture,
             'balance' => $user->balance,
+            'total_reports' => $user->total_reports,
             'is_admin' => $user->is_admin,
+            'total_false_infras' => $totalFalseInfras
         ]);
     }
 
