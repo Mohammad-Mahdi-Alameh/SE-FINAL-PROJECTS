@@ -83,21 +83,21 @@ Here's a brief high-level overview of the tech stack PEEKABOO uses:
 <br>
 
 ### Implementation of the user's mobile app 
-| Login  | Register| Map Permission  |
-| -----------------| -----|-----|
-| <img src="./readme/mobile/login.png"/> | <img src="./readme/mobile/register.gif"/> | <img src="./readme/mobile/mapPermission.png"/>
+| Register  | Login | 
+| -----------------| ------|
+| <img src="./readme/mobile/register.gif"/> | <img src="./readme/mobile/login.gif"/> | 
 
 | Report False Infra | Report Infra | Report Menu  |
 | -----------------| -----|-----|
-| <img src="./readme/mobile/reportFalse.png"/> | <img src="./readme/mobile/report.png"/> | <img src="./readme/mobile/reportMenu.jpg"/>
+| <img src="./readme/mobile/reportFalseInfra.gif"/> | <img src="./readme/mobile/report.png"/> | <img src="./readme/mobile/reportMenu.jpg"/>
 
-| Storage Permission | Edit User | Edit Profile  |
+| Storage Permission | Edit User | Edit Password  |
 | -----------------| -----|-----|
-| <img src="./readme/mobile/storagePermission.png"/> | <img src="./readme/mobile/editUser.png"/> | <img src="./readme/mobile/editPassword.png"/>
+| <img src="./readme/mobile/storagePermission.png"/> | <img src="./readme/mobile/editUser.gif"/> | <img src="./readme/mobile/editPassword.gif"/>
 
-|Drawer | Report History | False Requests |
-| -----------------| -----|-----|
-|<img src="./readme/mobile/drawer.png"/> | <img src="./readme/mobile/history.png"/>  |<img src="./readme/mobile/falseRequests.png"/>|
+|Report History | False Requests |
+|-----|-----|
+|<img src="./readme/mobile/history.gif"/>  |<img src="./readme/mobile/falseRequests.gif"/>|
 
 |Foreground Service| Moment Sending Notification: The below joystick is a mock gps creater (it was used for testing and making sure everything is perfect)  |
 | -----------------| -----|
