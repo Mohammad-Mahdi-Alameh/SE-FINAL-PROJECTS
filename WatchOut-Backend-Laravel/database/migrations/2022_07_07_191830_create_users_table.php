@@ -19,9 +19,10 @@ class CreateUsersTable extends Migration
             $table->string('lastname');
             $table->integer('phonenumber');
             $table->integer('balance');
+            $table->integer('total_reports');
             $table->string('username');
             $table->string('password');
-            $table->string('picture');
+            $table->longText('picture')->nullable();
             $table->string('is_admin');
             $table->timestamps();
         });
