@@ -13,14 +13,24 @@
 
 <img src="./readme/title2.svg"/>
 
-> The Well app is a mental health and mindfulness app built on top of the science of positive psychology. The Well app is more than just another meditation or journaling app; it encourages you to enhance and reflect on your day with structured, guided activities.
+> The PEEKABOO app is live-tracking app , that notifies the users before they reach any infrastructural problem in seven seconds. The PEEKABOO app is more than just another tracking app; it enhances and fulfills the driving experience you are looking for.
 > 
-> There are 5 daily tasks that the Well app asks you to complete each day: record 3 gratitudes, write a journal entry, perform 3 acts of kindness, exercise for 20 minutes, and meditate for 15 minutes.
+
 
 ### User Stories
-- As a user, I want to browsse ablums, so that I can find quick links
-- As a user, I want to browsse ablums, so that I can find quick links
-- As a user, I want to browsse ablums, so that I can find quick links
+- As a user, I want to know of the presence of infrastructural problem before I reach it.
+- As a user, I want to report the presence of any infrastructural problem I face, or already faced.(even If I wasn't moving)
+- As a user, I want to report if this infrastructural problem is false.
+- As a user, I want to see the status of my request regarding false infrastructural problem (pending , rejected, accepted).
+- As a user, I want to see all infrastructural problems reported by me.
+
+<br><br>
+### Admin Stories
+- As a admin, I want to manage all the users and see their report history.
+- As a admin, I want to report the presence of any infrastructural problem whenever I want.
+- As a admin, I want to delete (fix) any infrastructural problem immedietly.
+- As a admin, I want to accept, and reject any user request regarding false infrastructural problem.
+
 
 <br><br>
 

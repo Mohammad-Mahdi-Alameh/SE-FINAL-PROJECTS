@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">PEEKABOO</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="log_in">Log In</string>
+    <string name="watch_out">Watch Out !</string>
+    <string name="user_name">Enter your username</string>
+    <string name="choose_username">Choose a username</string>
+    <string name="choose_password">Choose a password</string>
+    <string name="password">Enter your password</string>
+    <string name="password_confirmation">Retype your password</string>
+    <string name="forget_password">Forget Password ?</string>
+    <string name="first_name">Enter Your First Name</string>
+    <string name="last_name">Enter Your Last Name</string>
+    <string name="welcome">Welcome</string>
+    <string name="home_fragment">Hello from home fragment</string>
+    <string name="map_fragment">Hello from map fragment</string>
+    <string name="profile_fragment">Hello from profile fragment</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="title_activity_map">MapAct</string>
+    <string name="sign_in">SIGN IN</string>
+</resources>

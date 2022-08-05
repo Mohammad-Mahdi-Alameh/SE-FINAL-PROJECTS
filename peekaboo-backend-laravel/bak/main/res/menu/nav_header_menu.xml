@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/edit_profile"
+        android:title="Edit Profile"
+         />
+    <item
+        android:id="@+id/history"
+        android:title="Your Report History"
+         />
+    <item
+        android:id="@+id/logout"
+        android:title="Logout"
+         />
+<!--    <item-->
+<!--        android:id="@+id/mapFragment"-->
+<!--        android:icon="@drawable/map_icon"-->
+<!--        android:title="Map"-->
+<!--        />-->
+<!--    <item-->
+<!--        android:id="@+id/profileFragment"-->
+<!--        android:icon="@drawable/profile_icon"-->
+<!--        android:title="Profile"-->
+<!--       />-->
+</menu>

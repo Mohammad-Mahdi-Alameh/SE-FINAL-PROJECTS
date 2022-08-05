@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="Button_a">
+        <item name="cornerSize">20%</item>
+
+    </style>
+    <style name="Button_b">
+        <item name="cornerSize">40%</item>
+
+    </style>
+
+</resources>

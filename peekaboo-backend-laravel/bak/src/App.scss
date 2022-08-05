@@ -1,0 +1,43 @@
+.App {
+  display: flex;
+
+  .container {
+    flex: 6;
+  }
+
+}
+.map{
+  display: flex;
+  justify-content: center;
+  position: relative;
+  
+  .wrapper {
+      position: absolute;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 100vw;
+
+  
+      .search {
+        display: flex;
+        align-items: center;
+        border: 1.7px solid #792DC4;
+        padding: 3px;
+        background: white;
+
+        input {
+          width: 30vw;
+          height: 100%;
+          border: none;
+          outline: none;
+          
+
+          &::placeholder {
+            font-size: 12px;
+          }
+        }
+      }
+  
+    }}
