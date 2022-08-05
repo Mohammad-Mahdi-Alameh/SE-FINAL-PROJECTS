@@ -85,42 +85,59 @@ Here's a brief high-level overview of the tech stack PEEKABOO uses:
 ### Implementation of the user's mobile app 
 | Login  | Register| Map Permission  |
 | -----------------| -----|-----|
-| <img src="./readme/mobile/mobile/login.png"/> | <img src="./readme/mobile/mobile/register.png"/> | <img src="./readme/mobile/mobile/mapPermission.png"/>
+| <img src="./readme/mobile/login.png"/> | <img src="./readme/mobile/register.png"/> | <img src="./readme/mobile/mapPermission.png"/>
 
 | Report False Infra | Report Infra | Report Menu  |
 | -----------------| -----|-----|
-| <img src="./readme/mobile/mobile/reportFalse.png"/> | <img src="./readme/mobile/mobile/report.png"/> | <img src="./readme/mobile/mobile/reportMenu.jpg"/>
+| <img src="./readme/mobile/reportFalse.png"/> | <img src="./readme/mobile/report.png"/> | <img src="./readme/mobile/reportMenu.jpg"/>
 
 | Storage Permission | Edit User | Edit Profile  |
 | -----------------| -----|-----|
-| <img src="./readme/mobile/mobile/storagePermission.png"/> | <img src="./readme/mobile/mobile/editUser.png"/> | <img src="./readme/mobile/mobile/editPassword.png"/>
+| <img src="./readme/mobile/storagePermission.png"/> | <img src="./readme/mobile/editUser.png"/> | <img src="./readme/mobile/editPassword.png"/>
 
 |Drawer | Report History | False Requests |
 | -----------------| -----|-----|
-|<img src="./readme/mobile/mobile/drawer.png"/> | <img src="./readme/mobile/mobile/history.png"/>  |<img src="./readme/mobile/mobile/falseRequests.png"/>|
+|<img src="./readme/mobile/drawer.png"/> | <img src="./readme/mobile/history.png"/>  |<img src="./readme/mobile/falseRequests.png"/>|
 
 |Foreground Service| Moment Sending Notification: The below joystick is a mock gps creater (it was used for testing and making sure everything is perfect)  |
 | -----------------| -----|
-| <img src="./readme/mobile/mobile/foregroundService.jpg"/>  |<img src="./readme/mobile/mobile/notification.jpg"/>|
+| <img src="./readme/mobile/foregroundService.jpg"/>  |<img src="./readme/mobile/notification.jpg"/>|
 
 
 ### Implementation of the admins's website
 
-|Login | Landing Page |
-| -----------------|-----|
-|<img src="./readme/website/logIn.png"/>|<img src="./readme/website/landingPage.png"/>|
+|Login |
+| -----------------|
+|<img src="./readme/website/logIn.png"/>|
 
-|Adding Infra | Deleting (fixing) Infra |
-| -----------------|-----|
-|<img src="./readme/website/addInfra.png"/>|<img src="./readme/website/deleteInfra.png"/>|
+| Landing Page |
+|-----|
+|<img src="./readme/website/landingPage.png"/>|
 
-|Search | Manage False Infras |
-| -----------------|-----|
-|<img src="./readme/website/search.png"/>|<img src="./readme/website/manageFalseInfras.png"/>|
+|Adding Infra | 
+| -----------------|
+|<img src="./readme/website/addInfra.png"/>|
 
-|Manage Users | Viewing User |
-| -----------------|-----|
-|<img src="./readme/website/manageUsers.png"/>|<img src="./readme/website/viewUser.png"/>|
+|Deleting (fixing) Infra |
+|-----|
+|<img src="./readme/website/deleteInfra.png"/>|
+
+|Search| 
+| -----------------|
+|<img src="./readme/website/search.png"/>|
+
+|Manage false Infras |
+|-----|
+|<img src="./readme/website/manageFalseInfras.png"/>|
+
+|Manage Users | 
+| -----------------|
+|<img src="./readme/website/manageUsers.png"/>|
+
+|View User |
+|-----|
+|<img src="./readme/website/viewUser.png"/>|
+
 
 
 <br><br>
