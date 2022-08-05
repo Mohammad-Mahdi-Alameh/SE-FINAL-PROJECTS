@@ -11,6 +11,8 @@ import Login from "./pages/login/Login";
 import View from "./pages/view/View";
 import Table from "./components/Table/Table";
 import Sidebar from "./components/Sidebar/Sidebar";
+//Axios
+import axios from 'axios';
 
 function App() {
   let navigate = useNavigate();
@@ -19,7 +21,11 @@ function App() {
   
   if(!token){
     navigate('/login');
-  }},[])
+  }
+else{
+  axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+
+}},[])
   return (
       <div className="App">
         <Sidebar />
