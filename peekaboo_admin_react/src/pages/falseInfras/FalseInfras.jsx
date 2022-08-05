@@ -4,9 +4,8 @@ import { useState, useEffect } from "react";
 import "../../index.scss"
 //Components
 import { DataGrid } from "@mui/x-data-grid";
-//Constants
-import { falseInfrasColumns , actionColumn } from "../../Utilities";
-import { base_url } from "../../Utilities/Constants";
+//Utilities
+import { falseInfrasColumns , actionColumn } from "../../Utilities/Utilities";
 //Axios
 import axios from "axios";
 
@@ -31,13 +30,13 @@ const FalseInfras = () => {
 
   //functions and handlers
   const getFalseInfras = async () => {
-    const res = await axios.get(base_url + "/false_infras");
+    const res = await axios.get( "/false_infras");
     const data = await res.data;
     return data;
   };
   const handleAccept = async (id) => {
     try {
-      const res = await axios.put(base_url + "/fix_infra/" + id);
+      const res = await axios.put( "/fix_infra/" + id);
       setFalseInfras(falseInfras.filter((item) => item.id !== id));
     } catch (error) {
       console.log(error)
@@ -45,7 +44,7 @@ const FalseInfras = () => {
   }
   const handleReject = async (id) => {
     try {
-      const res = await axios.put(base_url + "/reject_false_infra/" + id);
+      const res = await axios.put( "/reject_false_infra/" + id);
       setFalseInfras(falseInfras.filter((item) => item.id !== id));
     } catch (error) {
       console.log(error)

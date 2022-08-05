@@ -9,8 +9,8 @@ import Map from "./pages/map/Map";
 import FalseAlarms from "./pages/falseInfras/FalseInfras";
 import Login from "./pages/login/Login";
 import View from "./pages/view/View";
-import Table from "./components/Table/Table";
-import Sidebar from "./components/Sidebar/Sidebar";
+import Table from "./components/table/Table";
+import Sidebar from "./components/sidebar/Sidebar";
 //Axios
 import axios from 'axios';
 

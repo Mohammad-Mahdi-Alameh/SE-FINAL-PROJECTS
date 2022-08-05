@@ -16,10 +16,6 @@ axios.defaults.baseURL = 'http://192.168.0.101:8000/api/v1/admin'
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 axios.defaults.headers.common['Accept'] = 'application/json'
 
-
-
-
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Router>

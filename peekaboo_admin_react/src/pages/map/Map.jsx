@@ -5,11 +5,11 @@ import "../../index.scss"
 //Google Maps
 import { GoogleMap, InfoWindow, Marker, MarkerClusterer, useLoadScript } from "@react-google-maps/api"
 //Components
-import SearchBar from "../../components/SearchBar";
+import SearchBar from "../../components/searchBar/SearchBar";
 //Utilities
-import { infraDataExtractor, getMarker } from "../../Utilities";
+import { infraDataExtractor, getMarker } from "../../Utilities/Utilities";
 //Constants
-import { base_url } from "../../Constants";
+import { base_url } from "../../Utilities/Constants";
 import { libraries, mapContainerStyle, options } from "./mapConstants";
 //Axios
 import axios from "axios";

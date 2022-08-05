@@ -1,7 +1,5 @@
 //React
 import React from "react"
-//Style File
-import "../index.scss";
 //Mui Icons
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 //Use-Places-Autocomplete imports

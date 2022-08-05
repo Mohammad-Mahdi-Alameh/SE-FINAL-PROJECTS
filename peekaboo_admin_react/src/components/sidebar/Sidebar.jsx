@@ -1,5 +1,3 @@
-//Style File
-import "../../index.scss";
 //React Router
 import { Link, useNavigate } from "react-router-dom";
 //Svg's
