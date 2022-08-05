@@ -62,4 +62,13 @@ class AdminController extends Controller
         $users = User::where("is_admin","=",0)->get();
         return $users;
     }
+    public function getFalseInfras($infra_id = null){
+        if($infra_id){
+            $infra = InfrastructuralProblem::findOrFail($infra_id);
+            return $infra;
+        }
+        $infras = InfrastructuralProblem::where("false_infra","=",1)->get();
+        return $infras;
+    }
+
 }
