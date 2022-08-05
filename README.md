@@ -85,7 +85,7 @@ Here's a brief high-level overview of the tech stack PEEKABOO uses:
 ### Implementation of the user's mobile app 
 | Login  | Register| Map Permission  |
 | -----------------| -----|-----|
-| <img src="./readme/mobile/login.png"/> | <img src="./readme/mobile/register.png"/> | <img src="./readme/mobile/mapPermission.png"/>
+| <img src="./readme/mobile/login.png"/> | <img src="./readme/mobile/register.gif"/> | <img src="./readme/mobile/mapPermission.png"/>
 
 | Report False Infra | Report Infra | Report Menu  |
 | -----------------| -----|-----|
