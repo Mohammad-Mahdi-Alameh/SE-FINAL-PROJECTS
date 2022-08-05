@@ -10,49 +10,12 @@ use Illuminate\Http\Request;
 use Validator;
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => []]);
-    }
+  public function __construct()
+  {
+      $this->middleware('auth:api', ['except' => []]);
+  }
 
-    public function report(Request $request)
-    {
-
-
-        $validator = Validator::make($request->all(), [
-            'latitude' => 'required|string|min:2|max:100',
-            'longitude' => 'required|string|min:2|max:100',
-            'type' => 'required|string',
-        ]);
-
-        if($validator->fails()) {
-            return response()->json(["message" => "Validator Failed ! Check your submiited values again!"]);
-        }
-
-
-        $infrastructural_problem = new InfrastructuralProblem;
-
-        $record = Type::where("name","=",$request->type)->get();
-
-        if(count($record) == 0){
-            return response()->json([
-                'message' => 'There is no such type!',
-
-            ]);
-        }
-        $type_id = json_decode($record,true)[0]["id"];
-
-        $infrastructural_problem->latitude = $request->latitude;
-        $infrastructural_problem->longitude = $request->longitude;
-        $infrastructural_problem->is_fixed = 0;
-        $infrastructural_problem->type_id = $type_id;
-
-        $infrastructural_problem->save();
-
-        return response()->json([
-            'message' => 'Infrastructural problem reported successfully',
-        ], Response::HTTP_OK);
-    }
+    
 //infras :infrastructural problems
     public function getNearInfras(Request $request){
         function getDistance($lat1, $lon1, $lat2, $lon2) {
@@ -73,8 +36,9 @@ class UserController extends Controller
         }
 
           $validator = Validator::make($request->all(), [
-            'base_latitude' => 'required|string|min:2|max:100',
-            'base_longitude' => 'required|string|min:2|max:100',
+            'base_latitude' => 'required|between:0,99.99|min:2|max:100',
+            'base_longitude' => 'required|between:0,99.99|min:2|max:100',
+            // 'speed' => 'required|between:0,99.99',
         ]);
 
         if($validator->fails()) {
@@ -88,10 +52,9 @@ class UserController extends Controller
         foreach($decoded as $d) {
 
           $i++;
-          $distance = getDistance(floatval($request->base_latitude),floatval($request->base_longitude),floatval($d->latitude),floatval($d->longitude),"K");
-          if($distance < 7){
+          $distance = getDistance($request->base_latitude,$request->base_longitude,$d->latitude,$d->longitude,"K");
+          if($distance < 2){
                   array_push($near_infra_problems,$d);
-
                 }
 
         }
@@ -101,6 +64,7 @@ class UserController extends Controller
     public function addCoins($user_id){
         $user = User::findOrFail($user_id);
         $user->balance +=5;
+        $user->total_reports +=1;
         $user->save();
         return response()->json([
             'message' => 'added successfully',
@@ -108,12 +72,14 @@ class UserController extends Controller
 
 }
 
-    public function falseAlarm($infra_id){
+    public function falseInfra($infra_id){
         $infra = InfrastructuralProblem::findOrFail($infra_id);
-        $infra->false_alarms +=1;
+        $infra->false_infra = 1;
+        // $infra->is_fixed=0;
+        $infra->pending = 1;
         $infra->save();
         return response()->json([
-            'message' => 'added successfully',
+            'message' => 'reported successfully',
         ], Response::HTTP_OK);
 
 }
@@ -124,7 +90,7 @@ class UserController extends Controller
         $user->lastname = $request ->lastname;
         $user->phonenumber = $request ->phonenumber;
         $user->picture = $request ->picture;
-        $user->username = $request ->username;
+        $user->username = $request ->username;//will write later a code to check if username exists
         $user->password = bcrypt( $request->password);
 
         $user->save();
@@ -133,4 +99,9 @@ class UserController extends Controller
         ], Response::HTTP_OK);
 
     }
+
+    public function getUserFalseInfras($user_id){
+      $infras = InfrastructuralProblem::where([["user_id","=",$user_id],["false_infra","=",1]])->get();
+      return $infras;
+  }
 }
