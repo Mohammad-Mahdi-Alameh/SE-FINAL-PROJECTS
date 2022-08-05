@@ -1,13 +1,16 @@
+//Style File
+import "./index.scss";
+//React Hooks
+import { useEffect} from 'react';
+//React Router Dom
 import { Routes, Route,useNavigate } from "react-router-dom";
-import "./App.scss";
-import Home from "./pages/home/Home";
+//Components
 import Map from "./pages/map/Map";
+import FalseAlarms from "./pages/falseInfras/FalseInfras";
 import Login from "./pages/login/Login";
 import View from "./pages/view/View";
-import Add from "./pages/add/Add";
-import List from "./pages/list/List";
-import Navbar from "./components/navbar/Navbar";
-import Sidebar from "./components/sidebar/Sidebar";
+import Table from "./components/Table/Table";
+import Sidebar from "./components/Sidebar/Sidebar";
 
 function App() {
   let navigate = useNavigate();
@@ -21,18 +24,14 @@ function App() {
       <div className="App">
         <Sidebar />
         <div className="container">
-          <Navbar />
           <Routes>
-            <Route index element={<Home />} />
+            <Route index element={<Map />} />
             <Route path="login" element={<Login />} />
             <Route path="map" element={<Map />} />
+            <Route path="false_alarms" element={<FalseAlarms />} />
             <Route path="users">
-              <Route index element={<List />} />
+              <Route index element={<Table />} />
               <Route path=":userId" element={<View />} />
-              <Route
-                path="add"
-                element={<Add />}
-              />
             </Route>
           </Routes>
         </div>
