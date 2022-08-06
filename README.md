@@ -82,26 +82,32 @@ Here's a brief high-level overview of the tech stack PEEKABOO uses:
 
 <br>
 
-### Implementation of the user's mobile app 
-| Register  | Login | 
+### Implementation of the user's mobile app (the joystick used below in some pages is a mock gps creator, used for tesing the app)
+
+| Register  | Login |
 | -----------------| ------|
-| <img src="./readme/mobile/register.gif"/> | <img src="./readme/mobile/login.gif"/> | 
+| <img src="./readme/mobile/register.gif"/> | <img src="./readme/mobile/login.gif"/> |
 
-| Report False Infra | Report Infra | Report Menu  |
-| -----------------| -----|-----|
-| <img src="./readme/mobile/reportFalseInfra.gif"/> | <img src="./readme/mobile/report.png"/> | <img src="./readme/mobile/reportMenu.jpg"/>
+| Report False Infra | Foreground Service used for tracking ; starting it after successful login , and stopping it after successful logout|
+| -----------------| -----|
+| <img src="./readme/mobile/reportFalseInfra.gif"/> | <img src="./readme/mobile/foregroundService.gif"/>
 
-| Storage Permission | Edit User | Edit Password  |
-| -----------------| -----|-----|
-| <img src="./readme/mobile/storagePermission.png"/> | <img src="./readme/mobile/editUser.gif"/> | <img src="./readme/mobile/editPassword.gif"/>
+| Edit User | Edit Password  |
+|  -----|-----|
+| <img src="./readme/mobile/editUser.gif"/> | <img src="./readme/mobile/editPassword.gif"/>
 
 |Report History | False Requests |
 |-----|-----|
 |<img src="./readme/mobile/history.gif"/>  |<img src="./readme/mobile/falseRequests.gif"/>|
 
-|Foreground Service| Moment Sending Notification: The below joystick is a mock gps creater (it was used for testing and making sure everything is perfect)  |
+
+|Sending notifications of near infra when map is opened and the user have less than 7 seconds on impact | Sending notification of near infra (from foreground service and you can see it running and showing notification)|
+|-----|-----|
+|<img src="./readme/mobile/sendingNotification.gif"/>  |<img src="./readme/mobile/foregroundNotification.gif"/>|
+
+|Report infra while moving (so when the user clicks report, an infra will be saved on his live location)| Report infras any where on the map by just pressing anypoint on the map |
 | -----------------| -----|
-| <img src="./readme/mobile/foregroundService.jpg"/>  |<img src="./readme/mobile/notification.jpg"/>|
+| <img src="./readme/mobile/reportWhileMoving.gif"/>  |<img src="./readme/mobile/reportRandomInfras.gif"/>|
 
 
 ### Implementation of the admins's website
