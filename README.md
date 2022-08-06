@@ -122,15 +122,15 @@ Here's a brief high-level overview of the tech stack PEEKABOO uses:
 
 |Adding Infra | 
 | -----------------|
-|<img src="./readme/website/addInfra.png"/>|
+|<img src="./readme/website/addingInfra.gif"/>|
 
 |Deleting (fixing) Infra |
 |-----|
-|<img src="./readme/website/deleteInfra.png"/>|
+|<img src="./readme/website/removeInfra.gif"/>|
 
 |Search| 
 | -----------------|
-|<img src="./readme/website/search.png"/>|
+|<img src="./readme/website/panToSearched.gif"/>|
 
 |Manage false Infras |
 |-----|
