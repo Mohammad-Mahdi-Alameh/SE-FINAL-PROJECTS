@@ -13,7 +13,7 @@
 
 <img src="./readme/title2.svg" id="philosophy"/>
 
-> The PEEKABOO app is a live-tracking app , that notifies the users before they reach any infrastructural problem in seven seconds. The PEEKABOO app is more than just another tracking app; it enhances and fulfills the driving experience you are looking for.
+> The PEEKABOO app is a live-tracking app , that notifies the users before they reach any infrastructural problem (infra) in seven seconds. The PEEKABOO app is more than just another tracking app; it enhances and fulfills the driving experience you are looking for.
 > 
 
 
@@ -42,12 +42,12 @@ Note that i didn't use any styling library or theme, all from scratch and using 
 ### Wireframes of the user's mobile app 
 
 | Sign In  | Register  | Map | Report  |
-| -----------------| -----|-----------------| -----|
-| <img src="./readme/userFigma/1.png"/> | <img src="./readme/userFigma/2.png"/> |<img src="./readme/userFigma/3.png"/> |<img src="./readme/userFigma/4.png"/> |
+| -----------------| -----------------|-----------------| -----------------|
+| <img src="./readme/userFigma/1.png" style="width : 230px ;"/> | <img src="./readme/userFigma/2.png"  style="width : 230px ; height :390px "/> |<img src="./readme/userFigma/3.png" style="width : 230px ; height : 390px"/> |<img src="./readme/userFigma/4.png" style="width : 230px ; height : 390px"/> |
 ### Wireframes of the admin's webiste (panel) 
 | Map | Users |
 | ----------------------- | -------|
-| <img src="./readme/adminFigma/1.png"/> |  <img src="./readme/adminFigma/2.png"/> |
+| <img src="./readme/adminFigma/1.png"/> |  <img src="./readme/adminFigma/2.png" /> |
 <br>
 
 <br><br>
@@ -85,29 +85,29 @@ Here's a brief high-level overview of the tech stack PEEKABOO uses:
 ### Implementation of the user's mobile app (the joystick used below in some pages is a mock gps creator, used for tesing the app)
 
 | Register  | Login |
-| -----------------| ------|
-| <img src="./readme/mobile/register.gif"/> | <img src="./readme/mobile/login.gif"/> |
+| -----------------| -----------------|
+| <img src="./readme/mobile/register.gif" style="width : 540px "/> | <img src="./readme/mobile/login.gif" style="width : 550px "/> |
 
 | Report False Infra | Foreground Service used for tracking ; starting it after successful login , and stopping it after successful logout|
-| -----------------| -----|
-| <img src="./readme/mobile/reportFalseInfra.gif"/> | <img src="./readme/mobile/foregroundService.gif"/>
+| -----------------| -----------------|
+| <img src="./readme/mobile/reportFalseInfra.gif" style="width : 850px" /> | <img src="./readme/mobile/foregroundService.gif"/>
 
 | Edit User | Edit Password  |
 |  -----|-----|
-| <img src="./readme/mobile/editUser.gif"/> | <img src="./readme/mobile/editPassword.gif"/>
+| <img src="./readme/mobile/editUser.gif" style="width : 620px" /> | <img src="./readme/mobile/editPassword.gif"/>
 
 |Report History | False Requests |
 |-----|-----|
-|<img src="./readme/mobile/history.gif"/>  |<img src="./readme/mobile/falseRequests.gif"/>|
+|<img src="./readme/mobile/history.gif" style="width :610px"/>  |<img src="./readme/mobile/falseRequests.gif"/>|
 
 
 |Sending notifications of near infra when map is opened and the user have less than 7 seconds on impact | Sending notification of near infra (from foreground service and you can see it running and showing notification)|
 |-----|-----|
-|<img src="./readme/mobile/sendingNotification.gif"/>  |<img src="./readme/mobile/foregroundNotification.gif"/>|
+|<img src="./readme/mobile/sendingNotification.gif" style="width:760px ; height : 805px"/>|<img src="./readme/mobile/foregroundNotification.gif"/>|
 
 |Report infra while moving (so when the user clicks report, an infra will be saved on his live location)| Report infras any where on the map by just pressing anypoint on the map |
-| -----------------| -----|
-| <img src="./readme/mobile/reportWhileMoving.gif"/>  |<img src="./readme/mobile/reportRandomInfras.gif"/>|
+| -----| -----|
+| <img src="./readme/mobile/reportWhileMoving.gif"/>  |<img src="./readme/mobile/reportRandomInfras.gif" style="width : 720px "/> |
 
 
 ### Implementation of the admins's website
@@ -117,23 +117,36 @@ Here's a brief high-level overview of the tech stack PEEKABOO uses:
 |<img src="./readme/website/logIn.png"/>|
 
 | Landing Page |
-|-----|
+|-----------------|
 |<img src="./readme/website/landingPage.png"/>|
 
-|Adding Infra | 
-| -----------------|
-|<img src="./readme/website/addingInfra.gif"/>|
+|Adding Infra |
+| -----------------| 
+|<img src="./readme/website/addingInfra.gif" style="width : 1830px " />|
 
-|Deleting (fixing) Infra |
-|-----|
-|<img src="./readme/website/removeInfra.gif"/>|
+|Deleting (fixing) Infra | 
+|-----------------|
+|<img src="./readme/website/removeInfra.gif"  style="width : 1830px " />|
 
-|Search| 
-| -----------------|
-|<img src="./readme/website/panToSearched.gif"/>|
+|Search | 
+|-----------------|
+|<img src="./readme/website/panToSearched.gif"  style="width : 1970px " />|
+
+
+|Adding Infra (Static) |
+|-----------------|
+|<img src="./readme/website/addInfra.png"/>|
+
+|Deleting Infra (Static) |
+|-----------------|
+|<img src="./readme/website/removeInfra.png"/>|
+
+|Search (Static) |
+|-----------------|
+|<img src="./readme/website/search.png"/>|
 
 |Manage false Infras |
-|-----|
+|-----------------|
 |<img src="./readme/website/manageFalseInfras.png"/>|
 
 |Manage Users | 
@@ -141,7 +154,7 @@ Here's a brief high-level overview of the tech stack PEEKABOO uses:
 |<img src="./readme/website/manageUsers.png"/>|
 
 |View User |
-|-----|
+|-----------------|
 |<img src="./readme/website/viewUser.png"/>|
 
 
