@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.example.rently.models.User;
 import com.example.rently.payload.request.LoginRequest;
+import com.example.rently.payload.request.SignupRequest;
 import com.example.rently.payload.response.JwtResponse;
+import com.example.rently.payload.response.MessageResponse;
 import com.example.rently.repository.UserRepository;
 import com.example.rently.security.jwt.JwtUtils;
 import com.example.rently.security.services.UserDetailsImpl;
@@ -44,5 +47,25 @@ public class AuthController {
 												 userDetails.getUsername(), 
 												 userDetails.getEmail()));
 	}
-
+	@PostMapping("/signup")
+	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+			return ResponseEntity
+					.badRequest()
+					.body(new MessageResponse("Error: Username is already taken!"));
+		}
+		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+			return ResponseEntity
+					.badRequest()
+					.body(new MessageResponse("Error: Email is already in use!"));
+		}
+		// Create new user's account
+		User user = new User(signUpRequest.getUsername(), 
+							 signUpRequest.getEmail(),
+							 encoder.encode(signUpRequest.getPassword()));
+		
+		
+		userRepository.save(user);
+		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+	}
 }
