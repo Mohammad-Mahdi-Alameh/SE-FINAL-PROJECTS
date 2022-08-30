@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,4 +44,10 @@ public class VehicleController {
 		return new ResponseEntity<Vehicle>(vehicleService.getVehicleById(vehicleId), HttpStatus.OK);
 	}
 	
+	// build update vehicle RESTful API
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Vehicle> updateVehicle(@PathVariable("id") long id
+												  ,@RequestBody Vehicle vehicle){
+		return new ResponseEntity<Vehicle>(vehicleService.updateVehicle(vehicle, id), HttpStatus.OK);
+	}
 }

@@ -45,8 +45,21 @@ public class VehicleServiceImpl implements VehicleService{
 
 	@Override
 	public Vehicle updateVehicle(Vehicle vehicle, Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		// we need to check whether vehicle with given id is exist in DB or not
+		Vehicle existingVehicle = vehicleRepository.findById(id).orElseThrow(
+				() -> new ResourceNotFoundException("Vehicle", "Id", id)); 
+		
+		existingVehicle.setName(vehicle.getName());
+		existingVehicle.setManufacturer(vehicle.getManufacturer());
+		existingVehicle.setModel(vehicle.getModel());
+		existingVehicle.setColor(vehicle.getColor());
+		existingVehicle.setTopSpeed(vehicle.getTopSpeed());
+		existingVehicle.setNbOfSeats(vehicle.getNbOfSeats());
+		existingVehicle.setPrice(vehicle.getPrice());
+		// save existing vehicle to DB
+		vehicleRepository.save(existingVehicle);
+		return existingVehicle;
 	}
 
 	@Override
