@@ -26,8 +26,7 @@ public class VehicleServiceImpl implements VehicleService{
 
 	@Override
 	public List<Vehicle> getAllVehicles() {
-		// TODO Auto-generated method stub
-		return null;
+		return vehicleRepository.findAll();
 	}
 
 	@Override
@@ -53,5 +52,6 @@ public class VehicleServiceImpl implements VehicleService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+
 }
