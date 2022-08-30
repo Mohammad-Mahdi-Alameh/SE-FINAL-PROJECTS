@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.rently.exceptions.ResourceNotFoundException;
 import com.example.rently.models.Vehicle;
 import com.example.rently.repository.VehicleRepository;
 import com.example.rently.services.VehicleService;
@@ -31,8 +32,15 @@ public class VehicleServiceImpl implements VehicleService{
 
 	@Override
 	public Vehicle getVehicleById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+//		Optional<Vehicle> vehicle = vehicleRepository.findById(id);
+//		if(vehicle.isPresent()) {
+//			return vehicle.get();
+//		}else {
+//			throw new ResourceNotFoundException("Vehicle", "Id", id);
+//		}
+		return vehicleRepository.findById(id).orElseThrow(() -> 
+						new ResourceNotFoundException("Vehicle", "Id", id));
+		
 	}
 
 	@Override
@@ -52,6 +60,5 @@ public class VehicleServiceImpl implements VehicleService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 }
