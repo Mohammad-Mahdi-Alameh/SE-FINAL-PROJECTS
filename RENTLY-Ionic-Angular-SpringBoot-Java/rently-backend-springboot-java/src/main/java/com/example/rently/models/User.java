@@ -1,10 +1,13 @@
 package com.example.rently.models;
+
 //import java.util.HashSet;
 //import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+
 @Entity
 @Table(	name = "users", 
 		uniqueConstraints = { 
@@ -15,23 +18,58 @@ import javax.validation.constraints.Size;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Long id;
+
 	@NotBlank
 	@Size(max = 20)
+    @Column(name = "firstname" )
+	private String firstname;
+
+	@NotBlank
+	@Size(max = 20)
+    @Column(name = "lastname" )
+	private String lastname;
+
+	@NotBlank
+	@Size(max = 20)
+    @Column(name = "username" )
 	private String username;
+
 	@NotBlank
 	@Size(max = 50)
 	@Email
+    @Column(name = "email" )
 	private String email;
+
 	@NotBlank
 	@Size(max = 120)
+    @Column(name = "password" )
 	private String password;
+
+    @Column(name = "phonenumber" )
+	private int phoneNumber;
+	
+	@NotBlank
+	@Lob
+    @Column(name = "picture" )
+	private String picture;
+
+	@Column(name = "is_admin" )
+	private int isAdmin;
+
 	public User() {
 	}
-	public User(String username, String email, String password) {
+
+	public User(String firstName , String lastName,String username, String email, String password , int phoneNumber , String picture , int isAdmin) {
+		this.firstname = firstName;
+		this.lastname = lastName;
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.phoneNumber = phoneNumber;
+		this.picture = picture;
+		this.isAdmin = isAdmin;
 	}
 	public Long getId() {
 		return id;
@@ -57,5 +95,34 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	public int getPhoneNumber() {
+		return phoneNumber;
+	}
+	public void setPhoneNumber(int phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	public String getPicture() {
+		return picture;
+	}
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+	public int getIsAdmin() {
+		return isAdmin;
+	}
+	public void setIsAdmin(int isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+	public String getFirstname() {
+		return firstname;
+	}
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+	public String getLastname() {
+		return lastname;
+	}
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
 }
