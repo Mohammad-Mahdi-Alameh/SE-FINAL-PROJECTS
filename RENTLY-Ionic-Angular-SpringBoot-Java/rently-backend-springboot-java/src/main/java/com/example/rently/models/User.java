@@ -2,6 +2,7 @@ package com.example.rently.models;
 import java.time.LocalDateTime;
 
 //import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -69,6 +70,9 @@ public class User {
 	@Column(name = "is_admin" )
 	private int isAdmin;
 	
+    @OneToMany(mappedBy="user")
+    private Set<Rent> rents;
+
 	public User() {
 	}
 
