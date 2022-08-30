@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,4 +51,15 @@ public class VehicleController {
 												  ,@RequestBody Vehicle vehicle){
 		return new ResponseEntity<Vehicle>(vehicleService.updateVehicle(vehicle, id), HttpStatus.OK);
 	}
+	
+	// build delete vehicle RESTful API
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<String> deleteVehicle(@PathVariable("id") long id){
+		
+		// delete vehicle from DB
+		vehicleService.deleteVehicle(id);
+		
+		return new ResponseEntity<String>("Vehicle deleted successfully!.", HttpStatus.OK);
+	}
+	
 }

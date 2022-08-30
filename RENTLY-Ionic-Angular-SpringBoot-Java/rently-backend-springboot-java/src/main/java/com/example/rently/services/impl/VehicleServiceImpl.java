@@ -64,8 +64,11 @@ public class VehicleServiceImpl implements VehicleService{
 
 	@Override
 	public void deleteVehicle(Long id) {
-		// TODO Auto-generated method stub
 		
+		// check whether a vehicle exist in a DB or not
+		vehicleRepository.findById(id).orElseThrow(() -> 
+								new ResourceNotFoundException("Vehicle", "Id", id));
+		vehicleRepository.deleteById(id);
 	}
 
 	@Override
@@ -73,5 +76,5 @@ public class VehicleServiceImpl implements VehicleService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 }
