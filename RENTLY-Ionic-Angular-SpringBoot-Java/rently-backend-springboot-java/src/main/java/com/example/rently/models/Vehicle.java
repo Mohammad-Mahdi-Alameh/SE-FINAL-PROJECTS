@@ -7,8 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 
 import lombok.Data;
 
@@ -18,43 +20,61 @@ import lombok.Data;
 public class Vehicle {
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @NotBlank
+    @NotEmpty
 	@Size(max = 50)
+    @Column(name = "name" )
     private String name;
 
-    @NotBlank
+    @NotEmpty
 	@Size(max = 50)
+    @Column(name = "manufacturer" )
     private String manufacturer;
 
-    @NotBlank
+    @NotEmpty
 	@Size(max = 50)
+    @Column(name = "model" )
     private String model;
 
-    @NotBlank
+    @NotEmpty
 	@Size(max = 15)
+    @Column(name = "color" )
     private String color;
 
-    @NotBlank
-	@Size(max = 3)
+    @NotNull
+    @Column(name = "top_speed" )
     private int topSpeed;
 
-    @NotBlank
-	@Size(max = 3)
+    @NotEmpty
+	@Size(max = 10)
+    @Column(name = "transmission" )
+    private String transmission;
+
+    @NotNull
+    @Column(name = "nb_of_seats" )
     private int nbOfSeats;
 
-    @NotBlank
-	@Size(max = 1)
+    @NotNull
+    @Column(name = "status" )
     private int status;
 
-    @NotBlank
-	@Size(max = 1)
+    @NotNull
+    @Column(name = "type" )
     private int type;
 
-    @NotBlank
-	@Size(max = 5)
+    @NotNull
+    @Column(name = "price" )
     private int price;
+
+    @NotNull
+    @Column(name = "availability" )
+    private boolean availability;
+
+    @NotNull
+    @Column(name = "count" )
+    private int count;
 
 
 
