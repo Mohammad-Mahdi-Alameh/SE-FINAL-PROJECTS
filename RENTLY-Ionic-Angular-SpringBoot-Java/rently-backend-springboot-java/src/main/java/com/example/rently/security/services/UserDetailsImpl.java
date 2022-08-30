@@ -15,26 +15,42 @@ import com.example.rently.models.User;
 public class UserDetailsImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	private Long id;
+	private String firstname;
+	private String lastname;
 	private String username;
 	private String email;
 	@JsonIgnore
 	private String password;
-	public UserDetailsImpl(Long id, String username, String email, String password) {
+	private int phoneNumber;
+	private String picture;
+	private int isAdmin;
+
+	public UserDetailsImpl(Long id, String firstname , String lastname , String username, String email, String password,int phoneNumber , String picture , int isAdmin) {
 		this.id = id;
+		this.firstname = firstname;
+		this.lastname = lastname;
 		this.username = username;
 		this.email = email;
 		this.password = password;
-		
+		this.phoneNumber = phoneNumber ; 
+		this.picture = picture;	
+		this.isAdmin = isAdmin;	
 	}
 	public static UserDetailsImpl build(User user) {
 //		List<GrantedAuthority> authorities = user.getRoles().stream()
 //				.map(role -> new SimpleGrantedAuthority(role.getName().name()))
 //				.collect(Collectors.toList());
 		return new UserDetailsImpl(
-				user.getId(), 
+			    user.getId(), 
+			    user.getFirstname(),
+			    user.getLastname(),
 				user.getUsername(), 
 				user.getEmail(),
-				user.getPassword());
+				user.getPassword(),
+				user.getPhoneNumber(),
+				user.getPicture(),
+				user.getIsAdmin());
+
 	}
 
 	public Long getId() {
