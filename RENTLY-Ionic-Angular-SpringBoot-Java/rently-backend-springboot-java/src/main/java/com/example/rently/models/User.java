@@ -1,12 +1,15 @@
 package com.example.rently.models;
+import java.time.LocalDateTime;
 
 //import java.util.HashSet;
-//import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(	name = "users", 
@@ -21,43 +24,51 @@ public class User {
 	@Column(name = "id")
 	private Long id;
 
-	@NotBlank
+	@CreationTimestamp
+    private LocalDateTime createDateTime;
+ 
+    @UpdateTimestamp
+    private LocalDateTime updateDateTime;
+
+	@NotEmpty
 	@Size(max = 20)
     @Column(name = "firstname" )
 	private String firstname;
 
-	@NotBlank
+	@NotEmpty
 	@Size(max = 20)
     @Column(name = "lastname" )
 	private String lastname;
 
-	@NotBlank
+	@NotEmpty
 	@Size(max = 20)
     @Column(name = "username" )
 	private String username;
 
-	@NotBlank
+	@NotEmpty
 	@Size(max = 50)
 	@Email
     @Column(name = "email" )
 	private String email;
 
-	@NotBlank
+	@NotEmpty
 	@Size(max = 120)
     @Column(name = "password" )
 	private String password;
 
+	@NotNull
     @Column(name = "phonenumber" )
 	private int phoneNumber;
 	
-	@NotBlank
+	@NotEmpty
 	@Lob
     @Column(name = "picture" )
 	private String picture;
 
+	@NotNull
 	@Column(name = "is_admin" )
 	private int isAdmin;
-
+	
 	public User() {
 	}
 
