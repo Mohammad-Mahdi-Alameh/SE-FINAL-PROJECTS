@@ -2,13 +2,14 @@ package com.example.rently.models;
 
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -81,15 +82,15 @@ public class Vehicle {
     private int price;
 
     @NotNull
-    @Column(name = "availability" )
-    private boolean availability;
+    @Column(name = "is_available" )
+    private boolean available;
 
     @NotNull
     @Column(name = "count" )
     private int count;
 
-    @OneToOne(mappedBy = "vehicle")
-    private Rent rent;
+    @OneToMany(mappedBy = "vehicle")
+    private Set<Rent> rents;
 
 
 

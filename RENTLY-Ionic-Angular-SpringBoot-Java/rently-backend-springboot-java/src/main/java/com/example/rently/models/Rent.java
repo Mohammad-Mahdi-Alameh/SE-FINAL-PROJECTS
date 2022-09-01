@@ -9,9 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -22,6 +21,16 @@ import lombok.Data;
 @Entity
 @Table(name="rents")
 public class Rent {
+
+    public Rent(){
+
+    }
+ 
+    public Rent(Vehicle vehicle, User user){
+        this.user = user;
+        this.vehicle = vehicle;
+    }
+    
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -34,13 +43,14 @@ public class Rent {
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
   
-    @NotEmpty
+    @NotNull
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
     
 }
