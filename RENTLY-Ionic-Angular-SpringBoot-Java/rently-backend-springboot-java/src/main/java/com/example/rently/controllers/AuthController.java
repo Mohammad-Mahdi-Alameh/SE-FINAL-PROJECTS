@@ -46,8 +46,13 @@ public class AuthController {
 
 		return ResponseEntity.ok(new JwtResponse(jwt,
 				userDetails.getId(),
+				userDetails.getFirstName(),
+				userDetails.getLastName(),
 				userDetails.getUsername(),
-				userDetails.getEmail()));
+				userDetails.getEmail(),
+				userDetails.getPhoneNumber(),
+				userDetails.getPicture(),
+				userDetails.getIsAdmin()));
 	}
 
 	@PostMapping("/signup")
