@@ -59,6 +59,21 @@ public class UserDetailsImpl implements UserDetails {
 	public String getEmail() {
 		return email;
 	}
+	public int getPhoneNumber() {
+		return phoneNumber;
+	}
+	public int getIsAdmin() {
+		return isAdmin;
+	}
+	public String getPicture() {
+		return picture;
+	}
+	public String getFirstName() {
+		return firstname;
+	}
+	public String getLastName() {
+		return lastname;
+	}
 	@Override
 	public String getPassword() {
 		return password;
