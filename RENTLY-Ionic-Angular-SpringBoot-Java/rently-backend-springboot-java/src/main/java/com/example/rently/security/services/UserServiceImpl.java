@@ -7,10 +7,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.rently.exceptions.ResourceNotFoundException;
 import com.example.rently.models.User;
 import com.example.rently.repository.UserRepository;
+
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService,UserService {
+
 	@Autowired
 	UserRepository userRepository;
 	@Override
@@ -20,4 +23,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
 		return UserDetailsImpl.build(user);
 	}
+	
+	@Override
+	public User getUserById(Long userId){
+		return userRepository.findById(userId).orElseThrow(() -> 
+						new ResourceNotFoundException("User", "Id", userId));
+		
+	}
+	
 }

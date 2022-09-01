@@ -14,12 +14,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-import com.example.rently.security.services.UserDetailsServiceImpl;
+import com.example.rently.security.services.UserServiceImpl;
 public class AuthTokenFilter extends OncePerRequestFilter {
 	@Autowired
 	private JwtUtils jwtUtils;
 	@Autowired
-	private UserDetailsServiceImpl userDetailsService;
+	private UserServiceImpl userDetailsService;
 	private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

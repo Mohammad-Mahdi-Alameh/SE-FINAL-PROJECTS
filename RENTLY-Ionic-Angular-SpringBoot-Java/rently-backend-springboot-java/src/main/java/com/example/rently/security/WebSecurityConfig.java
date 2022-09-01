@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.example.rently.security.jwt.AuthEntryPointJwt;
 import com.example.rently.security.jwt.AuthTokenFilter;
-import com.example.rently.security.services.UserDetailsServiceImpl;
+import com.example.rently.security.services.UserServiceImpl;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -24,7 +24,7 @@ import com.example.rently.security.services.UserDetailsServiceImpl;
 		prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
-	UserDetailsServiceImpl userDetailsService;
+	UserServiceImpl userDetailsService;
 	@Autowired
 	private AuthEntryPointJwt unauthorizedHandler;
 	@Bean
