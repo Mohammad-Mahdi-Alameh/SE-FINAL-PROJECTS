@@ -19,47 +19,52 @@ import com.example.rently.services.VehicleService;
 @RestController
 @RequestMapping("/api/v1/vehicles")
 public class VehicleController {
-	
+
 	private VehicleService vehicleService;
 
 	public VehicleController(VehicleService vehicleService) {
 		super();
 		this.vehicleService = vehicleService;
 	}
-	
+
 	// build create vehicle RESTful API
 	@PostMapping("/add")
-	public ResponseEntity<Vehicle> addVehicle(@RequestBody Vehicle vehicle){
+	public ResponseEntity<Vehicle> addVehicle(@RequestBody Vehicle vehicle) {
 		return new ResponseEntity<Vehicle>(vehicleService.addVehicle(vehicle), HttpStatus.CREATED);
 	}
-	
+
 	// build get all vehicles RESTful API
 	@GetMapping
-	public List<Vehicle> getAllVehicles(){
+	public List<Vehicle> getAllVehicles() {
 		return vehicleService.getAllVehicles();
 	}
-	
+
 	// build get vehicle by id RESTful API
 	@GetMapping("{id}")
-	public ResponseEntity<Vehicle> getVehicleById(@PathVariable("id") long vehicleId){
+	public ResponseEntity<Vehicle> getVehicleById(@PathVariable("id") long vehicleId) {
 		return new ResponseEntity<Vehicle>(vehicleService.getVehicleById(vehicleId), HttpStatus.OK);
 	}
-	
+
 	// build update vehicle RESTful API
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Vehicle> updateVehicle(@PathVariable("id") long id
-												  ,@RequestBody Vehicle vehicle){
+	public ResponseEntity<Vehicle> updateVehicle(@PathVariable("id") long id, @RequestBody Vehicle vehicle) {
 		return new ResponseEntity<Vehicle>(vehicleService.updateVehicle(vehicle, id), HttpStatus.OK);
 	}
-	
+
 	// build delete vehicle RESTful API
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> deleteVehicle(@PathVariable("id") long id){
-		
+	public ResponseEntity<String> deleteVehicle(@PathVariable("id") long id) {
+
 		// delete vehicle from DB
 		vehicleService.deleteVehicle(id);
-		
-		return new ResponseEntity<String>("Vehicle deleted successfully!.", HttpStatus.OK);
+		return new ResponseEntity<String>("Vehicle deleted successfully!", HttpStatus.OK);
 	}
-	
+
+	// build create rent RESTful API
+	@PutMapping("/return/{id}")
+	public ResponseEntity<String> returnVehicle(@PathVariable("id") long id){
+		// resetting vehicle's availability to true
+		vehicleService.returnVehicle(id);
+		return new ResponseEntity<String>("Vehicle returned successfully!", HttpStatus.OK);
+	}
 }
