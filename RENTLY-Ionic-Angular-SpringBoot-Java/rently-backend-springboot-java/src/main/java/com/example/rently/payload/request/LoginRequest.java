@@ -1,12 +1,12 @@
 package com.example.rently.payload.request;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 public class LoginRequest {
-	@NotBlank
-  private String username;
+	@NotEmpty
+	private String username;
 
-	@NotBlank
+	@NotEmpty
 	private String password;
 
 	public String getUsername() {
