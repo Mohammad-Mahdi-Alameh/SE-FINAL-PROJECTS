@@ -10,5 +10,6 @@ public interface VehicleService {
 	Vehicle getVehicleById(Long id);
 	Vehicle updateVehicle(Vehicle vehicle, Long id);
 	void deleteVehicle(Long id);
+	Vehicle returnVehicle(Long id);
 	Vehicle rentVehicle(Long id);
 }

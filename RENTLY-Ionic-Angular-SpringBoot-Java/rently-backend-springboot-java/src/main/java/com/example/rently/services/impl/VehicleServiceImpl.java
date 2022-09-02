@@ -3,6 +3,7 @@ package com.example.rently.services.impl;
 import java.util.List;
 // import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.rently.exceptions.ResourceNotFoundException;
@@ -72,9 +73,25 @@ public class VehicleServiceImpl implements VehicleService{
 	}
 
 	@Override
+    public Vehicle returnVehicle(Long id) {
+        // we need to check whether vehicle with given id is exist in DB or not
+        Vehicle existingVehicle = vehicleRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Vehicle", "Id", id));
+        existingVehicle.setAvailable(true);
+        vehicleRepository.save(existingVehicle);
+
+        return existingVehicle;
+
+    }
+	@Override
 	public Vehicle rentVehicle(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		// we need to check whether vehicle with given id is exist in DB or not
+		Vehicle existingVehicle = vehicleRepository.findById(id).orElseThrow(
+				() -> new ResourceNotFoundException("Vehicle", "Id", id)); 
+		existingVehicle.setAvailable(false);
+		vehicleRepository.save(existingVehicle);
+		return existingVehicle;
+		
 	}
 	
 }
