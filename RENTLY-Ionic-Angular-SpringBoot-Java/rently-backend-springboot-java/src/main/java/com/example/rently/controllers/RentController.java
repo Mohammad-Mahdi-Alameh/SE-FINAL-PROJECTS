@@ -61,19 +61,5 @@ public class RentController {
         return rentService.getAllRents();
     }
 
-    // build get all rents RESTful API
-    @GetMapping("{id}")
-    public ResponseEntity<?> getAllRentsOfUser(@PathVariable("id") long userId) {
-        List<Rent> rents = rentService.loadRentsOfUser(userId);
-        List<RentResponse> rentResponses = new ArrayList<RentResponse>();
-        rents.forEach((rent) -> rentResponses.add(new RentResponse(rent.getUser().getId(), rent.getVehicle().getId(),rent.getCreateDateTime())));
-        return ResponseEntity.ok(rentResponses);
-    }
-
-    // build get rent by id RESTful API
-    @GetMapping("/rent/{id}")
-    public ResponseEntity<Rent> getRentById(@PathVariable("id") long rentId) {
-        return new ResponseEntity<Rent>(rentService.getRentById(rentId), HttpStatus.OK);
-    }
 
 }
