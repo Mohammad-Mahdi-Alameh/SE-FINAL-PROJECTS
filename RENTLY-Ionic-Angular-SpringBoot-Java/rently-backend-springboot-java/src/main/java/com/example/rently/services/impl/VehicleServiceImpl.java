@@ -14,12 +14,8 @@ import com.example.rently.services.VehicleService;
 @Service
 public class VehicleServiceImpl implements VehicleService{
 
-	private VehicleRepository vehicleRepository;
-	
-	public VehicleServiceImpl(VehicleRepository vehicleRepository) {
-		super();
-		this.vehicleRepository = vehicleRepository;
-	}
+    @Autowired
+    VehicleRepository vehicleRepository;
 
 	@Override
 	public Vehicle addVehicle(Vehicle vehicle) {
