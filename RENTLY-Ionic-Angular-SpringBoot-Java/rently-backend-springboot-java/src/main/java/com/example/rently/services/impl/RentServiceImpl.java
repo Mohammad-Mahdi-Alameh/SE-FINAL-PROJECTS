@@ -63,6 +63,14 @@ public class RentServiceImpl implements RentService {
             return rents;
         }
 
+    @Override
+    public Integer countVehicleRents(Long vehicleId){
+        Vehicle existingVehicle = vehicleRepository.findById(vehicleId).orElseThrow(
+                () -> new ResourceNotFoundException("Vehicle", "Id", vehicleId));
+        Integer totalVehicleRents = rentRepository.countByVehicle(existingVehicle);
+        return totalVehicleRents;
+    }
+
     
 
 }
