@@ -70,6 +70,13 @@ public class RentServiceImpl implements RentService {
         Integer totalVehicleRents = rentRepository.countByVehicle(existingVehicle);
         return totalVehicleRents;
     }
+    @Override
+    public Integer countUserRents(Long userId){
+        User existingUser = userRepository.findById(userId).orElseThrow(
+                () -> new ResourceNotFoundException("User", "Id", userId));
+        Integer totalUserRents = rentRepository.countByUser(existingUser);
+        return totalUserRents;
+    }
 
     
 

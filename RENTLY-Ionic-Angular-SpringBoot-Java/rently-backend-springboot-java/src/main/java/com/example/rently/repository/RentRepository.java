@@ -12,7 +12,8 @@ import com.example.rently.models.Vehicle;
 public interface RentRepository  extends JpaRepository<Rent, Long> {
     //method to get all rents of a specific user
     List<Rent> findAllByUser(User user);
-
+    //method to count all rents of a specific user
+    Integer countByUser(User user);
     //method to count all rents of a specific vehicle
     Integer countByVehicle(Vehicle vehicle);
 
