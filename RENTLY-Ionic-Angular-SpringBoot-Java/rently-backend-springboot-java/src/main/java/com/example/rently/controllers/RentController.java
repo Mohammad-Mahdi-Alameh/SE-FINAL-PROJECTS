@@ -76,4 +76,10 @@ public class RentController {
         return new ResponseEntity<Rent>(rentService.getRentById(rentId), HttpStatus.OK);
     }
 
+    // build get number of rents of a vehicle by its id RESTful API
+    @GetMapping("/count-vehicle-rents/{id}")
+    public ResponseEntity<Integer> countVehicleRents(@PathVariable("id") long vehicleId) {
+        return new ResponseEntity<Integer>(rentService.countVehicleRents(vehicleId), HttpStatus.OK);
+    }
+
 }
