@@ -6,13 +6,10 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss']
+  styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  credentials = {
-    username: 'saimon@devdactic.com',
-    password: '123'
-  };
+  credentials: any = {};
 
   constructor(
     private auth: AuthService,
@@ -23,14 +20,15 @@ export class LoginPage implements OnInit {
   ngOnInit() {}
 
   login() {
-    this.auth.login(this.credentials).subscribe(async res => {
+    this.auth.login(this.credentials).subscribe(async (res) => {
       if (res) {
-        this.router.navigateByUrl('/members');
+        this.router.navigateByUrl('/user');
+        localStorage.setItem('token', res.accessToken);
       } else {
         const alert = await this.alertCtrl.create({
           header: 'Login Failed',
           message: 'Wrong credentials.',
-          buttons: ['OK']
+          buttons: ['OK'],
         });
         await alert.present();
       }
@@ -39,5 +37,4 @@ export class LoginPage implements OnInit {
   // ionViewWillEnter() {
   //   this.menu.enable(false);
   // }
-
 }
