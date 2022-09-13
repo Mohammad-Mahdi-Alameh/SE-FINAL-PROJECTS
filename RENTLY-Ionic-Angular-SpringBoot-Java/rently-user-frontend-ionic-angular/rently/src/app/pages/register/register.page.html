@@ -1,3 +1,70 @@
-
-
-<app-user-information [button]="button" [navbarTitle]="register"></app-user-information>
+<ion-app>
+  <app-navbar title="Register"></app-navbar>
+  <div class="container">
+    <ion-card class="card">
+      <form id="form">
+        <ion-item class="ion-margin-bottom input">
+          <ion-label position="floating">Firstname</ion-label>
+          <ion-input
+            type="text"
+            placeholder="Firstname"
+            [(ngModel)]="user.firstname"
+            [ngModelOptions]="{standalone: true}"
+          ></ion-input>
+        </ion-item>
+        <ion-item class="ion-margin-bottom input">
+          <ion-label position="floating">Lastname</ion-label>
+          <ion-input
+            type="text"
+            placeholder="Lastname"
+            [(ngModel)]="user.lastname"
+            [ngModelOptions]="{standalone: true}"
+          ></ion-input>
+        </ion-item>
+        <ion-item class="ion-margin-bottom input">
+          <ion-label position="floating">Email</ion-label>
+          <ion-input
+            type="text"
+            placeholder="Email"
+            [(ngModel)]="user.email"
+            [ngModelOptions]="{standalone: true}"
+          ></ion-input>
+        </ion-item>
+        <ion-item class="ion-margin-bottom input">
+            <ion-label position="floating">Phone Number</ion-label>
+              <ion-input
+                label="Phone Number"
+                type="number"
+                placeholder="Phone Number"
+                [(ngModel)]="user.phonenumber"
+                [ngModelOptions]="{standalone: true}"
+              ></ion-input>
+          </ion-item>
+        <ion-item class="ion-margin-bottom input">
+          <ion-label position="floating">Username</ion-label>
+          <ion-input
+            type="text"
+            placeholder="Username"
+            [(ngModel)]="user.username"
+            [ngModelOptions]="{standalone: true}"
+          ></ion-input>
+        </ion-item>
+        <ion-item class="ion-margin-bottom input">
+          <ion-label position="floating">Password</ion-label>
+          <app-show-hide-password>
+            <ion-input
+              label="Password"
+              type="password"
+              placeholder="Password"
+              [(ngModel)]="user.password"
+              [ngModelOptions]="{standalone: true}"
+            ></ion-input>
+          </app-show-hide-password>
+        </ion-item>
+        <ion-button (click)="register()" expand="block" shape="round"
+          >REGISTER</ion-button
+        >
+      </form>
+    </ion-card>
+  </div>
+</ion-app>
