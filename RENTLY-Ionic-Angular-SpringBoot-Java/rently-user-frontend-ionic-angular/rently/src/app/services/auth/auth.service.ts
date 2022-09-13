@@ -25,6 +25,17 @@ export class AuthService {
     );
   }
 
+  getUser() {
+    return this.userData.getValue();
+  }
+
+  logout() {
+    localStorage.removeItem("token");
+      this.router.navigateByUrl('/');
+      this.userData.next(null);
+    };
+  
+  
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
