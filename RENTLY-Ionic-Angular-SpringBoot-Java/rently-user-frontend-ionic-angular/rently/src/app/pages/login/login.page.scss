@@ -1,0 +1,44 @@
+ion-toolbar{
+    --background : #f5f5f3;
+    ion-button{
+        text-tranfrom:initial;
+        font-size: 17px;
+    }
+
+}
+
+.goToRegister{
+display: flex;
+align-items: center;
+justify-content: center;
+ position: absolute;
+width: 100vw;
+// height: 17px;
+// left: 72.06px;
+top: 93vh;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 17px;
+/* identical to box height */
+
+text-align: center;
+
+color: #FFFFFF;
+
+text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.register{
+    color: var(--ion-color-success);
+    margin-left: 7px;
+    font-weight: 700;
+}
+
+// .goToRegister{
+//     width: 100vw;
+//     display: flex;
+//     justify-content: space-between;
+// }
