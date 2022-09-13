@@ -15,7 +15,7 @@ import { SharedComponentsModule } from 'src/app/components/shared-components.mod
     FormsModule,
     IonicModule,
     LoginPageRoutingModule,
-    SharedComponentsModule
+    SharedComponentsModule,
   ],
   declarations: [LoginPage]
 })

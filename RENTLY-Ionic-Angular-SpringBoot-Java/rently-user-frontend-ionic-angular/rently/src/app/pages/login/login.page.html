@@ -4,10 +4,19 @@
   <div id="header">
     <h1>Login</h1>
   </div>
-  <form id="form" action="">
-    <app-input label="Username" type="text" placeholder="Username"></app-input>
-     <app-input label="Password" type="password" placeholder="Password"></app-input>
-    <ion-button expand="block" shape="round">LOGIN</ion-button>
+  <form id="form" >
+    <ion-item class="ion-margin-bottom input">
+      <ion-label position="floating">Username</ion-label>
+    <ion-input type="text" placeholder="Username" [(ngModel)]="credentials.username" [ngModelOptions]="{standalone: true}"></ion-input>
+    </ion-item >
+  <ion-item class="ion-margin-bottom input">
+
+    <ion-label position="floating">Password</ion-label>
+    <app-show-hide-password>
+      <ion-input label="Password" type="password" placeholder="Password" [(ngModel)]="credentials.password"  [ngModelOptions]="{standalone: true}"></ion-input>
+    </app-show-hide-password>
+    </ion-item>
+    <ion-button (click)="login()" expand="block" shape="round">LOGIN</ion-button>
 
   </form>
 </ion-card>
