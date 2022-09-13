@@ -1,0 +1,33 @@
+<ion-app>
+  
+  <app-navbar [title]="navbarTitle"></app-navbar>
+  <div class="container ">
+    
+    <!-- <img src="assets/RENTLY.svg" /> -->
+    <div class="imageContainer" *ngIf="withImage">
+      <img src="../../../assets/hmdella.jpg"/>
+    </div>
+    <!-- <ion-grid style="height: 100%"> -->
+      <!-- <ion-row justify-content-center align-items-center style="height: 100%"> -->
+        <ion-card class="card">
+          <form id="form" action="">
+            <app-input label="First Name" placeholder="First Name"></app-input>
+            <app-input label="Last Name" placeholder="Last Name"></app-input>
+            <app-input label="Username" placeholder="Username"></app-input>
+            <app-input label="Email" placeholder="Email"></app-input>
+            <app-input label="Phone Number" placeholder="Phone Number"></app-input>
+            <app-input
+            label="Password"
+            type="password"
+            placeholder="Password"
+            ></app-input>
+            <app-input
+            label="Confirm Password"
+        type="password"
+        placeholder="Confirm Password"
+      ></app-input>
+      <ion-button expand="block" shape="round">{{this.button}}</ion-button>
+    </form>
+  </ion-card>
+</div>
+</ion-app>

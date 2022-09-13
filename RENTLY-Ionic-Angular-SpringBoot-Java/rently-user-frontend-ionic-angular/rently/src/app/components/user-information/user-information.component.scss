@@ -1,0 +1,14 @@
+.imageContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  // position: absolute;
+  // z-index: 3;
+  img {
+    // margin-top: 7%;
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    border: 8px solid #ffffff;
+  }
+}
