@@ -1,0 +1,9 @@
+<ion-item class="ion-margin-bottom input">
+    <ion-label position="floating">{{this.label}}</ion-label>
+    <ion-input *ngIf="withoutPassword ; else withPassword" [type]="type" [placeholder]="placeholder"></ion-input>
+    <ng-template #withPassword>
+        <app-show-hide-password>
+            <ion-input [type]="type" [placeholder]="placeholder"></ion-input>
+        </app-show-hide-password>
+    </ng-template>
+</ion-item>
