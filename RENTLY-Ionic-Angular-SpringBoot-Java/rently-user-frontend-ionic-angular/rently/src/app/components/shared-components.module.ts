@@ -2,15 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ShowHidePasswordComponent } from './show-hide-password/show-hide-password.component';
 
 
 
 @NgModule({
-  declarations: [NavbarComponent],
+  declarations: [ShowHidePasswordComponent,NavbarComponent],
   imports: [
     CommonModule,
     IonicModule
   ],
-  exports:[NavbarComponent]
+  exports:[ShowHidePasswordComponent,NavbarComponent]
 })
 export class SharedComponentsModule { }
