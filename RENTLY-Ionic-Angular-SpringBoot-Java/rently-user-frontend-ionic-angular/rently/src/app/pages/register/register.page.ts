@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
+  register:string="Register";
+  button:string="REGISTER";
+  registerCard:string="card";
 
   constructor() { }
 
