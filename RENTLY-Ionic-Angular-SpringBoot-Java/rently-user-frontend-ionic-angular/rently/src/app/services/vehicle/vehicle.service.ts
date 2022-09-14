@@ -13,10 +13,6 @@ import { catchError } from 'rxjs/operators';
 export class VehicleService {
   baseUrl : string  ="http://localhost:8080/api/v1"
   
-  authenticatedOptions = {
-    header: new HttpHeaders({ 'Authorization': 'Bearer ' + localStorage.getItem("token") })
-  };
-
   selectedVehicle?: Vehicle;
   onSelect(vehicle: Vehicle): void {
   this.selectedVehicle = vehicle;
@@ -24,15 +20,10 @@ export class VehicleService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  // getVehicles(): Observable<Vehicle[]> {
-  //   const vehicles = of(VEHICLES);
-  //   return vehicles;
-  // }
-
   getCars(){
     return this.http
       .get<any>(
-        this.baseUrl +'/vehicles'
+        this.baseUrl +'/cars'
       )
       .pipe(catchError(this.handleError<any>('Error occured')));
   }
@@ -44,7 +35,6 @@ export class VehicleService {
       .pipe(catchError(this.handleError<any>('Error occured')));
   }
   // getVehicle():Observable<Vehicle>{
-
   // }
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
