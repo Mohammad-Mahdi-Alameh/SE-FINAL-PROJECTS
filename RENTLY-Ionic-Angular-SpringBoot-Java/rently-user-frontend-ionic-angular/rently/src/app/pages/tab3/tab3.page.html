@@ -1,0 +1,19 @@
+<ion-content role="motorcycles" [scrollEvents]="true"
+> 
+<ion-list>
+  <ion-card *ngFor="let vehicle of observableVehicles | async" (click)="vehicleService.onSelect(vehicle)" routerLink="/user/vehicle">
+  <ion-item >
+    <ion-thumbnail slot="end">
+      <img src={{vehicle.image}}/>
+    </ion-thumbnail>
+    <ion-label class="ion-text-wrap">
+      {{ vehicle.name }}<br>
+      <b>{{ vehicle.price | currency:'USD' }} / day</b>
+      <p>{{ vehicle.category }} left</p>
+    </ion-label>
+    <ion-row slot="end" class="ion-no-padding ion-align-items-center">
+    </ion-row>
+  </ion-item>
+</ion-card>
+</ion-list>
+</ion-content>
