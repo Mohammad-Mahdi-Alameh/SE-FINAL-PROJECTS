@@ -14,6 +14,7 @@ import { SharedComponentsModule } from 'src/app/components/shared-components.mod
     CommonModule,
     FormsModule,
     TabsPageRoutingModule,
+    SharedComponentsModule
   ],
   declarations: [TabsPage],
   schemas: [
