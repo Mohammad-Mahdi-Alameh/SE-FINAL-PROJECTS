@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -24,3 +24,94 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+
+.container {
+  height: 100vh;
+  width: 100vw;
+  // position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  justify-content: center;
+  .logo {
+    width: 50%;
+    align-self: center;
+    position: absolute;
+    // width: 100vw;
+    // height: 17px;
+    // left: 72.06px;
+    bottom: 85vh;
+    // margin-left:50vw;
+    // margin-right:50vw;
+    // height:125px;
+    // border-radius: 50%;
+    // border:8px solid #ffffff;
+  }
+}
+.card {
+  margin-top: 7vh;
+  margin-bottom: 7vh;
+  border-radius: 7%;
+  --background: var(--ion-color-success);
+  margin-left: 5%;
+  margin-right: 5%;
+  #header {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-left: 34px;
+
+    h1 {
+      font-weight: 700;
+      font-size: 26px;
+      color: black;
+      margin-bottom: 1%;
+    }
+  }
+  #form {
+    margin-top: 2vh;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-bottom: 2vh;
+
+    ion-button {
+      margin-top: 5%;
+      height: 48px;
+      font-size: 18px;
+      color: white;
+      text-transform: initial;
+      border-radius: 50px;
+      box-shadow: 1px 8px 8px 0px (0, 0, 0, 0, 05);
+      --box-shadow: none;
+    }
+  }
+}
+
+.input {
+  border-radius: 30px;
+  height: 55px;
+  box-shadow: 1px 8px 8px 0px (0, 0, 0, 0, 0.08);
+  --highlight-height: 0px;
+
+  ion-input {
+    font-size: 18px;
+    --padding-top: 9px;
+    // --padding-bottom: 15px;
+    --padding-start: 7px;
+  }
+  ion-label {
+    // --padding-top:7px;
+    margin-left: 7px;
+    color: #000000;
+  }
+  a {
+    font-size: 17px;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+  }
+}
+.margin {
+  margin-top: 7vh;
+}
